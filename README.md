@@ -79,3 +79,6 @@
 | CI/CD | GitHub Actions |
 | 開発環境 | Docker |
 | API | Web Speech API、OpenAI API |
+
+##　画面遷移図
+https://www.figma.com/file/29Z6kPbrJDKNfcNO9k8K3K/IDEA-SPACE-TRIP?type=design&node-id=61%3A69046&mode=design&t=jFuaTkVUaT2S3pgl-1
