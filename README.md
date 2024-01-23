@@ -82,3 +82,6 @@
 
 ## 画面遷移図
 https://www.figma.com/file/29Z6kPbrJDKNfcNO9k8K3K/IDEA-SPACE-TRIP?type=design&node-id=61%3A69046&mode=design&t=jFuaTkVUaT2S3pgl-1
+
+## ER図
+![er](https://github.com/meimei-kr/idea-space-trip/assets/77828683/f34ced94-9b6d-486e-9bc3-063221cce91b)
