@@ -17,14 +17,13 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     volumes:
       - ./back:/app
+      - /etc/ssl/cert.pem:/etc/ssl/cert.pem
     ports:
       - "3000:3000"
     depends_on:
       - db
     tty: true
     stdin_open: true
-    environment:
-      - RAILS_ENV=development
   front:
     build:
       context: ./front
