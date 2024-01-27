@@ -14,8 +14,12 @@ services:
     build:
       context: ./back
       dockerfile: Dockerfile
+    user: "root"
     environment:
       RAILS_ENV: development
+      BUNDLE_WITHOUT: "null"
+      BUNDLE_DEPLOYMENT: ""
+      BUNDLE_PATH: "/app/.bundle"
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     volumes:
       - ./back:/app
