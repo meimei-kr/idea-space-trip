@@ -9,11 +9,13 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql/data
+      - mysql_data:/var/lib/mysql
   back:
     build:
       context: ./back
       dockerfile: Dockerfile
+    environment:
+      RAILS_ENV: development
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     volumes:
       - ./back:/app
