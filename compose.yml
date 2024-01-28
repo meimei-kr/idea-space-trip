@@ -15,8 +15,6 @@ services:
       - /etc/ssl/cert.pem:/etc/ssl/cert.pem
     ports:
       - "3000:3000"
-    depends_on:
-      - db
     tty: true
     stdin_open: true
   front:
