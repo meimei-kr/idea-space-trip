@@ -1,15 +1,4 @@
 services:
-  db:
-    image: mysql:8.0.36
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
   back:
     build:
       context: ./back
@@ -39,5 +28,3 @@ services:
     command: yarn dev -p 4000
     ports:
       - "8000:4000"
-volumes:
-  mysql_data:
