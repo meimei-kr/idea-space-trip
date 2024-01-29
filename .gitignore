@@ -1,2 +1,69 @@
 .env
 redis/
+
+# ignoreing files for front directory
+# dependencies
+/front/node_modules
+/front/.pnp
+/front/.pnp.js
+/front/.yarn/install-state.gz
+
+# testing
+/front/coverage
+
+# next.js
+/front/.next/
+/front/out/
+
+# production
+/front/build
+
+# misc
+/front/.DS_Store
+/front/*.pem
+
+# debug
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
+
+# local env files
+/front/.env*.local
+
+# vercel
+/front/.vercel
+
+# typescript
+/front/*.tsbuildinfo
+/front/next-env.d.ts
+
+# ignoreing files for back directory
+# Ignore bundler config.
+/back/.bundle
+
+# Ignore all environment files (except templates).
+/back/.env*
+/back/!/.env*.erb
+
+# Ignore all logfiles and tempfiles.
+/back/log/*
+/back/tmp/*
+!back/log/.keep
+!back/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+back/tmp/pids/*
+!back/tmp/pids/
+!back/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development and any SQLite databases).
+back/storage/*
+!back/storage/.keep
+back/tmp/storage/*
+!back/tmp/storage/
+!back/tmp/storage/.keep
+
+# Ignore master key for decrypting credentials and more.
+back/config/master.key
+
+back/.DS_Store
