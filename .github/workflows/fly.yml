@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'back/**'
 jobs:
   deploy:
     name: Deploy app
