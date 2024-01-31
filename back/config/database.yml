@@ -22,7 +22,7 @@ development:
   database: <%= Rails.application.credentials.dig(:planetscale, :development, :database) %>
   host: <%= Rails.application.credentials.dig(:planetscale, :development, :host) %>
   ssl_mode: :verify_identity
-  sslca: "/etc/ssl/cert.pem"
+  sslca: "/etc/ssl/certs/ca-certificates.crt"
 
 production:
   <<: *default
