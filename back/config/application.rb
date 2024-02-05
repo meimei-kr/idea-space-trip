@@ -41,6 +41,6 @@ module App
       g.test_framework false
     end
 
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :solid_queue
   end
 end

@@ -1,0 +1,33 @@
+# ruby 3.2.2 の公式イメージをベースイメージとして使用
+FROM ruby:3.2.2
+
+# コンテナ内の作業ディレクトリを /app に設定
+WORKDIR /app
+
+# 必要なパッケージをインストール
+RUN apt-get update -qq && \
+    apt-get install -y build-essential default-mysql-client vim openssl ca-certificates
+
+# Gemfile と Gemfile.lock を /app にコピー
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+
+# Bundler と Gem の依存関係をインストール
+RUN gem install bundler
+RUN bundle install
+
+# アプリケーションのソースコードをコピー
+COPY . /app
+
+# entrypoint.sh スクリプトをコピーして実行可能にする
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+
+# コンテナ起動時に entrypoint.sh スクリプトを実行
+ENTRYPOINT ["entrypoint.sh"]
+
+# コンテナの3000番ポートを外部に公開
+EXPOSE 3000
+
+# コンテナ起動時のデフォルトコマンド。Railsサーバーを起動
+CMD ["rails", "server", "-b", "0.0.0.0"]
