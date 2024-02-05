@@ -1,6 +1,3 @@
-.env
-redis/
-
 # ignoreing files for front directory
 # dependencies
 front/node_modules
@@ -37,6 +34,7 @@ front/.vercel
 front/*.tsbuildinfo
 front/next-env.d.ts
 
+
 # ignoreing files for back directory
 # Ignore bundler config.
 back/.bundle
@@ -67,3 +65,5 @@ back/tmp/storage/*
 back/config/master.key
 
 back/.DS_Store
+
+redis/data/*

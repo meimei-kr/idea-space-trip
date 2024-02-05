@@ -14,4 +14,4 @@ RUN yarn install
 COPY . /app
 
 # サーバーを起動
-CMD ["yarn", "dev"]
+CMD ["yarn", "dev", "-p", "4000"]

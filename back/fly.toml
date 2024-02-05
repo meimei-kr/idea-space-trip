@@ -37,5 +37,5 @@ console_command = "/rails/bin/rails console"
   memory_mb = 256
 
 [processes]
-app = "bin/rails server"
-worker = "bundle exec sidekiq"
+  app = "bin/rails server"
+  worker = "bundle exec rake solid_queue:start"
