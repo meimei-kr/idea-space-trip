@@ -1,0 +1,54 @@
+inherit_from: .rubocop_todo.yml
+
+# inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+# 人の手で変更しないことが前提のファイルは除外
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/*
+    - db/schema.rb
+    - vendor/**/*
+
+# ********************
+# RailsのCops詳細設定
+# ********************
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+# 日本語コメントを許可する
+Style/AsciiComments:
+  Enabled: false
+
+# DBディレクトリのファイルはABCサイズをチェックしない
+Metrics/AbcSize:
+  Exclude:
+    - 'db/**/*'
+
+# DBディレクトリのファイルはメソッドの長さをチェックしない
+Metrics/MethodLength:
+  Exclude:
+    - "db/**/*"
+
+# 行の長さを100文字までに制限
+Layout/LineLength:
+  Max: 100
+  Exclude:
+    - 'db/migrate/*'
+    - 'Gemfile'
+    - 'config/**/*'
+
+#　文末のカンマを許可
+Style/TrailingCommaInArguments:
+  Exclude:
+    - 'db/fixtures/*'
+
+# ファイルの先頭に文字列をfreezeするかの記述を強制するチェックを無効化
+Style/FrozenStringLiteralComment:
+  Enabled: false
