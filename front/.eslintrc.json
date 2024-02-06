@@ -6,5 +6,11 @@
     "prettier",
     "next",
     "next/babel"
-  ]
+  ],
+  "plugins": [
+    "unused-imports"
+  ],
+  "rules": {
+    "unused-imports/no-unused-imports": "warn"
+  }
 }
