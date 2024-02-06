@@ -17,6 +17,12 @@ jobs:
           ruby-version: '3.2.2'
           bundler-cache: true
 
+      # Bundlerのインストールパスを設定
+      - name: Configure Bundler
+        run: |
+          bundle config set --local path 'vendor/bundle'
+        working-directory: back
+
       # RSpecを使用してテストを実行し、結果をJSON形式と標準出力で出力
       - name: Run tests
         run: bundle exec rspec -f j -o tmp/rspec_results.json -f p
