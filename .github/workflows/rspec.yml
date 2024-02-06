@@ -23,6 +23,11 @@ jobs:
           bundle config set --local path 'vendor/bundle'
         working-directory: back
 
+      # 依存関係を明示的にインストール
+      - name: Install dependencies
+        run: bundle install
+        working-directory: back
+
       # RSpecを使用してテストを実行し、結果をJSON形式と標準出力で出力
       - name: Run tests
         run: bundle exec rspec -f j -o tmp/rspec_results.json -f p
