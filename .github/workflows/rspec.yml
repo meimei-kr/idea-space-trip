@@ -20,13 +20,14 @@ jobs:
       # RSpecを使用してテストを実行し、結果をJSON形式と標準出力で出力
       - name: Run tests
         run: bundle exec rspec -f j -o tmp/rspec_results.json -f p
+        working-directory: back
 
       # RSpecのテスト結果をGitHub上に生成
       - name: RSpec Report
         uses: SonicGarden/rspec-report-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          json-path: tmp/rspec_results.json
+          json-path: back/tmp/rspec_results.json
         if: always()
 
       # # SimpleCovのカバレッジレポートをGitHub上に生成
@@ -41,5 +42,5 @@ jobs:
       #   uses: actions/upload-artifact@master
       #   with:
       #     name: coverage-report
-      #     path: coverage
+      #     path: back/coverage
       #   if: always()
