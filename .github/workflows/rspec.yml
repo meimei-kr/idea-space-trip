@@ -1,0 +1,57 @@
+name: Run RSpec tests
+on: [push, pull_request]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v4
+
+      # Rubyをセットアップし、Bundlerのキャッシュを使用して依存関係をインストール
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
+          bundler-cache: true
+
+      # Bundlerのインストールパスを設定
+      - name: Configure Bundler
+        run: |
+          bundle config set --local path 'vendor/bundle'
+        working-directory: back
+
+      # 依存関係を明示的にインストール
+      - name: Install dependencies
+        run: bundle install
+        working-directory: back
+
+      # RSpecを使用してテストを実行し、結果をJSON形式と標準出力で出力
+      - name: Run tests
+        run: bundle exec rspec -f j -o tmp/rspec_results.json -f p
+        working-directory: back
+
+      # RSpecのテスト結果をGitHub上に生成
+      - name: RSpec Report
+        uses: SonicGarden/rspec-report-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          json-path: back/tmp/rspec_results.json
+        if: always()
+
+      # # SimpleCovのカバレッジレポートをGitHub上に生成
+      # - name: Report simplecov
+      #   uses: aki77/simplecov-report-action@v1
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #   if: always()
+
+      # # SimpleCovのカバレッジレポートをアーティファクトとしてアップロード
+      # - name: Upload simplecov results
+      #   uses: actions/upload-artifact@master
+      #   with:
+      #     name: coverage-report
+      #     path: back/coverage
+      #   if: always()
