@@ -1,0 +1,25 @@
+.button {
+  background-color: #fff;
+  border: #747775 1px solid;
+  padding: 16px;
+  border-radius: 22px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sentence {
+  color: #1f1f1f;
+  margin-left: 12px;
+  font-size: 14px;
+}

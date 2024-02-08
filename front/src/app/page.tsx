@@ -1,19 +1,17 @@
-"use client";
-
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import Login from "@/app/components/Login";
 import Logout from "@/app/components/Logout";
-import styles from "./page.module.css";
+import styles from "@/app/page.module.css";
+import { authOptions } from "@/app/lib/options";
 
-export default function Home() {
-  const { data: session, status } = useSession();
+export default async function Home() {
+  const session = await getServerSession(authOptions);
 
   return (
     <main className={styles.main}>
       <div>
-        {status === "authenticated" ? (
+        {session ? (
           <div>
-            <p>セッション期限：{session.expires}</p>
             <p>ようこそ、{session.user?.name}さん</p>
             <img
               src={session.user?.image ?? ""}

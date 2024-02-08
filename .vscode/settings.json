@@ -5,6 +5,6 @@
     "source.organizeImports": true,
     "source.addMissingImports": true
   },
-  "prettier.configPath": ".prettier.json",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "prettier.configPath": "front/.prettier.json",
+  "typescript.tsdk": "front/node_modules/typescript/lib"
 }
