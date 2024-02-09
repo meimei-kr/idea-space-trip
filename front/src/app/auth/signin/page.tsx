@@ -1,14 +1,23 @@
-import GoogleSignInButton from "@/app/components/GoogleSignInButton/GoogleSignInButton";
-import { authOptions } from "@/app/lib/options";
-import { getServerSession } from "next-auth";
+import styles from "@/app/auth/signin/Signin.module.scss";
+import SignInButton from "@/components/SignInButton/SignInButton";
+import Link from "next/link";
 
 export default async function SignIn() {
-  const session = await getServerSession(authOptions);
   return (
-    <div>
-      <div>
-        <h1>Sign In</h1>
-        <GoogleSignInButton />
+    <div className={styles.container}>
+      <div className={styles.window}>
+        <h1 className={styles.title}>Sign In</h1>
+        <div className={styles.buttons}>
+          <SignInButton provider="google" />
+          <SignInButton provider="credentials" />
+        </div>
+        <div className={styles.description}>
+          続けることにより、
+          <Link href="/terms">利用規約</Link>
+          に同意し、
+          <Link href="/privacy">プライバシーポリシー</Link>
+          を理解したうえで、個人情報の取り扱いに同意したものとみなされます。
+        </div>
       </div>
     </div>
   );

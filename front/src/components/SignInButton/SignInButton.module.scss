@@ -4,6 +4,7 @@
   padding: 16px;
   border-radius: 22px;
   height: 44px;
+  width: 200px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -19,7 +20,8 @@
 }
 
 .sentence {
+  flex: 1;
   color: #1f1f1f;
-  margin-left: 12px;
   font-size: 14px;
+  text-align: center;
 }

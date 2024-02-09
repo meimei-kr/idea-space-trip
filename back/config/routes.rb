@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   post 'auth/:provider/callback', to: 'api/v1/users#create'
+  post 'auth/guest/signin', to: 'api/v1/users#create_guest'
 end

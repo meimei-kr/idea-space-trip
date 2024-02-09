@@ -1,0 +1,18 @@
+:root {
+  --black: #100706;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  box-sizing: inherit;
+  line-height: 1.7;
+  -webkit-text-size-adjust: 100%;
+}

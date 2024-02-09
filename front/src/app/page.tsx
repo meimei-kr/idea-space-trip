@@ -1,8 +1,9 @@
-import { getServerSession } from "next-auth/next";
-import Login from "@/app/components/Login";
-import Logout from "@/app/components/Logout";
 import styles from "@/app/page.module.css";
-import { authOptions } from "@/app/lib/options";
+import Login from "@/components/Login";
+import Logout from "@/components/Logout";
+import { authOptions } from "@/lib/options";
+import { getServerSession } from "next-auth/next";
+import Image from "next/image";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -13,7 +14,7 @@ export default async function Home() {
         {session ? (
           <div>
             <p>ようこそ、{session.user?.name}さん</p>
-            <img
+            <Image
               src={session.user?.image ?? ""}
               alt=""
               style={{ borderRadius: "50px" }}
