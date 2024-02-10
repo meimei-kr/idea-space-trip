@@ -3,10 +3,10 @@
 # back/ 配下に変更があれば rubocop を実行する
 if git diff --quiet --exit-code -- ./back
 then
-  echo "No changes detected in ./back"
-else
   echo "Running rubocop ..."
   docker compose -f ./compose.yml exec -T back bundle exec rubocop -A
+else
+  echo "No changes detected in ./back"
 fi
 
 # 標準入力を受け取る
