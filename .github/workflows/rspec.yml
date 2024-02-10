@@ -14,7 +14,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.2'
+          ruby-version: "3.2.2"
           bundler-cache: true
 
       # Bundlerのインストールパスを設定
@@ -41,17 +41,17 @@ jobs:
           json-path: back/tmp/rspec_results.json
         if: always()
 
-      # # SimpleCovのカバレッジレポートをGitHub上に生成
-      # - name: Report simplecov
-      #   uses: aki77/simplecov-report-action@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #   if: always()
+      # SimpleCovのカバレッジレポートをGitHub上に生成
+      - name: Report simplecov
+        uses: aki77/simplecov-report-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: always()
 
-      # # SimpleCovのカバレッジレポートをアーティファクトとしてアップロード
-      # - name: Upload simplecov results
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: coverage-report
-      #     path: back/coverage
-      #   if: always()
+      # SimpleCovのカバレッジレポートをアーティファクトとしてアップロード
+      - name: Upload simplecov results
+        uses: actions/upload-artifact@master
+        with:
+          name: coverage-report
+          path: back/coverage
+        if: always()
