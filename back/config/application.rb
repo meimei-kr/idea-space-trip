@@ -38,9 +38,11 @@ module App
     config.i18n.available_locales = %i[en ja]
 
     config.generators do |g|
-      g.test_framework false
+      g.test_framework :rspec
     end
 
     config.active_job.queue_adapter = :solid_queue
+
+    config.factory_bot.definition_file_paths = [ Rails.root.join('spec', 'factories') ]
   end
 end
