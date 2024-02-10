@@ -1,0 +1,44 @@
+.container {
+  background-color: var(--black);
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.window {
+  display: grid;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  width: 90%;
+  border: 1px solid #747775;
+  border-radius: 10px;
+  background-color: #fff;
+
+  @media (min-width: 768px) {
+    max-width: 560px;
+  }
+}
+
+.title {
+  text-align: center;
+  color: var(--black);
+}
+
+.buttons {
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  font-size: 10px;
+  color: var(--black);
+
+  @media (min-width: 768px) {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# back/ 配下に変更があれば rubocop を実行する
+if git diff --quiet --exit-code -- ./back
+then
+  echo "Running rubocop ..."
+  docker compose -f ./compose.yml exec -T back bundle exec rubocop -A
+else
+  echo "No changes detected in ./back"
+fi
+
+# 標準入力を受け取る
+exec < /dev/tty
+
+# rspecの実行をするか選択
+echo "Do you want to run rspec? (Press Enter for yes, or 'n' for no): "
+# ユーザーの入力をrun_rspec変数に格納
+read run_rspec
+
+# ユーザーがEnterキーを押すかyを入力した場合にRSpecを実行
+if [ -z "$run_rspec" ] || [ "$run_rspec" = "y" ]; then
+	echo "Running rspec ..."
+	docker compose -f ./compose.yml exec -T back bundle exec rspec
+else
+	echo "Skipping rspec."
+fi

@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+  "prettier.configPath": "front/.prettier.json",
+  "typescript.tsdk": "front/node_modules/typescript/lib"
+}
