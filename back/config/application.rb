@@ -43,6 +43,6 @@ module App
 
     config.active_job.queue_adapter = :solid_queue
 
-    config.factory_bot.definition_file_paths = [ Rails.root.join('spec', 'factories') ]
+    config.factory_bot.definition_file_paths = [Rails.root.join('spec/factories')]
   end
 end
