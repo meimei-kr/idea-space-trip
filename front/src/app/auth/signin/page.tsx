@@ -2,7 +2,7 @@ import styles from "@/app/auth/signin/Signin.module.scss";
 import SignInButton from "@/components/SignInButton/SignInButton";
 import Link from "next/link";
 
-export default async function SignIn() {
+export default function SignIn() {
   return (
     <div className={styles.container}>
       <div className={styles.window}>

@@ -18,8 +18,6 @@ export const authOptions: NextAuthOptions = {
           .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/guest/signin`)
           .then((res) => res.data.user);
         if (user) {
-          console.log("created guest user");
-          console.log(user);
           return user;
         }
         return null;
@@ -35,7 +33,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account, credentials }) {
-      console.log({ user, account, credentials });
       if (credentials) {
         return true;
       }

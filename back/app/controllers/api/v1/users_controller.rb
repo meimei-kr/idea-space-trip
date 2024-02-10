@@ -1,8 +1,8 @@
 module Api
   module V1
-    class Api::V1::UsersController < ApplicationController
+    class UsersController < ApplicationController
       def create
-        user = User.find_or_create_by!(user_params)
+        User.find_or_create_by!(user_params)
         render json: { status: :ok }
       rescue StandardError => e
         render json: { error: e.message }, status: :internal_server_error
@@ -16,7 +16,6 @@ module Api
         end
         render json: { user: @user }
       rescue StandardError => e
-        puts "error:" + e.message
         render json: { error: e.message }, status: :internal_server_error
       end
 

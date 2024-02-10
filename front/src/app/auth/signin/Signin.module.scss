@@ -18,7 +18,7 @@
   background-color: #fff;
 
   @media (min-width: 768px) {
-    width: 560px;
+    max-width: 560px;
   }
 }
 
@@ -37,4 +37,8 @@
 .description {
   font-size: 10px;
   color: var(--black);
+
+  @media (min-width: 768px) {
+    font-size: 12px;
+  }
 }
