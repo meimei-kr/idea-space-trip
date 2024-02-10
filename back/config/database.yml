@@ -24,15 +24,6 @@ development:
   ssl_mode: :verify_identity
   sslca: "/etc/ssl/certs/ca-certificates.crt"
 
-test:
-  <<: *default
-  username: <%= Rails.application.credentials.dig(:planetscale, :development, :username) %>
-  password: <%= Rails.application.credentials.dig(:planetscale, :development, :password) %>
-  database: <%= Rails.application.credentials.dig(:planetscale, :development, :database) %>
-  host: <%= Rails.application.credentials.dig(:planetscale, :development, :host) %>
-  ssl_mode: :verify_identity
-  sslca: "/etc/ssl/certs/ca-certificates.crt"
-
 production:
   <<: *default
   username: <%= Rails.application.credentials.dig(:planetscale, :production, :username) %>
