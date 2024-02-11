@@ -15,6 +15,10 @@ jobs:
         run: yarn install
         working-directory: front
 
+      - name: Upgrade Dependencies
+        run: yarn upgrade
+        working-directory: front
+
       - name: Run Test
         run: yarn run test:coverage --passWithNoTests
         working-directory: front
