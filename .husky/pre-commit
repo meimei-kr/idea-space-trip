@@ -1,1 +1,13 @@
+#!/bin/sh
+
+# フロントエンドのlintを実行
 npx lint-staged
+
+# back/ 配下に変更があればßrubocopとrspecを実行
+if git diff --cached --name-only -- ./back | egrep '\.rb$'; then
+  echo "Running rubocop and rspec for backend changes..."
+  docker-compose -f ./compose.yml exec -T back bundle exec rubocop -A
+  docker-compose -f ./compose.yml exec -T back bundle exec rspec
+else
+  echo "No backend changes detected."
+fi
