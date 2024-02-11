@@ -8,6 +8,7 @@ WORKDIR /app
 
 # ホストのpackage.jsonとyarn.lockをコンテナにコピーし、依存関係をインストール
 COPY package.json yarn.lock /app/
+RUN yarn upgrade
 RUN yarn install
 
 # ホストのソースコードをコンテナにコピー
