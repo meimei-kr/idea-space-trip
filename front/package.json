@@ -2,19 +2,12 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint",
-      "prettier --write"
-    ]
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}' && next lint --fix",
-    "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -37,10 +30,9 @@
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-unused-imports": "^3.0.0",
-    "husky": "^9.0.6",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.2.0",
+    "lefthook": "^1.6.1",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
     "typescript": "^5"
