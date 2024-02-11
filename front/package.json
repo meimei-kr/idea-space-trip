@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "lint-staged": {
-    "front/**/*.{ts,tsx}": [
+    "*.{ts,tsx}": [
       "eslint",
       "prettier --write"
     ]

@@ -1,7 +1,17 @@
 #!/bin/sh
 
-# フロントエンドのlintを実行
-npx lint-staged
+if git diff --quiet --exit-code -- ./front; then
+  # フロントエンドディレクトリに移動
+  cd front
+
+  # フロントエンドのlintを実行
+  npx lint-staged
+
+  # フロントエンドのテストを実行
+  yarn test
+else
+  echo "No frontend changes detected."
+fi
 
 # back/ 配下に変更があればßrubocopとrspecを実行
 if git diff --cached --name-only -- ./back | egrep '\.rb$'; then
