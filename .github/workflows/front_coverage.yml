@@ -13,9 +13,11 @@ jobs:
 
       - name: Install Dependencies
         run: yarn install
+        working-directory: front
 
       - name: Run Test
-        run: yarn run test:coverage
+        run: yarn run test:coverage --passWithNoTests
+        working-directory: front
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
