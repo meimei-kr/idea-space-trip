@@ -1,1 +1,3 @@
-yarn run test
+#!/bin/sh
+
+yarn test
