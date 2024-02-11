@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: true
+  commands:
+    frontend:
+      root: front/
+      glob: "*.{ts,tsx}"
+      run: |
+        docker compose exec -T front yarn eslint {staged_files} &&
+        docker compose exec -T front yarn prettier --write {staged_files} &&
+        docker compose exec -T front yarn test --passWithNoTests
+    backend:
+      root: back/
+      run: |
+        docker compose exec -T back bundle exec rubocop -A &&
+        docker compose exec -T back bundle exec rspec

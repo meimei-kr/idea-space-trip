@@ -1,0 +1,29 @@
+name: Frontend Test Coverage
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: yarn install
+        working-directory: front
+
+      - name: Upgrade Dependencies
+        run: yarn upgrade
+        working-directory: front
+
+      - name: Run Test
+        run: yarn run test:coverage --passWithNoTests
+        working-directory: front
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
