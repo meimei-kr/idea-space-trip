@@ -14,7 +14,10 @@ WORKDIR /rails
 ENV BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development:test" \
-    RAILS_ENV="production"
+    RAILS_ENV="production"\
+    RUBY_YJIT_ENABLE=1\
+    LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2\
+    MALLOC_CONF=dirty_decay_ms:1000,narenas:2,background_thread:true
 
 # RubyとBundlerの更新
 RUN gem update --system --no-document && \
@@ -46,7 +49,7 @@ FROM base
 
 # デプロイに必要なパッケージをインストール
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client openssl ca-certificates && \
+    apt-get install --no-install-recommends -y libjemalloc2 curl default-mysql-client openssl ca-certificates && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # ビルド段階で作成されたアーティファクト（gems, アプリケーションコード）をコピー
