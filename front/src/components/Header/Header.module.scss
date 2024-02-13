@@ -6,7 +6,7 @@
   height: 72px;
   z-index: 1;
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     padding: 16px 80px 0;
   }
 }
@@ -62,7 +62,7 @@
     }
   }
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     right: 80px;
   }
 }

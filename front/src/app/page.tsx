@@ -1,4 +1,5 @@
 import styles from "@/app/page.module.css";
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import Login from "@/components/Login";
 import Logout from "@/components/Logout";
@@ -26,6 +27,7 @@ export default async function Home() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
