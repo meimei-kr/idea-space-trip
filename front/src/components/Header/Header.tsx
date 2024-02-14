@@ -1,17 +1,23 @@
 "use client";
 
 import styles from "@/components/Header/Header.module.scss";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const { status } = useSession();
+
   const menuFunction = () => {
     setOpenMenu((prev) => !prev);
   };
-  const { status } = useSession();
+
+  const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    await signOut();
+  };
 
   return (
     <header className={styles.header}>
@@ -29,46 +35,58 @@ export default function Header() {
       >
         <ul>
           <li>
-            <Link href="/#about">
-              <span className={styles.mainTitle}>About</span>
+            <Link href="/#about" onClick={menuFunction}>
+              <span className={styles.mainTitle}>ABOUT</span>
               <span className={styles.subTitle}>このアプリについて</span>
             </Link>
           </li>
           <li>
-            <Link href="/#features">
-              <span className={styles.mainTitle}>Features</span>
+            <Link href="/#features" onClick={menuFunction}>
+              <span className={styles.mainTitle}>FEATURES</span>
               <span className={styles.subTitle}>使える機能</span>
             </Link>
           </li>
           {status === "authenticated" ? (
             <>
               <li>
-                <Link href="#">
-                  <span className={styles.mainTitle}>Brainstorm</span>
+                <Link href="#" onClick={menuFunction}>
+                  <span className={styles.mainTitle}>BRAINSTORM</span>
                   <span className={styles.subTitle}>
                     アイデア出しセッション
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="#">
-                  <span className={styles.mainTitle}>Memo</span>
+                <Link href="#" onClick={menuFunction}>
+                  <span className={styles.mainTitle}>MEMO</span>
                   <span className={styles.subTitle}>
                     保存したアイデアを確認
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="#">
-                  <span className={styles.mainTitle}>MyPage</span>
-                  <span className={styles.subTitle}>マイページ</span>
+                <Link href="#" onClick={menuFunction}>
+                  <span className={styles.mainTitle}>SETTINGS</span>
+                  <span className={styles.subTitle}>登録情報設定</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={(e) => {
+                    menuFunction();
+                    handleLogout(e);
+                  }}
+                >
+                  <span className={styles.mainTitle}>LOGOUT</span>
+                  <span className={styles.subTitle}>ログアウト</span>
                 </Link>
               </li>
             </>
           ) : (
             <li>
-              <Link href="/auth/signin">
-                <span className={styles.mainTitle}>Login</span>
+              <Link href="/auth/signin" onClick={menuFunction}>
+                <span className={styles.mainTitle}>LOGIN</span>
                 <span className={styles.subTitle}>ログイン</span>
               </Link>
             </li>
