@@ -93,7 +93,11 @@ export default function Header() {
           )}
         </ul>
       </nav>
-      <div className={styles.hamburger} onClick={() => menuFunction()}>
+      <div
+        className={styles.hamburger}
+        onClick={() => menuFunction()}
+        data-testid="hamburger"
+      >
         <span className={openMenu ? styles.open : undefined}></span>
         <span className={openMenu ? styles.open : undefined}></span>
         <span className={openMenu ? styles.open : undefined}></span>

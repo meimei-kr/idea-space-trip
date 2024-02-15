@@ -12,10 +12,10 @@ export default function Footer() {
         <div className={styles.sns}>
           <p>Keep In Touch</p>
           <div className={styles.icons}>
-            <Link href="https://twitter.com/meimei_kr_">
+            <Link href="https://twitter.com/meimei_kr_" data-testid="x-link">
               <FaXTwitter />
             </Link>
-            <Link href="https://github.com/meimei-kr">
+            <Link href="https://github.com/meimei-kr" data-testid="github-link">
               <FaGithub />
             </Link>
           </div>
