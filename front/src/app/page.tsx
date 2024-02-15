@@ -1,4 +1,4 @@
-import styles from "@/app/page.module.css";
+import styles from "@/app/page.module.scss";
 import Login from "@/components/Login";
 import Logout from "@/components/Logout";
 import { authOptions } from "@/lib/options";
