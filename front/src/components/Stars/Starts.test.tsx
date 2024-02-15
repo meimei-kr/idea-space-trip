@@ -1,7 +1,6 @@
 import Stars from "@/components/Stars/Stars";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 
 jest.mock("@tsparticles/react", () => {
   // デフォルトエクスポートのモック
@@ -22,9 +21,7 @@ jest.mock("@tsparticles/slim", () => ({
 
 describe("Stars", () => {
   it("should render Particles component after initialization", async () => {
-    await act(async () => {
-      render(<Stars />);
-    });
+    render(<Stars />);
 
     const particles = await screen.findByText("Particles");
     expect(particles).toBeInTheDocument();
