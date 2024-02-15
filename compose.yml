@@ -7,6 +7,7 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - ./front:/app
+      - front_node_modules:/app/node_modules
     command: yarn dev -p 4000
     ports:
       - "4000:4000"
@@ -61,3 +62,5 @@ networks:
       driver: default
       config:
         - subnet: 172.27.0.0/24
+volumes:
+  front_node_modules:

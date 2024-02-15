@@ -1,4 +1,18 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import createBundleAnalyzer from "@next/bundle-analyzer";
 
-export default nextConfig;
+const withBundleAnalyzer = createBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (config) => {
+    config.watchOptions = {
+      poll: 5000,
+      aggregateTimeout: 300,
+    };
+    return config;
+  },
+};
+
+export default withBundleAnalyzer(nextConfig);
