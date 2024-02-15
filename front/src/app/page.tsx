@@ -8,19 +8,22 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <main className={styles.main}>
-      <div>
-        {session ? (
-          <div>
-            <p>ようこそ、{session.user?.name}さん</p>
+    <>
+      <main className={styles.main}>
+        <div>
+          {session ? (
             <div>
-              <Logout />
+              <p>ようこそ、{session.user?.name}さん</p>
+              <div id="about">About</div>
+              <div>
+                <Logout />
+              </div>
             </div>
-          </div>
-        ) : (
-          <Login />
-        )}
-      </div>
-    </main>
+          ) : (
+            <Login />
+          )}
+        </div>
+      </main>
+    </>
   );
 }

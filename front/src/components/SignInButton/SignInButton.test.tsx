@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 jest.mock("next-auth/react", () => ({
   // signIn 関数を Jest のモック関数 (jest.fn()) に置き換え
   // signIn 関数はログインに成功すると、Promise を返す
-  signIn: jest.fn(() => Promise.resolve()),
+  signIn: jest.fn().mockResolvedValue(true),
 }));
 
 describe("SignInButton", () => {

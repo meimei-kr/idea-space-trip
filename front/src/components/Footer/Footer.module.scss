@@ -1,0 +1,130 @@
+.container {
+  display: grid;
+  grid-template-rows: 3fr 2fr 2fr;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--gray);
+
+  @media screen and (min-width: 1024px) {
+    grid-template-rows: 10fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    height: 264px;
+  }
+}
+
+.snsContainer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+
+  @media screen and (min-width: 1024px) {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+  }
+}
+
+.sns {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  p {
+    margin-top: 0;
+  }
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  a {
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
+
+.logo {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-row: 2 / 3;
+  grid-column: 1 / 3;
+
+  @media screen and (min-width: 1024px) {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+  }
+}
+
+.circle {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  background-color: var(--black);
+
+  img {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.items {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--white);
+
+    &:hover {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+  }
+}
+
+.copyrights {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
+
+  p {
+    font-size: 8px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-row: 2 / 3;
+    grid-column: 1 / 4;
+  }
+}

@@ -1,3 +1,6 @@
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import Stars from "@/components/Stars/Stars";
 import NextAuthProvider from "@/context/AuthProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,7 +23,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <Stars />
+          <Header />
+          {children}
+          <Footer />
+        </NextAuthProvider>
       </body>
     </html>
   );

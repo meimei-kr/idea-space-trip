@@ -1,5 +1,7 @@
 :root {
   --black: #100706;
+  --white: #fff;
+  --gray: #333333;
 }
 
 html,
@@ -9,6 +11,8 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  background-color: var(--black);
+  color: var(--white);
 }
 
 body * {

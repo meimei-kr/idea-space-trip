@@ -1,0 +1,127 @@
+/* ヘッダー */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 16px 0;
+  height: 72px;
+  z-index: 10;
+
+  @media screen and (min-width: 1024px) {
+    padding: 16px 80px 0;
+  }
+}
+
+/* Menuボタン */
+.hamburger {
+  position: fixed;
+  z-index: 9999;
+  top: 16px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+
+  cursor: pointer;
+
+  span {
+    display: inline-block;
+    position: absolute;
+    left: 16px;
+    width: 24px;
+    height: 3px;
+    background-color: var(--white);
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: all 0.4s;
+
+    &:nth-child(1) {
+      top: 16px;
+
+      &.open {
+        top: 16px;
+        left: 16px;
+        transform: translateY(8px) rotate(-45deg);
+      }
+    }
+
+    &:nth-child(2) {
+      top: 24px;
+
+      &.open {
+        opacity: 0;
+      }
+    }
+
+    &:nth-child(3) {
+      top: 32px;
+
+      &.open {
+        top: 32px;
+        left: 16px;
+        transform: translateY(-8px) rotate(45deg);
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    right: 80px;
+  }
+}
+
+/* Menuが開かれているときの画面 */
+.drawerMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -999;
+  opacity: 0;
+  background-color: var(--black);
+  height: 100vh;
+  width: 100vw;
+  padding: 16px;
+  transition: all 0.3s;
+  overflow-y: auto;
+
+  a {
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    padding-left: 0;
+  }
+
+  li {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 8px;
+
+    &:hover {
+      background-color: var(--gray);
+      opacity: 0.8;
+    }
+
+    span {
+      text-align: center;
+    }
+  }
+
+  &.active {
+    opacity: 1;
+    z-index: 999;
+  }
+}
+
+.mainTitle {
+  display: block;
+  font-size: 32px;
+}
+
+.subTitle {
+  display: block;
+  font-size: 12px;
+}
