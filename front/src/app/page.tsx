@@ -1,29 +1,26 @@
 import styles from "@/app/page.module.scss";
-import Login from "@/components/Login";
-import Logout from "@/components/Logout";
-import { authOptions } from "@/lib/options";
-import { getServerSession } from "next-auth/next";
+import Earth from "public/images/earth.svg";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
   return (
-    <>
-      <main className={styles.main}>
-        <div>
-          {session ? (
-            <div>
-              <p>ようこそ、{session.user?.name}さん</p>
-              <div id="about">About</div>
-              <div>
-                <Logout />
-              </div>
-            </div>
-          ) : (
-            <Login />
-          )}
+    <main>
+      <section className={styles.heroContainer}>
+        <Earth className={styles.earthImg} />
+        <div className={styles.slogan}>
+          <span>EXPLORE</span> <span>INFINITE</span> <span>CREATIVITY</span>
         </div>
-      </main>
-    </>
+        <div className={styles.hero}>
+          <div className={styles.topLeftBg}>
+            <div className={styles.topLeftDecorations}></div>
+          </div>
+          <div className={styles.blobContainer}>
+            <div className={styles.blob}></div>
+          </div>
+          <div className={styles.topRightBg}>
+            <div className={styles.topRightDecorations}></div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

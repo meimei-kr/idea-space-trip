@@ -1,0 +1,170 @@
+/* 変数の定義 */
+$earth-width: 100%;
+
+.heroContainer {
+  position: relative;
+  height: calc(100vh - var(--header-height));
+}
+
+/* 地球の画像 */
+.earthImg {
+  position: absolute;
+  bottom: calc($earth-width / 10 * (-1));
+  left: calc($earth-width / 3 * (-1));
+  width: $earth-width;
+  translate: transform;
+  height: auto;
+  overflow: hidden;
+
+  @media screen and (min-width: 1280px) {
+    $earth-width: 45%;
+    width: $earth-width;
+    bottom: calc($earth-width / 2 * (-1.1));
+    left: calc($earth-width / 5 * (-1));
+  }
+}
+
+/* 文章 */
+.slogan {
+  position: absolute;
+  font-size: 48px;
+  font-family: var(--font-neoneon);
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  top: calc(50% - var(--header-height));
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  color: var(--white);
+  text-shadow: 0 0 30px var(--white);
+
+  span {
+    display: block;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 64px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    font-size: 80px;
+
+    span {
+      display: inline-block;
+    }
+  }
+}
+
+/* 背景 */
+.hero {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* 背景の装飾(左) */
+.topLeftBg {
+  position: absolute;
+  top: calc(-1 * var(--header-height));
+  left: 0;
+  width: 25vw;
+  height: 33vh;
+
+  @media screen and (min-width: 768px) {
+    width: 33vw;
+    height: 25vh;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 50vw;
+    height: 45vh;
+  }
+}
+
+.topLeftDecorations {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("/images/top-left-mobile.svg");
+
+  @media screen and (min-width: 768px) {
+    background-image: url("/images/top-left-tablet.svg");
+  }
+
+  @media screen and (min-width: 1280px) {
+    background-image: url("/images/top-left-pc.svg");
+  }
+}
+
+/* ブロブ */
+.blobContainer {
+  position: absolute;
+  top: calc(-1 * var(--header-height));
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  max-height: 70vh;
+
+  @media screen and (min-width: 768px) {
+    width: 80vw;
+    height: 65vh;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 60vw;
+    height: 100%;
+    max-height: 65vh;
+  }
+}
+
+.blob {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/images/top-blob-mobile.svg");
+
+  @media screen and (min-width: 768px) {
+    background-image: url("/images/top-blob-tablet.svg");
+  }
+
+  @media screen and (min-width: 1280px) {
+    background-image: url("/images/top-blob-pc.svg");
+  }
+}
+
+/* 背景の装飾(右) */
+.topRightBg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 33vw;
+  height: 33vh;
+
+  @media screen and (min-width: 768px) {
+    width: 33vw;
+    height: 60vh;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 50vw;
+    height: 50vh;
+  }
+}
+
+.topRightDecorations {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("/images/top-right-mobile.svg");
+
+  @media screen and (min-width: 768px) {
+    background-image: url("/images/top-right-tablet.svg");
+  }
+
+  @media screen and (min-width: 1280px) {
+    background-image: url("/images/top-right-pc.svg");
+  }
+}

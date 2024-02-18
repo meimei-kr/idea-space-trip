@@ -2,13 +2,27 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 16px 16px 0;
-  height: 72px;
+  padding: 16px 16px;
+  height: var(--header-height);
+  width: 100%;
   z-index: 10;
 
   @media screen and (min-width: 1024px) {
     padding: 16px 80px 0;
   }
+}
+
+/* ロゴ */
+.logoArea {
+  position: fixed;
+  height: 72px;
+  width: 112px;
+  z-index: 10;
+}
+
+.logo {
+  height: 100%;
+  width: 100%;
 }
 
 /* Menuボタン */
@@ -19,7 +33,9 @@
   right: 16px;
   width: 56px;
   height: 56px;
-
+  border-radius: 50%;
+  background-color: var(--white);
+  opacity: 0.8;
   cursor: pointer;
 
   span {
@@ -28,7 +44,7 @@
     left: 16px;
     width: 24px;
     height: 3px;
-    background-color: var(--white);
+    background-color: var(--black);
     border-radius: 2px;
     margin: 3px 0;
     transition: all 0.4s;
@@ -116,6 +132,7 @@
   }
 }
 
+/* drawerMenuの中身 */
 .mainTitle {
   display: block;
   font-size: 32px;

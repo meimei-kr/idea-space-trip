@@ -1,8 +1,8 @@
 "use client";
 
 import styles from "@/components/Footer/Footer.module.scss";
-import Image from "next/image";
 import Link from "next/link";
+import Logo from "public/images/logo.svg";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
@@ -23,13 +23,7 @@ export default function Footer() {
       </div>
       <div className={styles.logo}>
         <div className={styles.circle}>
-          <Image
-            src="/logo.svg"
-            alt="IDEA SPACE TRIP Logo"
-            width={168}
-            height={72}
-            priority
-          />
+          <Logo className={styles.logoImg} data-testid="logo" />
         </div>
       </div>
       <div className={styles.items}>
@@ -46,7 +40,7 @@ export default function Footer() {
         </ul>
       </div>
       <div className={styles.copyrights}>
-        <p>©2024 IDEA SPACE TRIP</p>
+        <small>©2024 IDEA SPACE TRIP</small>
       </div>
     </div>
   );

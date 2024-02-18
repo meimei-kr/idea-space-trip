@@ -17,7 +17,7 @@ describe("Footer", () => {
   it("should render logo", () => {
     render(<Footer />);
 
-    const logo = screen.getByRole("img", { name: "IDEA SPACE TRIP Logo" });
+    const logo = screen.getByTestId("logo");
     expect(logo).toBeInTheDocument();
   });
 

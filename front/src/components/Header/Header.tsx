@@ -2,8 +2,8 @@
 
 import styles from "@/components/Header/Header.module.scss";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
+import Logo from "public/images/logo.svg";
 import { useState } from "react";
 
 export default function Header() {
@@ -21,27 +21,27 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <Link href="/">
-        <Image
-          src="/logo.svg"
-          alt="IDEA SPACE TRIP Logo"
-          height={56}
-          width={128}
-          priority
-        />
+      <Link href="/" className={styles.logoArea}>
+        <Logo className={styles.logo} />
       </Link>
       <nav
         className={`${styles.drawerMenu} ${openMenu ? styles.active : undefined}`}
       >
         <ul>
           <li>
-            <Link href="/#about" onClick={menuFunction}>
+            <Link href="/" onClick={menuFunction}>
+              <span className={styles.mainTitle}>TOP</span>
+              <span className={styles.subTitle}>トップページ</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="#about" onClick={menuFunction}>
               <span className={styles.mainTitle}>ABOUT</span>
               <span className={styles.subTitle}>このアプリについて</span>
             </Link>
           </li>
           <li>
-            <Link href="/#features" onClick={menuFunction}>
+            <Link href="#features" onClick={menuFunction}>
               <span className={styles.mainTitle}>FEATURES</span>
               <span className={styles.subTitle}>使える機能</span>
             </Link>
