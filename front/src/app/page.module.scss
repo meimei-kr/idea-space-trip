@@ -20,12 +20,22 @@ $earth-width: 100%;
   translate: transform;
   height: auto;
   overflow: hidden;
+  animation: rotateEarth 180s linear infinite;
 
   @media screen and (min-width: 1280px) {
     $earth-width: 45%;
     width: $earth-width;
     bottom: calc($earth-width / 2 * (-1.1));
     left: calc($earth-width / 5 * (-1));
+  }
+
+  @keyframes rotateEarth {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
 
