@@ -285,7 +285,7 @@ $earth-width: 100%;
   min-height: 100vh;
   padding: 0 24px;
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1024px) {
     padding: 0 80px;
   }
 }
@@ -298,7 +298,7 @@ $earth-width: 100%;
   justify-content: center;
   gap: 16px;
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1024px) {
     gap: 24px;
   }
 }
@@ -309,7 +309,7 @@ $earth-width: 100%;
   width: 100%;
   margin-top: var(--header-height);
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 768px) {
     margin-top: 0;
   }
 }
@@ -317,6 +317,10 @@ $earth-width: 100%;
 .featuresImg {
   width: 70%;
   height: auto;
+
+  @media screen and (min-width: 1024px) {
+    width: 50%;
+  }
 
   @media screen and (min-width: 1280px) {
     width: 30%;
@@ -327,7 +331,11 @@ $earth-width: 100%;
 .featuresContent {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
-  gap: 16px;
+  gap: 24px;
+
+  @media screen and (min-width: 1024px) {
+    gap: 40px;
+  }
 
   @media screen and (min-width: 1280px) {
     grid-template-columns: repeat(3, 1fr);
