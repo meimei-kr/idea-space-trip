@@ -1,7 +1,9 @@
 /* 変数の定義 */
 $earth-width: 100%;
-
-.heroContainer {
+/*
+ * ヒーローセクション
+ */
+.heroWrapper {
   position: relative;
   height: calc(100vh - var(--header-height));
 }
@@ -166,5 +168,99 @@ $earth-width: 100%;
 
   @media screen and (min-width: 1280px) {
     background-image: url("/images/top-right-pc.svg");
+  }
+}
+
+/*
+ * Aboutセクション
+ */
+.aboutWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.aboutContainer {
+  padding: 0 24px;
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 80px;
+  }
+}
+
+/* Aboutの画像 */
+.about {
+  text-align: right;
+}
+
+.aboutImg {
+  width: 50%;
+  height: auto;
+
+  @media screen and (min-width: 1280px) {
+    width: 25%;
+  }
+}
+
+/* Aboutの文章 */
+.aboutBody {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 20%;
+  }
+}
+
+.aboutTitleText {
+  font-size: 20px;
+  margin-bottom: 20px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 38px;
+    margin-bottom: 24px;
+  }
+}
+
+.description {
+  font-size: 16px;
+}
+
+/* クォーテーション画像 */
+.quoteArea {
+  p {
+    font-size: 18px;
+    height: 24px;
+
+    @media screen and (min-width: 1280px) {
+      font-size: 24px;
+      height: 32px;
+    }
+  }
+}
+
+.quoteStart {
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+
+  @media screen and (min-width: 1280px) {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+  }
+}
+
+.quoteEnd {
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+
+  @media screen and (min-width: 1280px) {
+    width: 32px;
+    height: 32px;
+    margin-left: 16px;
   }
 }
