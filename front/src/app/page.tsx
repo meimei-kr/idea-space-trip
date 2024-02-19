@@ -1,4 +1,5 @@
 import styles from "@/app/page.module.scss";
+import Button from "@/components/Button/Button";
 import One from "public/images/01.svg";
 import Two from "public/images/02.svg";
 import Three from "public/images/03.svg";
@@ -120,6 +121,13 @@ export default async function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      <section className={styles.loginWrapper}>
+        <div className={styles.loginContainer}>
+          <Button color="pink" size="large" type="button" href="/auth/signin">
+            LOGIN
+          </Button>
         </div>
       </section>
     </main>
