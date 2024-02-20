@@ -1,17 +1,9 @@
 "use client";
 
 import styles from "@/components/Button/Button.module.scss";
+import { ButtonType } from "@/types/Button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
-type ButtonProps = {
-  children: React.ReactNode;
-  color: "pink";
-  size: "large";
-  type: "button" | "submit";
-  href?: string;
-  onClick?: () => void;
-};
 
 export default function Button({
   children,
@@ -20,7 +12,7 @@ export default function Button({
   type,
   href,
   onClick,
-}: ButtonProps) {
+}: ButtonType) {
   const router = useRouter();
   const handleClick = () => {
     if (type === "button" && href) {

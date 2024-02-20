@@ -1,4 +1,4 @@
-import styles from "@/app/page.module.scss";
+import styles from "@/app/Home.module.scss";
 import Button from "@/components/Button/Button";
 import One from "public/images/01.svg";
 import Two from "public/images/02.svg";
@@ -11,11 +11,11 @@ import QuoteStart from "public/images/quote-start.svg";
 import { PiNotepadBold } from "react-icons/pi";
 import { RiRobot2Line, RiUserVoiceLine } from "react-icons/ri";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main>
       <section className={styles.heroWrapper}>
-        <Earth className={styles.earthImg} />
+        <Earth className={styles.earthImg} data-testid="earth" />
         <div className={styles.slogan}>
           <span>EXPLORE</span> <span>INFINITE</span> <span>CREATIVITY</span>
         </div>
@@ -34,32 +34,45 @@ export default async function Home() {
       <section id="about" className={styles.aboutWrapper}>
         <div className={styles.aboutContainer}>
           <div className={styles.about}>
-            <About className={styles.aboutImg} />
+            <About className={styles.aboutImg} data-testid="about" />
           </div>
           <div className={styles.aboutBody}>
             <div className={styles.aboutTitle}>
               <div className={styles.aboutTitleText}>
-                宇宙のように広がる <br />
+                宇宙のように広がる
+                <br />
                 無限のアイデア
               </div>
             </div>
             <div className={styles.quoteArea}>
               <p>
                 <span>
-                  <QuoteStart className={styles.quoteStart} />
+                  <QuoteStart
+                    className={styles.quoteStart}
+                    data-testid="quote-start"
+                  />
                 </span>
                 解決したい課題がある
                 <span>
-                  <QuoteEnd className={styles.quoteEnd} />
+                  <QuoteEnd
+                    className={styles.quoteEnd}
+                    data-testid="quote-end"
+                  />
                 </span>
               </p>
               <p>
                 <span>
-                  <QuoteStart className={styles.quoteStart} />
+                  <QuoteStart
+                    className={styles.quoteStart}
+                    data-testid="quote-start"
+                  />
                 </span>
                 こんなことができたらいいのに
                 <span>
-                  <QuoteEnd className={styles.quoteEnd} />
+                  <QuoteEnd
+                    className={styles.quoteEnd}
+                    data-testid="quote-end"
+                  />
                 </span>
               </p>
             </div>
@@ -78,13 +91,13 @@ export default async function Home() {
       <section id="features" className={styles.featuresWrapper}>
         <div className={styles.featuresContainer}>
           <div className={styles.features}>
-            <Features className={styles.featuresImg} />
+            <Features className={styles.featuresImg} data-testid="features" />
           </div>
           <div className={styles.featuresContent}>
             <div className={styles.feature}>
               <div className={styles.featuresTitle}>
                 <div className={styles.titleNumber}>
-                  <One className={styles.number} />
+                  <One className={styles.number} data-testid="one" />
                   <RiRobot2Line className={styles.icon} />
                 </div>
                 <span>AIとアイデア出し</span>
@@ -97,7 +110,7 @@ export default async function Home() {
             <div className={styles.feature}>
               <div className={styles.featuresTitle}>
                 <div className={styles.titleNumber}>
-                  <Two className={styles.number} />
+                  <Two className={styles.number} data-testid="two" />
                   <RiUserVoiceLine className={styles.icon} />
                 </div>
                 <span>音声入力対応</span>
@@ -110,7 +123,7 @@ export default async function Home() {
             <div className={styles.feature}>
               <div className={styles.featuresTitle}>
                 <div className={styles.titleNumber}>
-                  <Three className={styles.number} />
+                  <Three className={styles.number} data-testid="three" />
                   <PiNotepadBold className={styles.icon} />
                 </div>
                 <span>アイデアメモ</span>
