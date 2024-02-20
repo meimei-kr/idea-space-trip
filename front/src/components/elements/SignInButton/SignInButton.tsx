@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/components/SignInButton/SignInButton.module.scss";
+import styles from "@/components/elements/SignInButton/SignInButton.module.scss";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { IoPersonCircleOutline } from "react-icons/io5";

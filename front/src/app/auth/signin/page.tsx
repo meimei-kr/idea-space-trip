@@ -1,5 +1,5 @@
 import styles from "@/app/auth/signin/Signin.module.scss";
-import SignInButton from "@/components/SignInButton/SignInButton";
+import SignInButton from "@/components/elements/SignInButton/SignInButton";
 import Link from "next/link";
 
 export default function SignIn() {

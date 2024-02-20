@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "@/components/Button/Button.module.scss";
-import { ButtonType } from "@/types/Button";
+import styles from "@/components/elements/Button/Button.module.scss";
+import { ButtonType } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
