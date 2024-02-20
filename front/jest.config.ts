@@ -14,6 +14,7 @@ const config: Config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^.+\\.(svg)$": "<rootDir>/src/tests/component-type/__mocks__/SvgrMock.jsx",
   },
 };
 

@@ -11,6 +11,17 @@ const nextConfig = {
       poll: 5000,
       aggregateTimeout: 300,
     };
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            svgo: false, // 圧縮無効
+          },
+        },
+      ],
+    });
     return config;
   },
 };

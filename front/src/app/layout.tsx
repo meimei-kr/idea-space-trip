@@ -2,11 +2,9 @@ import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import Stars from "@/components/Stars/Stars";
 import NextAuthProvider from "@/context/AuthProvider";
+import { neoneon, sawarabiGothic } from "@/fonts/fonts";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.scss";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "IDEA SPACE TRIP",
@@ -22,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
+      <body className={`${sawarabiGothic.variable} ${neoneon.variable}`}>
         <NextAuthProvider>
           <Stars />
           <Header />

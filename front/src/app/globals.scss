@@ -2,6 +2,10 @@
   --black: #100706;
   --white: #fff;
   --gray: #333333;
+  --light-blue: #4ac7d1;
+  --pink: #fc6eb3;
+
+  --header-height: 88px;
 }
 
 html,
@@ -13,6 +17,7 @@ body {
   padding: 0;
   background-color: var(--black);
   color: var(--white);
+  font-family: var(--font-sawarabi-gothic), var(--font-neoneon), sans-serif;
 }
 
 body * {
