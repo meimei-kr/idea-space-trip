@@ -11,21 +11,17 @@ export default function Button({
   size,
   type,
   href,
-  onClick,
 }: ButtonType) {
   const router = useRouter();
   const handleClick = () => {
     if (type === "button" && href) {
       router.push(href);
-    } else if (onClick) {
-      onClick();
     }
   };
 
   useEffect(() => {
-    if (href) {
-      router.prefetch(href);
-    }
+    if (!href) return;
+    router.prefetch(href);
   }, [router, href]);
 
   return (

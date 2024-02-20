@@ -4,5 +4,4 @@ export type ButtonType = {
   size: "large";
   type: "button" | "submit";
   href?: string;
-  onClick?: () => void;
 };

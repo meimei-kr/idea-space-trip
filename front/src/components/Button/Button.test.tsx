@@ -42,12 +42,14 @@ describe("Button", () => {
   });
 
   it("submits form when clicked", async () => {
-    const onClick = jest.fn();
+    const handleSubmit = jest.fn();
 
     render(
-      <Button color="pink" size="large" type="submit" onClick={onClick}>
-        SUBMIT
-      </Button>,
+      <form onSubmit={handleSubmit}>
+        <Button color="pink" size="large" type="submit">
+          SUBMIT
+        </Button>
+      </form>,
     );
 
     const button = screen.getByRole("button", { name: "SUBMIT" });
@@ -55,7 +57,7 @@ describe("Button", () => {
 
     // ボタンクリックによる状態時更新や副作用は非同期で行われるため、waitForをつける
     await waitFor(() => {
-      expect(onClick).toHaveBeenCalled();
+      expect(handleSubmit).toHaveBeenCalled();
     });
   });
 });
