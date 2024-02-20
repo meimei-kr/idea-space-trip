@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import SignInButton from "@/components/SignInButton/SignInButton";
+import SignInButton from "@/components/elements/SignInButton/SignInButton";
 import { signIn } from "next-auth/react";
 
 jest.mock("next-auth/react", () => ({

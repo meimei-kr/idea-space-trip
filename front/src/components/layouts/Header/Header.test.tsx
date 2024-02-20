@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Header from "@/components/Header/Header";
+import Header from "@/components/layouts/Header/Header";
 import { signOut, useSession } from "next-auth/react";
 
 jest.mock("next-auth/react");

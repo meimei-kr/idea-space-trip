@@ -1,4 +1,4 @@
-import Button from "@/components/Button/Button";
+import Button from "@/components/elements/Button/Button";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 

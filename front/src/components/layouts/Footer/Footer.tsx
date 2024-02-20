@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/components/Footer/Footer.module.scss";
+import styles from "@/components/layouts/Footer/Footer.module.scss";
 import Link from "next/link";
 import Logo from "public/images/logo.svg";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";

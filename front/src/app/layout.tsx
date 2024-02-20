@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import Stars from "@/components/Stars/Stars";
+import Footer from "@/components/layouts/Footer/Footer";
+import Header from "@/components/layouts/Header/Header";
+import Stars from "@/components/layouts/Stars/Stars";
 import NextAuthProvider from "@/context/AuthProvider";
 import { neoneon, sawarabiGothic } from "@/fonts/fonts";
 import type { Metadata } from "next";

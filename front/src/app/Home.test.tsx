@@ -1,11 +1,11 @@
 import Home from "@/app/page";
-import { ButtonType } from "@/types/Button";
+import { ButtonType } from "@/types";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Buttonコンポーネントをモック化
 const mockButton = jest.fn();
-jest.mock("@/components/Button/Button", () => ({
+jest.mock("@/components/elements/Button/Button", () => ({
   __esModule: true,
   default: (props: ButtonType) => {
     mockButton(props);

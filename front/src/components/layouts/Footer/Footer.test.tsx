@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/layouts/Footer/Footer";
 
 describe("Footer", () => {
   it("should render social media isons links", () => {

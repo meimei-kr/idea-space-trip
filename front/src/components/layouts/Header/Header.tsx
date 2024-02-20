@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/components/Header/Header.module.scss";
+import styles from "@/components/layouts/Header/Header.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Logo from "public/images/logo.svg";

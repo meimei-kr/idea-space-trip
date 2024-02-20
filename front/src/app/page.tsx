@@ -1,5 +1,5 @@
 import styles from "@/app/Home.module.scss";
-import Button from "@/components/Button/Button";
+import Button from "@/components/elements/Button/Button";
 import One from "public/images/01.svg";
 import Two from "public/images/02.svg";
 import Three from "public/images/03.svg";
