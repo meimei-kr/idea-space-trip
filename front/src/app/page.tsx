@@ -138,7 +138,13 @@ export default function Home() {
       </section>
       <section className={styles.loginWrapper}>
         <div className={styles.loginContainer}>
-          <Button color="pink" size="large" type="button" href="/auth/signin">
+          <Button
+            color="pink"
+            size="large"
+            type="button"
+            href="/auth/signin"
+            flicker="flicker"
+          >
             LOGIN
           </Button>
         </div>

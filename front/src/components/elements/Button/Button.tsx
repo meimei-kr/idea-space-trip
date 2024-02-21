@@ -11,6 +11,7 @@ export default function Button({
   size,
   type,
   href,
+  flicker,
 }: ButtonType) {
   const router = useRouter();
   const handleClick = () => {
@@ -26,7 +27,7 @@ export default function Button({
 
   return (
     <button
-      className={`${styles.button} ${styles[color]} ${styles[size]}`}
+      className={`${styles[color]} ${styles[size]} ${styles[flicker]}`}
       onClick={handleClick}
       type={type}
     >
