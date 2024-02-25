@@ -1,27 +1,28 @@
-import Home from "@/app/page";
-import { ButtonType } from "@/types";
-import { render, screen } from "@testing-library/react";
+import { HomePresentation } from "@/app/presentation/Home/HomePresentation";
+import { LinkButtonType } from "@/types";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Session } from "next-auth";
 
 // Buttonコンポーネントをモック化
 const mockButton = jest.fn();
-jest.mock("@/components/elements/Button/Button", () => ({
+jest.mock("@/components/elements/LinkButton/LinkButton", () => ({
   __esModule: true,
-  default: (props: ButtonType) => {
+  default: (props: LinkButtonType) => {
     mockButton(props);
-    return <button>{props.children}</button>;
+    return <a href="#">{props.children}</a>;
   },
 }));
 
 describe("Home", () => {
   describe("Hero Section", () => {
     it("should the earth image", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByTestId("earth")).toBeInTheDocument();
     });
 
     it("should render the slogan correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText("EXPLORE")).toBeInTheDocument();
       expect(screen.getByText("INFINITE")).toBeInTheDocument();
       expect(screen.getByText("CREATIVITY")).toBeInTheDocument();
@@ -30,18 +31,18 @@ describe("Home", () => {
 
   describe("About Section", () => {
     it("should render the about image", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByTestId("about")).toBeInTheDocument();
     });
 
     it("should render the title correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText(/宇宙のように広がる/)).toBeInTheDocument();
       expect(screen.getByText(/無限のアイデア/)).toBeInTheDocument();
     });
 
     it("should render the quotes correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       const quoteStart = screen.getAllByTestId("quote-start");
       expect(quoteStart.length).toBe(2);
       const quoteEnd = screen.getAllByTestId("quote-end");
@@ -49,7 +50,7 @@ describe("Home", () => {
     });
 
     it("should render quoted text correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText("解決したい課題がある")).toBeInTheDocument();
       expect(
         screen.getByText("こんなことができたらいいのに"),
@@ -57,7 +58,7 @@ describe("Home", () => {
     });
 
     it("should render about description correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(
         screen.getByText(
           /そんな風に思いながら、具体的にどんなことをしたらいいのかアイデアに詰まってしまっていませんか？/,
@@ -78,19 +79,19 @@ describe("Home", () => {
 
   describe("Features Section", () => {
     it("should render the features image", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByTestId("features")).toBeInTheDocument();
     });
 
     it("should render the features numbers correctly", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByTestId("one")).toBeInTheDocument();
       expect(screen.getByTestId("two")).toBeInTheDocument();
       expect(screen.getByTestId("three")).toBeInTheDocument();
     });
 
     it("should render the AI feature", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText("AIとアイデア出し")).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -105,7 +106,7 @@ describe("Home", () => {
     });
 
     it("should render the voice input feature", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText("音声入力対応")).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -120,7 +121,7 @@ describe("Home", () => {
     });
 
     it("should render the idea memo feature", () => {
-      render(<Home />);
+      render(<HomePresentation session={null} />);
       expect(screen.getByText("アイデアメモ")).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -136,17 +137,42 @@ describe("Home", () => {
   });
 
   describe("Login Section", () => {
-    it("should render the login button", () => {
-      render(<Home />);
+    it("should render the login button when user is unauthenticated", async () => {
+      render(<HomePresentation session={null} />);
 
-      const button = screen.getByRole("button", { name: "LOGIN" });
-      userEvent.click(button);
+      const button = screen.getByRole("link", { name: "LOGIN" });
+      await waitFor(() => userEvent.click(button));
 
       expect(mockButton).toHaveBeenCalledWith(
         expect.objectContaining({
           color: "pink",
           size: "large",
-          type: "button",
+          flicker: "flicker",
+          href: "/auth/signin",
+        }),
+      );
+    });
+
+    it("should render the next page button when user is authenticated", async () => {
+      const session: Session = {
+        user: {
+          userId: "1",
+          name: "test",
+          email: "test@gmail.com",
+          provider: "google",
+        },
+        expires: "2024-02-26T05:24:55.329Z",
+      };
+      render(<HomePresentation session={session} />);
+
+      const button = screen.getByRole("link", { name: "NEXT PAGE" });
+      await waitFor(() => userEvent.click(button));
+
+      expect(mockButton).toHaveBeenCalledWith(
+        expect.objectContaining({
+          color: "pink",
+          size: "large",
+          flicker: "flicker",
           href: "/auth/signin",
         }),
       );

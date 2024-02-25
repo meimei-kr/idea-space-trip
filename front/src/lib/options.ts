@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios from "@/lib/axios";
 import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
@@ -10,42 +9,32 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {},
-      async authorize() {
-        const user = await axios
-          .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/guest/signin`)
-          .then((res) => res.data.user);
-        if (user) {
-          return user;
-        }
-        return null;
-      },
-    }),
   ],
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+  },
+  jwt: {
     maxAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
     signIn: "/auth/signin",
   },
   callbacks: {
-    async signIn({ user, account, credentials }) {
-      if (credentials) {
-        return true;
-      }
-
+    async signIn({ user, account }) {
       const provider = account?.provider;
       const name = user?.name;
       const email = user?.email;
       try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}/callback`,
-          { provider, name, email },
-        );
+        const response = await axios.post(`/auth/${provider}/callback`, {
+          user: {
+            provider,
+            name,
+            email,
+          },
+        });
         if (response.status === 200) {
+          user.userId = response.data.user.id;
           return true;
         } else {
           return false;
@@ -55,9 +44,19 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async redirect({ baseUrl }) {
-      // TODO: あとでパスを変更
-      return baseUrl;
+    async jwt({ token, account, user }) {
+      if (account && user) {
+        console.log("account: ", account);
+        token.userId = user.userId;
+        token.accessToken = account.access_token;
+        token.provider = account.provider;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = token;
+      console.log(session);
+      return session;
     },
   },
 };

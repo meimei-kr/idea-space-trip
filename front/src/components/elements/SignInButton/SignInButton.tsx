@@ -5,10 +5,13 @@ import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { IoPersonCircleOutline } from "react-icons/io5";
 
-export default function GuestSignInButton({ provider }: { provider: string }) {
+export default function SignInButton({ provider }: { provider: string }) {
   return (
     <div>
-      <button onClick={() => signIn(provider)} className={styles.button}>
+      <button
+        onClick={() => signIn(provider, { callbackUrl: "/select-mode" })}
+        className={styles.button}
+      >
         {provider === "google" ? (
           <>
             <FcGoogle className={styles.icon} />

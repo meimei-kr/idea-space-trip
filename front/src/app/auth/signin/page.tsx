@@ -9,7 +9,6 @@ export default function SignIn() {
         <h1 className={styles.title}>Sign In</h1>
         <div className={styles.buttons}>
           <SignInButton provider="google" />
-          <SignInButton provider="credentials" />
         </div>
         <div className={styles.description}>
           続けることにより、

@@ -14,11 +14,6 @@ describe("Signin", () => {
       screen.getByRole("button", { name: "Sign in with Google" }),
     ).toBeInTheDocument();
 
-    // ゲストサインインボタンが存在するかを検証
-    expect(
-      screen.getByRole("button", { name: "Sign in as Guest" }),
-    ).toBeInTheDocument();
-
     // 利用規約とプライバシーポリシーへのリンクが存在するかを検証
     expect(screen.getByText("利用規約")).toHaveAttribute("href", "/terms");
     expect(screen.getByText("プライバシーポリシー")).toHaveAttribute(
