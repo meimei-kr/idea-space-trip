@@ -1,8 +1,7 @@
-export type ButtonType = {
+export type LinkButtonType = {
   children: React.ReactNode;
   color: "pink" | "light-blue";
   size: "large";
-  type: "button" | "submit";
-  href?: string;
+  href: string;
   flicker: "flicker" | "no-flicker";
 };

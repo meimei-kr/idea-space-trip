@@ -2,21 +2,11 @@ module Api
   module V1
     class UsersController < ApplicationController
       def create
-        User.find_or_create_by!(user_params)
-        render json: { status: :ok }
-      rescue StandardError => e
-        render json: { error: e.message }, status: :internal_server_error
-      end
+        user = User.find_or_create_by!(user_params)
 
-      def create_guest
-        loop do
-          guest_email = "guest_#{SecureRandom.alphanumeric(10)}@example.com"
-          @user = User.create!(name: 'Guest', email: guest_email)
-          break if @user.persisted?
-        end
-        render json: { user: @user }
+        render json: { user:, status: :ok }
       rescue StandardError => e
-        render json: { error: e.message }, status: :internal_server_error
+        render json: { error: "ログインに失敗しました: #{e.message}" }, status: :internal_server_error
       end
 
       private

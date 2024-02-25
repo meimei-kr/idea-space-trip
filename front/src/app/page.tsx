@@ -1,5 +1,8 @@
 import styles from "@/app/Home.module.scss";
-import Button from "@/components/elements/Button/Button";
+import LinkButton from "@/components/elements/LinkButton/LinkButton";
+import { authOptions } from "@/lib/options";
+import type { Session } from "next-auth";
+import { getServerSession } from "next-auth";
 import One from "public/images/01.svg";
 import Two from "public/images/02.svg";
 import Three from "public/images/03.svg";
@@ -11,7 +14,13 @@ import QuoteStart from "public/images/quote-start.svg";
 import { PiNotepadBold } from "react-icons/pi";
 import { RiRobot2Line, RiUserVoiceLine } from "react-icons/ri";
 
-export default function Home() {
+export default async function HomeContainer() {
+  const session = await getServerSession(authOptions);
+
+  return <HomePresentation session={session} />;
+}
+
+export function HomePresentation({ session }: { session: Session | null }) {
   return (
     <main>
       <section className={styles.heroWrapper}>
@@ -138,15 +147,25 @@ export default function Home() {
       </section>
       <section className={styles.loginWrapper}>
         <div className={styles.loginContainer}>
-          <Button
-            color="pink"
-            size="large"
-            type="button"
-            href="/auth/signin"
-            flicker="flicker"
-          >
-            LOGIN
-          </Button>
+          {session ? (
+            <LinkButton
+              href="/select-mode"
+              color="pink"
+              size="large"
+              flicker="flicker"
+            >
+              NEXT PAGE
+            </LinkButton>
+          ) : (
+            <LinkButton
+              href="/auth/signin"
+              color="pink"
+              size="large"
+              flicker="flicker"
+            >
+              LOGIN
+            </LinkButton>
+          )}
         </div>
       </section>
     </main>

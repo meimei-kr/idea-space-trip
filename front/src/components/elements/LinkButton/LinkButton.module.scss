@@ -69,6 +69,7 @@
 }
 
 @mixin baseButton($text-shadow-color) {
+  text-decoration: none;
   font-weight: bold;
   border-style: solid;
   color: var(--white);
@@ -89,6 +90,10 @@
   &::selection {
     border-color: $text-shadow-color;
     color: $text-shadow-color;
+  }
+
+  &:active {
+    transform: translateY(4px);
   }
 
   span {

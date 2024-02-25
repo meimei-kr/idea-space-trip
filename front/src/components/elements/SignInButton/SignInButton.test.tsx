@@ -30,13 +30,17 @@ describe("SignInButton", () => {
     render(<SignInButton provider="google" />);
     const button = screen.getByRole("button", { name: "Sign in with Google" });
     await userEvent.click(button); // ログイン処理が終わるのを待ってから次の処理を実行
-    expect(signIn).toHaveBeenCalledWith("google"); // signIn関数が引数 "google" で呼び出されたかどうかを検証
+    expect(signIn).toHaveBeenCalledWith("google", {
+      callbackUrl: "/select-mode",
+    }); // signIn関数が引数 "google" で呼び出されたかどうかを検証
   });
 
   it("should call signIn function when Guest sign-in button is clicked", async () => {
     render(<SignInButton provider="credentials" />);
     const button = screen.getByRole("button", { name: "Sign in as Guest" });
     await userEvent.click(button); // ログイン処理が終わるのを待ってから次の処理を実行
-    expect(signIn).toHaveBeenCalledWith("credentials"); // signIn関数が引数 "credentials" で呼び出されたかどうかを検証
+    expect(signIn).toHaveBeenCalledWith("credentials", {
+      callbackUrl: "/select-mode",
+    }); // signIn関数が引数 "credentials" で呼び出されたかどうかを検証
   });
 });

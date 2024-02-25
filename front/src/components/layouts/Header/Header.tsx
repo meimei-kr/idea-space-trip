@@ -16,7 +16,7 @@ export default function Header() {
 
   const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    await signOut();
+    await signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -35,13 +35,13 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="#about" onClick={menuFunction}>
+            <Link href="/#about" onClick={menuFunction}>
               <span className={styles.mainTitle}>ABOUT</span>
               <span className={styles.subTitle}>このアプリについて</span>
             </Link>
           </li>
           <li>
-            <Link href="#features" onClick={menuFunction}>
+            <Link href="/#features" onClick={menuFunction}>
               <span className={styles.mainTitle}>FEATURES</span>
               <span className={styles.subTitle}>使える機能</span>
             </Link>
