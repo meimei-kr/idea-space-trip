@@ -14,7 +14,7 @@ import QuoteStart from "public/images/quote-start.svg";
 import { PiNotepadBold } from "react-icons/pi";
 import { RiRobot2Line, RiUserVoiceLine } from "react-icons/ri";
 
-export default async function HomeContainer() {
+export async function HomeContainer() {
   const session = await getServerSession(authOptions);
 
   return <HomePresentation session={session} />;
@@ -171,3 +171,5 @@ export function HomePresentation({ session }: { session: Session | null }) {
     </main>
   );
 }
+
+export default HomeContainer;
