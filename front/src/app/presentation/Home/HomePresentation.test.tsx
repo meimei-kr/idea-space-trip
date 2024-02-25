@@ -1,4 +1,4 @@
-import { HomePresentation } from "@/app/page";
+import { HomePresentation } from "@/app/presentation/Home/HomePresentation";
 import { LinkButtonType } from "@/types";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
