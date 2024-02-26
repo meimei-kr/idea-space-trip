@@ -1,0 +1,63 @@
+/* 変数 */
+$back-button-length: 56px;
+$back-button-length-lg: 96px;
+
+.wrapper {
+  height: calc(100vh - var(--header-height));
+  width: 100vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 32px;
+  height: calc(100% - $back-button-length - var(--page-padding));
+  width: calc(100% - var(--page-padding) * 2);
+
+  @media screen and (min-width: 1024px) {
+    height: calc(100% - $back-button-length-lg - var(--page-padding-lg));
+  }
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+
+  @media screen and (min-width: 768px) {
+    gap: 80px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+  }
+}
+
+.question {
+  text-align: center;
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 24px;
+  }
+}
+
+.back {
+  position: absolute;
+  bottom: var(--page-padding);
+  left: var(--page-padding);
+
+  @media screen and (min-width: 1024px) {
+    bottom: var(--page-padding-lg);
+    left: var(--page-padding-lg);
+  }
+}
