@@ -1,33 +1,8 @@
-import styles from "@/app/select-mode/SelectMode.module.scss";
-import LinkButton from "@/components/elements/LinkButton/LinkButton";
-import { randomUUID } from "crypto";
+import { SelectModePresentation } from "@/app/presentation/SelectMode/SelectModePresentation";
+import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 
-export default function SelectMode() {
-  return (
-    <main className={styles.wrapper}>
-      <div className={styles.container}>
-        <LinkButton
-          href={`/${encodeURIComponent(randomUUID())}/check-theme`}
-          color="pink"
-          size="large"
-          flicker="no-flicker"
-        >
-          <div>
-            アイデア出し<span>スタート</span>
-          </div>
-        </LinkButton>
-        <LinkButton
-          href="#"
-          color="light-blue"
-          size="large"
-          flicker="no-flicker"
-        >
-          <div>
-            アイデア
-            <span>ストックメモ</span>
-          </div>
-        </LinkButton>
-      </div>
-    </main>
-  );
+export default async function SelectModeContainer() {
+  const sessionInProgress = await getIdeaSessionInProgress();
+
+  return <SelectModePresentation sessionInProgress={sessionInProgress} />;
 }

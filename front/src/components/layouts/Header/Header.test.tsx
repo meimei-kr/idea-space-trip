@@ -6,6 +6,7 @@ import Header from "@/components/layouts/Header/Header";
 import { signOut, useSession } from "next-auth/react";
 
 jest.mock("next-auth/react");
+jest.mock("next/navigation");
 
 describe("Header", () => {
   it("should render login link when user is not authenticated", () => {

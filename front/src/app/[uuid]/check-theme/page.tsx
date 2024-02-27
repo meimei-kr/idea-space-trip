@@ -2,7 +2,7 @@ import styles from "@/app/[uuid]/check-theme/CheckTheme.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
 
-export default function CheckTheme() {
+export default async function CheckTheme() {
   return (
     <main className={styles.wrapper}>
       <div className={styles.container}>

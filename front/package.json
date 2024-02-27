@@ -13,16 +13,21 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.11",
+    "@mui/material-nextjs": "^5.15.11",
     "@tsparticles/engine": "^3.2.1",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.2.1",
-    "axios": "^1.6.7",
     "next": "14.1.0",
     "next-auth": "^4.24.6",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "react-ztext": "^1.0.3"
+    "react-ztext": "^1.0.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.1.0",
@@ -35,6 +40,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^7.0.1",
     "eslint": "^8",

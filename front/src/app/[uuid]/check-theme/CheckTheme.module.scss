@@ -14,7 +14,7 @@ $back-button-length-lg: 96px;
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: 32px;
   height: calc(100% - $back-button-length - var(--page-padding));
