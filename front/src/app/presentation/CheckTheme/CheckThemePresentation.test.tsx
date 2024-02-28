@@ -1,10 +1,10 @@
-import CheckTheme from "@/app/[uuid]/check-theme/page";
+import CheckThemePresentation from "@/app/presentation/CheckTheme/CheckThemePresentation";
 import { render, screen } from "@testing-library/react";
 
-jest.mock("@/components/elements/LinkButton/LinkButton", () => ({
+jest.mock("@/components/elements/Button/Button", () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
+    <button>{children}</button>
   ),
 }));
 
@@ -13,9 +13,17 @@ jest.mock("@/components/elements/BackButton/BackButton", () => ({
   default: () => <div>BackButton</div>,
 }));
 
-describe("CheckTheme", () => {
+jest.mock("next/navigation", () => ({
+  usePathname: () => "/uuid/test",
+  useRouter: () => ({
+    prefetch: jest.fn(),
+    push: jest.fn(),
+  }),
+}));
+
+describe("CheckThemePresentation", () => {
   it("should render the sentence correctly", () => {
-    render(<CheckTheme />);
+    render(<CheckThemePresentation />);
 
     expect(
       screen.getByText("考えたいテーマは、すでに決まってる？"),
@@ -23,14 +31,14 @@ describe("CheckTheme", () => {
   });
 
   it("should display yes and no options", () => {
-    render(<CheckTheme />);
+    render(<CheckThemePresentation />);
 
     expect(screen.getByText("YES")).toBeInTheDocument();
     expect(screen.getByText("NO")).toBeInTheDocument();
   });
 
   it("should display the BackButton", () => {
-    render(<CheckTheme />);
+    render(<CheckThemePresentation />);
 
     expect(screen.getByText("BackButton")).toBeInTheDocument();
   });

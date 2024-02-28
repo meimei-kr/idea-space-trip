@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate
+  before_action :snake_case_params
 
   SECRET_KEY = Rails.application.credentials.secret_key_base
 
@@ -20,5 +21,9 @@ class ApplicationController < ActionController::API
   def decode_jwt(encoded_token)
     decoded_token = JWT.decode(encoded_token, SECRET_KEY, true, algorithm: 'HS256')
     decoded_token.first
+  end
+
+  def snake_case_params
+    request.parameters.deep_transform_keys!(&:underscore)
   end
 end

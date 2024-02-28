@@ -1,5 +1,6 @@
 "use server";
 
+import { IdeaSessionType } from "@/types";
 import { getServerSession } from "next-auth";
 import { headers } from "next/headers";
 import { authOptions } from "./options";
@@ -103,5 +104,30 @@ export async function getIdeaSession() {
   } catch (error) {
     console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
+  }
+}
+
+// アイデアセッションを更新
+export async function updateIdeaSession(uuid: string, data: IdeaSessionType) {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(`${BASE_URL}/api/v1/idea_sessions/${uuid}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+      body: JSON.stringify({
+        idea_session: { ...data },
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`データ更新に失敗しました: ${response.json()}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    throw new Error(`データ更新に失敗しました: ${error}`);
   }
 }

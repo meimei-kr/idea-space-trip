@@ -15,16 +15,12 @@ export type ButtonType = {
 };
 
 export type IdeaSessionType = {
-  id: number;
-  user_id: number;
-  uuid: string;
-  isThemeDetermined: boolean;
-  isAIThemeGenerated: boolean;
-  category: number;
-  question: number;
-  isAIAnswerGenerated: boolean;
-  theme: string;
-  is_finished: boolean;
-  created_at: string;
-  updated_at: string;
+  uuid?: string;
+  isThemeDetermined?: boolean;
+  isAIThemeGenerated?: boolean;
+  category?: number;
+  question?: number;
+  isAIAnswerGenerated?: boolean;
+  theme?: string;
+  isFinished?: boolean;
 };

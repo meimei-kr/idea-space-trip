@@ -23,7 +23,14 @@ module Api
         end
       end
 
-      def update; end
+      def update
+        idea_session = set_idea_session
+        if idea_session.update(idea_session_params)
+          render json: idea_session, status: :ok
+        else
+          render json: idea_session.errors, status: :unprocessable_entity
+        end
+      end
 
       def destroy
         idea_session = set_idea_session
