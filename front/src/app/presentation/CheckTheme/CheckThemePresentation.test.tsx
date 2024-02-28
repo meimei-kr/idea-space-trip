@@ -25,8 +25,8 @@ describe("CheckTheme", () => {
   it("should display yes and no options", () => {
     render(<CheckTheme />);
 
-    expect(screen.getByText("◯")).toBeInTheDocument();
-    expect(screen.getByText("✕")).toBeInTheDocument();
+    expect(screen.getByText("YES")).toBeInTheDocument();
+    expect(screen.getByText("NO")).toBeInTheDocument();
   });
 
   it("should display the BackButton", () => {

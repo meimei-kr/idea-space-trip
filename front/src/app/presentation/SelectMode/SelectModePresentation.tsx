@@ -4,20 +4,21 @@ import styles from "@/app/presentation/SelectMode/SelectModePresentation.module.
 import Button from "@/components/elements/Button/Button";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
 import { useDialog } from "@/hooks/useDialog";
-import { createIdeaSession, deleteIdeaSession } from "@/lib/idea-sessions";
+import {
+  createIdeaSession,
+  deleteIdeaSession,
+  getIdeaSessionInProgress,
+} from "@/lib/idea-sessions";
 import { generateUUID } from "@/lib/uuid";
 import { IdeaSessionType } from "@/types";
 import { useRouter } from "next/navigation";
 
-export function SelectModePresentation({
-  sessionInProgress,
-}: {
-  sessionInProgress: IdeaSessionType | null;
-}) {
+export function SelectModePresentation() {
   const { ModalDialog, openDialog } = useDialog();
   const router = useRouter();
 
   const handleStartClick = async () => {
+    const sessionInProgress = await getIdeaSessionInProgress();
     if (!sessionInProgress) {
       const uuid = generateUUID();
       await createIdeaSession(uuid);
@@ -53,7 +54,7 @@ export function SelectModePresentation({
       return "theme-generation"; // テーマ生成画面
     }
 
-    if (ideaSession.category === 0) {
+    if (ideaSession.category !== 0) {
       return "select-theme-category"; // テーマカテゴリ選択画面
     }
 

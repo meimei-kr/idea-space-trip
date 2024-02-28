@@ -44,6 +44,7 @@ export const authOptions: NextAuthOptions = {
         if (response.status === 200) {
           const data = await response.json();
           user.userId = data.user.id;
+          user.accessToken = data.accessToken;
           return true;
         } else {
           return false;
@@ -56,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user }) {
       if (account && user) {
         token.userId = user.userId;
-        token.accessToken = account.access_token;
+        token.accessToken = user.accessToken;
         token.provider = account.provider;
       }
       return token;

@@ -71,7 +71,7 @@ export default function Header() {
       return "theme-generation"; // テーマ生成画面
     }
 
-    if (ideaSession.category === 0) {
+    if (ideaSession.category !== 0) {
       return "select-theme-category"; // テーマカテゴリ選択画面
     }
 

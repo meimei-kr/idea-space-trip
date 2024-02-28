@@ -29,10 +29,11 @@ Style/AsciiComments:
 # DBディレクトリのファイルはABCサイズをチェックしない
 Metrics/AbcSize:
   Exclude:
-    - 'db/**/*'
+    - "db/**/*"
 
 # DBディレクトリのファイルはメソッドの長さをチェックしない
 Metrics/MethodLength:
+  Max: 20
   Exclude:
     - "db/**/*"
 
@@ -40,15 +41,24 @@ Metrics/MethodLength:
 Layout/LineLength:
   Max: 100
   Exclude:
-    - 'db/migrate/*'
-    - 'Gemfile'
-    - 'config/**/*'
+    - "db/migrate/*"
+    - "Gemfile"
+    - "config/**/*"
 
 #　文末のカンマを許可
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'db/fixtures/*'
+    - "db/fixtures/*"
 
 # ファイルの先頭に文字列をfreezeするかの記述を強制するチェックを無効化
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# ブロック行数の制限を無効化
+Metrics/BlockLength:
+  Exclude:
+    - "db/migrate/*"
+    - "db/schema.rb"
+    - "db/seeds.rb"
+    - "spec/**/*"
+    - "config/**/*"

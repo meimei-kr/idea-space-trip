@@ -1,13 +1,15 @@
 "use client";
 
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 import { FC, useState } from "react";
 
 type DialogProps = {
@@ -27,26 +29,26 @@ const _ModalDialog: FC<DialogProps> = ({
   trueVal,
   falseVal,
 }) => {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   return (
-    <Dialog
-      fullScreen={fullScreen}
-      open={open}
-      aria-labelledby="responsive-dialog-title"
-    >
-      <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>{message}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={() => onClose(true)}>
-          {trueVal}
-        </Button>
-        <Button onClick={() => onClose(false)}>{falseVal}</Button>
-      </DialogActions>
-    </Dialog>
+    <AlertDialog open={open} aria-labelledby="responsive-dialog-title">
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-black">{title}</AlertDialogTitle>
+          <AlertDialogDescription>{message}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+          <AlertDialogAction autoFocus onClick={() => onClose(true)}>
+            {trueVal}
+          </AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => onClose(false)}
+            className="text-red-500 bg-red-200 hover:bg-red-100"
+          >
+            {falseVal}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
