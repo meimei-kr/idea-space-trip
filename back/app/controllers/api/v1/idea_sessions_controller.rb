@@ -50,7 +50,8 @@ module Api
           :question,
           :is_ai_answer_generated,
           :theme,
-          :is_finished
+          :is_finished,
+          :user_id
         )
       end
 

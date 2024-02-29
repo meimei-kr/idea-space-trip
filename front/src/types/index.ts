@@ -23,4 +23,5 @@ export type IdeaSessionType = {
   isAIAnswerGenerated?: boolean;
   theme?: string;
   isFinished?: boolean;
+  userId?: number;
 };
