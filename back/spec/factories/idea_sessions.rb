@@ -25,6 +25,6 @@ FactoryBot.define do
     is_ai_answer_generated { false }
     theme { 'MyText' }
     is_finished { false }
-    association :user
+    user
   end
 end

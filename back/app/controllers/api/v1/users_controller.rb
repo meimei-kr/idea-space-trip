@@ -5,14 +5,12 @@ module Api
 
       def create
         @current_user = User.find_or_create_by!(user_params)
-        if @current_user
-          # AIUsageHistoryを作成/更新
-          create_or_update_ai_usage_history
+        # AIUsageHistoryを作成/更新
+        create_or_update_ai_usage_history
 
-          # JWTを発行
-          payload = { user_id: @current_user.id, exp: 24.hours.from_now.to_i }
-          encoded_token = encode_jwt(payload)
-        end
+        # JWTを発行
+        payload = { user_id: @current_user.id, exp: 24.hours.from_now.to_i }
+        encoded_token = encode_jwt(payload)
 
         render json: { user: @current_user, accessToken: encoded_token, status: :ok }
       rescue StandardError => e

@@ -2,22 +2,22 @@ module Api
   module V1
     class IdeaSessionsController < ApplicationController
       def show_in_progress
-        idea_session = @current_user.idea_sessions.where('user_id = ? and is_finished = ?',
-                                                         @current_user.id, false)
-        render json: idea_session
+        idea_session = @current_user.idea_sessions.where(is_finished: false).first
+        if idea_session.nil?
+          render json: nil, status: :ok
+        else
+          render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
+                 status: :ok
+        end
       end
 
       def index; end
 
-      def show
-        idea_session = set_idea_session
-        render json: idea_session
-      end
-
       def create
         idea_session = @current_user.idea_sessions.new(idea_session_params)
         if idea_session.save
-          render json: idea_session, status: :created
+          render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
+                 status: :ok
         else
           render json: idea_session.errors, status: :unprocessable_entity
         end
@@ -26,7 +26,8 @@ module Api
       def update
         idea_session = set_idea_session
         if idea_session.update(idea_session_params)
-          render json: idea_session, status: :ok
+          render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
+                 status: :ok
         else
           render json: idea_session.errors, status: :unprocessable_entity
         end

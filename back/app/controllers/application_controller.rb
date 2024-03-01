@@ -12,8 +12,10 @@ class ApplicationController < ActionController::API
 
   def authenticate
     encoded_token = request.headers['Authorization']&.split&.last
-    payload = decode_jwt(encoded_token)
-    @current_user = User.find(payload['user_id'])
+    if encoded_token
+      payload = decode_jwt(encoded_token)
+      @current_user = User.find(payload['user_id'])
+    end
   rescue ActiveRecord::RecordNotFound, JWT::DecodeError => e
     render json: { error: "認証に失敗しました: #{e.message}" }, status: :unauthorized
   end

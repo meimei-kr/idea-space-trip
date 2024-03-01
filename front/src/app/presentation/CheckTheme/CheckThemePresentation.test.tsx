@@ -21,9 +21,13 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
+const ideaSession = {
+  uuid: "uuid",
+};
+
 describe("CheckThemePresentation", () => {
   it("should render the sentence correctly", () => {
-    render(<CheckThemePresentation />);
+    render(<CheckThemePresentation ideaSession={ideaSession} />);
 
     expect(
       screen.getByText("考えたいテーマは、すでに決まってる？"),
@@ -31,14 +35,14 @@ describe("CheckThemePresentation", () => {
   });
 
   it("should display yes and no options", () => {
-    render(<CheckThemePresentation />);
+    render(<CheckThemePresentation ideaSession={ideaSession} />);
 
     expect(screen.getByText("YES")).toBeInTheDocument();
     expect(screen.getByText("NO")).toBeInTheDocument();
   });
 
   it("should display the BackButton", () => {
-    render(<CheckThemePresentation />);
+    render(<CheckThemePresentation ideaSession={ideaSession} />);
 
     expect(screen.getByText("BackButton")).toBeInTheDocument();
   });

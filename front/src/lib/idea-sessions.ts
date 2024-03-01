@@ -1,14 +1,14 @@
 "use server";
 
 import { IdeaSessionType } from "@/types";
+import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
-import { headers } from "next/headers";
 import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // 途中のアイデアセッションを取得
-export async function getIdeaSessionInProgress() {
+export async function getIdeaSessionInProgress(): Promise<IdeaSessionType | null> {
   const session = await getServerSession(authOptions);
 
   try {
@@ -23,11 +23,15 @@ export async function getIdeaSessionInProgress() {
         cache: "no-store",
       },
     );
-    const data = await response.json();
-    if (Object.keys(data).length === 0 || data.length === 0) {
+    const serializedData = await response.json();
+    if (serializedData === null) {
       return null;
     }
-    return data[0];
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+    return deserializedData;
   } catch (error) {
     console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
@@ -54,7 +58,12 @@ export async function createIdeaSession(uuid: string) {
     if (!response.ok) {
       throw new Error(`データ作成に失敗しました: ${response.json()}`);
     }
-    return response.json();
+    const serializedData = await response.json();
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+    return deserializedData;
   } catch (error) {
     console.error(error);
     throw new Error(`データ作成に失敗しました: ${error}`);
@@ -83,30 +92,6 @@ export async function deleteIdeaSession(uuid: string) {
   }
 }
 
-// 現在のアイデアセッションを取得
-export async function getIdeaSession() {
-  const session = await getServerSession(authOptions);
-
-  const headersList = headers();
-  const header_url = headersList.get("x-url") || "";
-  const uuid = header_url.split("/")[0];
-
-  try {
-    const response = await fetch(`${BASE_URL}/api/v1/idea_sessions/${uuid}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-      cache: "no-store",
-    });
-    return response.json();
-  } catch (error) {
-    console.error(error);
-    throw new Error(`データ取得に失敗しました: ${error}`);
-  }
-}
-
 // アイデアセッションを更新
 export async function updateIdeaSession(uuid: string, data: IdeaSessionType) {
   const session = await getServerSession(authOptions);
@@ -125,7 +110,12 @@ export async function updateIdeaSession(uuid: string, data: IdeaSessionType) {
     if (!response.ok) {
       throw new Error(`データ更新に失敗しました: ${response.json()}`);
     }
-    return response.json();
+    const serializedData = await response.json();
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+    return deserializedData;
   } catch (error) {
     console.error(error);
     throw new Error(`データ更新に失敗しました: ${error}`);

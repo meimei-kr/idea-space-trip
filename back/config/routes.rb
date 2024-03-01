@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :idea_sessions, param: :uuid, only: %i[index create show update destroy] do
+      resources :idea_sessions, param: :uuid, only: %i[index create update destroy] do
         collection do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
         end

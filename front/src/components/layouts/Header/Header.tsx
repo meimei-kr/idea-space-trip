@@ -9,6 +9,7 @@ import {
 } from "@/lib/idea-sessions";
 import { generateUUID } from "@/lib/uuid";
 import { IdeaSessionType } from "@/types";
+
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -34,28 +35,9 @@ export default function Header() {
   const { ModalDialog, openDialog } = useDialog();
   const router = useRouter();
 
-  const handleStartClick = async () => {
-    const sessionInProgress = await getIdeaSessionInProgress();
-    if (!sessionInProgress) {
-      const uuid = generateUUID();
-      await createIdeaSession(uuid);
-      router.push(`/${encodeURIComponent(uuid)}/check-theme`);
-      return;
-    }
-
-    const result = await openDialog();
-    if (result) {
-      handleModalYesClick(sessionInProgress);
-    } else {
-      await deleteIdeaSession(sessionInProgress.uuid);
-      const uuid = generateUUID();
-      await createIdeaSession(uuid);
-      router.push(`/${encodeURIComponent(uuid)}/check-theme`);
-    }
-  };
-
+  // 途中セッションの中断時のパスを判定
   const checkPath = (ideaSession: IdeaSessionType) => {
-    if (ideaSession.isAIAnswerGenerated) {
+    if (ideaSession.isAiAnswerGenerated) {
       return "idea-generation"; // アイデア出し画面（回答生成後）
     }
 
@@ -67,7 +49,7 @@ export default function Header() {
       return "theme"; // テーマ入力画面
     }
 
-    if (ideaSession.isAIThemeGenerated) {
+    if (ideaSession.isAiThemeGenerated) {
       return "theme-generation"; // テーマ生成画面
     }
 
@@ -78,9 +60,36 @@ export default function Header() {
     return "check-theme"; // テーマ有無選択画面
   };
 
+  // モーダルのYESボタンクリック時の処理
   const handleModalYesClick = (sessionInProgress: IdeaSessionType) => {
     const path = checkPath(sessionInProgress);
     router.push(`/${sessionInProgress.uuid}/${path}`);
+  };
+
+  const handleStartClick = async () => {
+    // 途中のセッションを取得
+    const sessionInProgress = await getIdeaSessionInProgress();
+
+    // 途中のセッションがない場合、新しいセッションを作成
+    if (!sessionInProgress || !sessionInProgress.uuid) {
+      const uuid = generateUUID();
+      await createIdeaSession(uuid);
+      router.push(`/${encodeURIComponent(uuid)}/check-theme`);
+      return;
+    }
+
+    // 途中のセッションがある場合、続きから始めるか新しくスタートするかを選択
+    const result = await openDialog();
+    if (result) {
+      // 続きから始める場合
+      handleModalYesClick(sessionInProgress);
+    } else {
+      // 新しくスタートする場合
+      await deleteIdeaSession(sessionInProgress.uuid);
+      const uuid = generateUUID();
+      await createIdeaSession(uuid);
+      router.push(`/${encodeURIComponent(uuid)}/check-theme`);
+    }
   };
 
   return (

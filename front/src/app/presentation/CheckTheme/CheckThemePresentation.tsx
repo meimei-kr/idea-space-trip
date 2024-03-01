@@ -4,33 +4,60 @@ import styles from "@/app/presentation/CheckTheme/CheckThemePresentation.module.
 import BackButton from "@/components/elements/BackButton/BackButton";
 import Button from "@/components/elements/Button/Button";
 import { updateIdeaSession } from "@/lib/idea-sessions";
+import { IdeaSessionType } from "@/types";
+import Error from "next/error";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function CheckThemePresentation() {
-  // パスからUUIDを取得
-  const uuid = usePathname().split("/")[1];
-  if (typeof uuid !== "string") {
-    throw new Error("UUIDが取得できませんでした。");
+export default function CheckThemePresentation({
+  ideaSession,
+}: {
+  ideaSession: IdeaSessionType | null;
+}) {
+  const router = useRouter();
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+
+  // セッションは開始されており、ideaSessionは必ず取得できる想定なので
+  // nullの場合は、500エラーを返す
+  if (ideaSession === null) {
+    setStatusCode(500);
   }
 
-  const router = useRouter();
+  // ideaSessionからUUIDを取得
+  const uuid = ideaSession?.uuid;
+  // URLからUUIDを取得
+  const uuidFromPath = usePathname().split("/")[1];
 
-  // 遷移先パスをprefetch
   useEffect(() => {
-    router.prefetch(`/${uuid}/theme`);
-    router.prefetch(`/${uuid}/select-theme-category`);
-  }, [uuid, router]);
+    // URLに含まれるUUIDがログインユーザーのものと一致するかチェック
+    if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
+      setStatusCode(404);
+    } else {
+      setStatusCode(null);
+      // 遷移先パスをprefetch
+      router.prefetch(`/${uuid}/theme`);
+      router.prefetch(`/${uuid}/select-theme-category`);
+    }
+  }, [uuid, uuidFromPath]);
 
   const handleYesClick = async () => {
-    await updateIdeaSession(uuid, { isThemeDetermined: true });
+    await updateIdeaSession(uuid as string, {
+      isThemeDetermined: true,
+    });
     router.push(`/${uuid}/theme`);
   };
 
   const handleNoClick = async () => {
-    await updateIdeaSession(uuid, { isThemeDetermined: false });
+    await updateIdeaSession(uuid as string, {
+      isThemeDetermined: false,
+    });
     router.push(`/${uuid}/select-theme-category`);
   };
+
+  // エラーがある場合はエラーページを表示
+  if (statusCode) {
+    return <Error statusCode={statusCode} />;
+  }
 
   return (
     <main className={styles.wrapper}>
