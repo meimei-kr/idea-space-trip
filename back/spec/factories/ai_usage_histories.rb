@@ -15,6 +15,6 @@ FactoryBot.define do
     date { '2024-02-28' }
     theme_generated_count { 0 }
     answer_generated_count { 0 }
-    association :user
+    user
   end
 end
