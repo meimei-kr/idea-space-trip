@@ -157,6 +157,8 @@ GEM
       stringio
     puma (6.4.2)
       nio4r (~> 2.0)
+    pundit (2.3.1)
+      activesupport (>= 3.0.0)
     racc (1.7.3)
     rack (3.0.8)
     rack-cors (2.0.1)
@@ -288,6 +290,7 @@ DEPENDENCIES
   jwt
   mysql2 (~> 0.5)
   puma (>= 5.0)
+  pundit
   rack-cors
   rails (~> 7.1.3)
   redis (~> 5.0)

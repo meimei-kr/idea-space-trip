@@ -2,10 +2,11 @@ module Api
   module V1
     class IdeaSessionsController < ApplicationController
       def show_in_progress
-        idea_session = @current_user.idea_sessions.where(is_finished: false).first
+        idea_session = policy_scope(@current_user.idea_sessions).where(is_finished: false).first
         if idea_session.nil?
           render json: nil, status: :ok
         else
+          authorize idea_session
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
                  status: :ok
         end
@@ -15,6 +16,7 @@ module Api
 
       def create
         idea_session = @current_user.idea_sessions.new(idea_session_params)
+        authorize idea_session
         if idea_session.save
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
                  status: :ok
@@ -25,6 +27,7 @@ module Api
 
       def update
         idea_session = set_idea_session
+        authorize idea_session
         if idea_session.update(idea_session_params)
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
                  status: :ok
@@ -35,6 +38,7 @@ module Api
 
       def destroy
         idea_session = set_idea_session
+        authorize idea_session
         idea_session.destroy!
         render json: { message: 'データ削除に成功しました。' }, status: :ok
       end

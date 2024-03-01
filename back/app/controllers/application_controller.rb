@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include Pundit::Authorization
+
   before_action :authenticate
   before_action :snake_case_params
 
@@ -7,6 +9,8 @@ class ApplicationController < ActionController::API
   def encode_jwt(payload)
     JWT.encode(payload, SECRET_KEY, 'HS256')
   end
+
+  attr_reader :current_user
 
   private
 
