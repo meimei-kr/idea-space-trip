@@ -50,7 +50,7 @@ $earth-width: 100%;
   top: calc(50% - var(--header-height));
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 20;
+  z-index: 10;
   color: var(--white);
   text-shadow: 0 0 30px var(--white);
 

@@ -1,6 +1,7 @@
 import Footer from "@/components/layouts/Footer/Footer";
 import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
+import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/AuthProvider";
 import { neoneon, sawarabiGothic } from "@/fonts/fonts";
 import type { Metadata } from "next";
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Stars />
           <Header />
           {children}
+          <Toaster />
           <Footer />
         </NextAuthProvider>
       </body>

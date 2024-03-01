@@ -3,7 +3,14 @@
 import styles from "@/app/presentation/SelectMode/SelectModePresentation.module.scss";
 import Button from "@/components/elements/Button/Button";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
+import { ToastAction, ToastClose } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  ANSWER_GENERATED_COUNT_LIMIT,
+  THEME_GENERATED_COUNT_LIMIT,
+} from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
+import { getAIUsageHistory } from "@/lib/ai-usage-history";
 import {
   createIdeaSession,
   deleteIdeaSession,
@@ -11,9 +18,12 @@ import {
 } from "@/lib/idea-sessions";
 import { generateUUID } from "@/lib/uuid";
 import { IdeaSessionType } from "@/types";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function SelectModePresentation() {
+  const { toast } = useToast();
+
   // 途中のデータがある場合のアイデアセッションの開始時モーダル処理
   const { ModalDialog, openDialog } = useDialog();
   const router = useRouter();
@@ -49,7 +59,46 @@ export function SelectModePresentation() {
     router.push(`/${sessionInProgress.uuid}/${path}`);
   };
 
+  // OpenAI APIの使用制限回数に達していないかチェック
+  const checkOpenAIUsageLimit = async (): Promise<boolean> => {
+    const aiUsage = await getAIUsageHistory();
+    const themeGeneratedCount = aiUsage.themeGeneratedCount;
+    const answerGeneratedCount = aiUsage.answerGeneratedCount;
+
+    if (
+      themeGeneratedCount >= THEME_GENERATED_COUNT_LIMIT ||
+      answerGeneratedCount >= ANSWER_GENERATED_COUNT_LIMIT
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const handleStartClick = async () => {
+    // OpenAI APIの使用制限回数チェック
+    const isReachedLimit = await checkOpenAIUsageLimit();
+    if (isReachedLimit) {
+      // 制限回数に達している場合、エラーメッセージを表示
+      toast({
+        duration: 10000,
+        close: <ToastClose> ✕ </ToastClose>,
+        title: "AI利用回数制限超過",
+        description:
+          "頑張ったので、今日はAI利用回数制限に達したよ。出したアイデアをふりかえってみよう。",
+        action: (
+          <ToastAction
+            altText="アイデアストックメモ"
+            className="text-white bg-slate-950 hover:bg-slate-800 z-50 h-16 sm:5"
+          >
+            <Link href="/memos">
+              アイデア<span className="block sm:inline">ストックメモ</span>
+            </Link>
+          </ToastAction>
+        ),
+      });
+      return;
+    }
+
     // 途中のセッションを取得
     const sessionInProgress = await getIdeaSessionInProgress();
 

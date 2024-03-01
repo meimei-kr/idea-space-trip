@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
         end
       end
+      resource :ai_usage_history, only: %i[show update]
     end
   end
 end
