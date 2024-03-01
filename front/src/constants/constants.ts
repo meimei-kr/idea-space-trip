@@ -1,0 +1,2 @@
+export const THEME_GENERATED_COUNT_LIMIT = 3;
+export const ANSWER_GENERATED_COUNT_LIMIT = 3;

@@ -1,4 +1,3 @@
-import axios from "@/lib/axios";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -26,15 +25,26 @@ export const authOptions: NextAuthOptions = {
       const name = user?.name;
       const email = user?.email;
       try {
-        const response = await axios.post(`/auth/${provider}/callback`, {
-          user: {
-            provider,
-            name,
-            email,
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}/callback`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: {
+                provider,
+                name,
+                email,
+              },
+            }),
           },
-        });
+        );
         if (response.status === 200) {
-          user.userId = response.data.user.id;
+          const data = await response.json();
+          user.userId = data.user.id;
+          user.accessToken = data.accessToken;
           return true;
         } else {
           return false;
@@ -46,16 +56,14 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, account, user }) {
       if (account && user) {
-        console.log("account: ", account);
         token.userId = user.userId;
-        token.accessToken = account.access_token;
+        token.accessToken = user.accessToken;
         token.provider = account.provider;
       }
       return token;
     },
     async session({ session, token }) {
       session.user = token;
-      console.log(session);
       return session;
     },
   },

@@ -5,3 +5,23 @@ export type LinkButtonType = {
   href: string;
   flicker: "flicker" | "no-flicker";
 };
+
+export type ButtonType = {
+  children: React.ReactNode;
+  onClick: () => void;
+  color: "pink" | "light-blue";
+  size: "large";
+  flicker: "flicker" | "no-flicker";
+};
+
+export type IdeaSessionType = {
+  uuid?: string;
+  isThemeDetermined?: boolean;
+  isAiThemeGenerated?: boolean;
+  category?: number;
+  question?: number;
+  isAiAnswerGenerated?: boolean;
+  theme?: string;
+  isFinished?: boolean;
+  userId?: number;
+};

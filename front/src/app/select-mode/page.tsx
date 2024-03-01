@@ -1,27 +1,5 @@
-import styles from "@/app/select-mode/SelectMode.module.scss";
-import LinkButton from "@/components/elements/LinkButton/LinkButton";
+import { SelectModePresentation } from "@/app/presentation/SelectMode/SelectModePresentation";
 
-export default function SelectMode() {
-  return (
-    <main className={styles.wrapper}>
-      <div className={styles.container}>
-        <LinkButton href="#" color="pink" size="large" flicker="no-flicker">
-          <div>
-            アイデア出し<span>スタート</span>
-          </div>
-        </LinkButton>
-        <LinkButton
-          href="#"
-          color="light-blue"
-          size="large"
-          flicker="no-flicker"
-        >
-          <div>
-            アイデア
-            <span>ストックメモ</span>
-          </div>
-        </LinkButton>
-      </div>
-    </main>
-  );
+export default async function SelectModeContainer() {
+  return <SelectModePresentation />;
 }

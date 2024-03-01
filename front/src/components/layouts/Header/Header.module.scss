@@ -28,7 +28,7 @@
 /* Menuボタン */
 .hamburger {
   position: fixed;
-  z-index: 9999;
+  z-index: 30;
   top: 16px;
   right: 24px;
   width: 56px;
@@ -128,7 +128,7 @@
 
   &.active {
     opacity: 1;
-    z-index: 999;
+    z-index: 20;
   }
 }
 

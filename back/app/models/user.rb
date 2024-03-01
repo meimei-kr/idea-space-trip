@@ -10,6 +10,9 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
+  has_many :idea_sessions, dependent: :destroy
+  has_one :ai_usage_history, dependent: :destroy
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 end
