@@ -3,6 +3,8 @@
   grid-template-rows: 3fr 2fr 2fr;
   grid-template-columns: 1fr 1fr;
   background-color: var(--gray);
+  position: relative;
+  z-index: 10;
 
   @media screen and (min-width: 1024px) {
     grid-template-rows: 10fr 1fr;

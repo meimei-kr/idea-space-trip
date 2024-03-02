@@ -3,6 +3,11 @@
  */
 $earth-width: 100%;
 
+.main {
+  height: 100%;
+  width: 100%;
+}
+
 /*
  * ヒーローセクション
  */
@@ -473,9 +478,11 @@ $earth-width: 100%;
  * ログインセクション
  */
 .loginWrapper {
-  min-height: 50vh;
-  height: auto;
+  min-height: 100vh;
   padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (min-width: 1024px) {
     padding: 0 80px;
@@ -483,10 +490,5 @@ $earth-width: 100%;
 }
 
 .loginContainer {
-  min-height: 50vh;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }

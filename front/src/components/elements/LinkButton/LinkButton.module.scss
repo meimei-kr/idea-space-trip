@@ -77,6 +77,8 @@
   background: transparent;
   cursor: pointer;
   max-width: calc(100% - 48px);
+  position: relative;
+  z-index: 10;
 
   &:focus {
     outline: none;

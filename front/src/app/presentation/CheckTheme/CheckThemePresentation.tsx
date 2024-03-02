@@ -1,8 +1,8 @@
 "use client";
 
 import styles from "@/app/presentation/CheckTheme/CheckThemePresentation.module.scss";
-import BackButton from "@/components/elements/BackButton/BackButton";
 import Button from "@/components/elements/Button/Button";
+import { BackButton } from "@/components/ui/tailwind-buttons";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
@@ -35,6 +35,7 @@ export default function CheckThemePresentation({
     } else {
       setStatusCode(null);
       // 遷移先パスをprefetch
+      router.prefetch(`/select-mode`);
       router.prefetch(`/${uuid}/theme`);
       router.prefetch(`/${uuid}/select-theme-category`);
     }
@@ -52,6 +53,10 @@ export default function CheckThemePresentation({
       isThemeDetermined: false,
     });
     router.push(`/${uuid}/select-theme-category`);
+  };
+
+  const handleBack = () => {
+    router.push(`/select-mode`);
   };
 
   // エラーがある場合はエラーページを表示
@@ -83,7 +88,7 @@ export default function CheckThemePresentation({
         </div>
       </div>
       <div className={styles.back}>
-        <BackButton />
+        <BackButton onClick={handleBack}>BACK</BackButton>
       </div>
     </main>
   );

@@ -7,7 +7,7 @@ import { FaGithub, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <div className={styles.container}>
+    <footer className={styles.container}>
       <div className={styles.snsContainer}>
         <div className={styles.sns}>
           <p>Keep In Touch</p>
@@ -42,6 +42,6 @@ export default function Footer() {
       <div className={styles.copyrights}>
         <small>©2024 IDEA SPACE TRIP</small>
       </div>
-    </div>
+    </footer>
   );
 }

@@ -10,7 +10,7 @@ class AiUsageHistoryPolicy < ApplicationPolicy
   end
 
   def show?
-    general_check?
+    general_check? && record_owner?
   end
 
   def update?

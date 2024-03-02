@@ -90,15 +90,19 @@
 
 html,
 body {
-  height: 100%;
-  width: 100vw;
-  min-height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   background-color: var(--black);
   color: var(--white);
   font-family: var(--font-sawarabi-gothic), var(--font-neoneon), sans-serif;
+}
+
+body {
+  height: 100%;
+  width: 100vw;
+  position: relative;
 }
 
 body * {

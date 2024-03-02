@@ -8,9 +8,8 @@ jest.mock("@/components/elements/Button/Button", () => ({
   ),
 }));
 
-jest.mock("@/components/elements/BackButton/BackButton", () => ({
-  __esModule: true,
-  default: () => <div>BackButton</div>,
+jest.mock("@/components/ui/tailwind-buttons", () => ({
+  BackButton: () => <div>BackButton</div>,
 }));
 
 jest.mock("next/navigation", () => ({
