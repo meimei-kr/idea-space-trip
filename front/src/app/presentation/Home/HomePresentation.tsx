@@ -14,7 +14,7 @@ import { RiRobot2Line, RiUserVoiceLine } from "react-icons/ri";
 
 export function HomePresentation({ session }: { session: Session | null }) {
   return (
-    <main>
+    <main className={styles.main}>
       <section className={styles.heroWrapper}>
         <Earth className={styles.earthImg} data-testid="earth" />
         <div className={styles.slogan}>
