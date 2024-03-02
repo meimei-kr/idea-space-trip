@@ -219,6 +219,7 @@ $earth-width: 100%;
 .aboutImg {
   width: 50%;
   height: auto;
+  display: inline-block;
 
   @media screen and (min-width: 1024px) {
     width: 30%;
@@ -267,56 +268,82 @@ $earth-width: 100%;
   }
 }
 
-/* クォーテーション画像 */
+/* クォーテーションエリア */
 .quoteArea {
-  p {
+  margin: 8px 0;
+}
+
+.quoteItem {
+  height: 40px;
+
+  @media screen and (min-width: 768px) {
+    height: 44px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: 48px;
+  }
+
+  span {
+    display: inline-block;
     font-size: 18px;
-    height: 24px;
+    line-height: 40px;
+    position: relative;
+    padding: 0 28px;
+    height: 100%;
 
     @media screen and (min-width: 768px) {
       font-size: 20px;
-      height: 28px;
+      padding: 0 32px;
+      line-height: 44px;
     }
 
     @media screen and (min-width: 1024px) {
       font-size: 24px;
-      height: 32px;
+      padding: 0 44px;
+      line-height: 48px;
     }
   }
 }
 
 .quoteStart {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   margin-right: 6px;
+  position: absolute;
+  top: 0;
+  left: 0;
 
   @media screen and (min-width: 768px) {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     margin-right: 8px;
   }
 
   @media screen and (min-width: 1024px) {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     margin-right: 16px;
   }
 }
 
 .quoteEnd {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   margin-left: 6px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 
   @media screen and (min-width: 768px) {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     margin-left: 8px;
   }
 
   @media screen and (min-width: 1024px) {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     margin-left: 16px;
   }
 }

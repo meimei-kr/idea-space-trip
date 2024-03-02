@@ -3,7 +3,7 @@
 import styles from "@/app/presentation/SelectMode/SelectModePresentation.module.scss";
 import Button from "@/components/elements/Button/Button";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
-import { ToastAction, ToastClose } from "@/components/ui/toast";
+import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import {
   ANSWER_GENERATED_COUNT_LIMIT,
@@ -81,7 +81,6 @@ export function SelectModePresentation() {
       // 制限回数に達している場合、エラーメッセージを表示
       toast({
         duration: 10000,
-        close: <ToastClose> ✕ </ToastClose>,
         title: "AI利用回数制限超過",
         description:
           "頑張ったので、今日はAI利用回数制限に達したよ。出したアイデアをふりかえってみよう。",

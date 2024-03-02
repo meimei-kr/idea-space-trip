@@ -46,36 +46,32 @@ export function HomePresentation({ session }: { session: Session | null }) {
               </div>
             </div>
             <div className={styles.quoteArea}>
-              <p>
+              <div className={styles.quoteItem}>
                 <span>
+                  解決したい課題がある
                   <QuoteStart
                     className={styles.quoteStart}
                     data-testid="quote-start"
                   />
-                </span>
-                解決したい課題がある
-                <span>
                   <QuoteEnd
                     className={styles.quoteEnd}
                     data-testid="quote-end"
                   />
                 </span>
-              </p>
-              <p>
+              </div>
+              <div className={styles.quoteItem}>
                 <span>
+                  こんなことができたらいいのに
                   <QuoteStart
                     className={styles.quoteStart}
                     data-testid="quote-start"
                   />
-                </span>
-                こんなことができたらいいのに
-                <span>
                   <QuoteEnd
                     className={styles.quoteEnd}
                     data-testid="quote-end"
                   />
                 </span>
-              </p>
+              </div>
             </div>
             <p className={styles.description}>
               そんな風に思いながら、具体的にどんなことをしたらいいのかアイデアに詰まってしまっていませんか？

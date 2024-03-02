@@ -21,7 +21,7 @@ jest.mock("@/lib/idea-sessions");
 
 describe("SelectMode", () => {
   it("renders the correct text content", () => {
-    render(<SelectModePresentation sessionInProgress={null} />);
+    render(<SelectModePresentation />);
     expect(screen.getByText("アイデア出し")).toBeInTheDocument();
     expect(screen.getByText("スタート")).toBeInTheDocument();
     expect(screen.getByText("アイデア")).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe("SelectMode", () => {
   });
 
   it("should render two LinkButton components", () => {
-    render(<SelectModePresentation sessionInProgress={null} />);
+    render(<SelectModePresentation />);
     const linkButton = screen.getByTestId("linkButton");
     const button = screen.getByTestId("button");
 
