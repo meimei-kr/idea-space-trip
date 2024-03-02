@@ -1,11 +1,11 @@
 "use client";
 
 import styles from "@/components/layouts/Header/Header.module.scss";
-import { ToastClose, ToastAction } from "@/components/ui/toast";
+import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import {
-  THEME_GENERATED_COUNT_LIMIT,
   ANSWER_GENERATED_COUNT_LIMIT,
+  THEME_GENERATED_COUNT_LIMIT,
 } from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
 import { getAIUsageHistory } from "@/lib/ai-usage-history";
@@ -95,7 +95,6 @@ export default function Header() {
       // 制限回数に達している場合、エラーメッセージを表示
       toast({
         duration: 10000,
-        close: <ToastClose> ✕ </ToastClose>,
         title: "AI利用回数制限超過",
         description:
           "頑張ったので、今日はAI利用回数制限に達したよ。出したアイデアをふりかえってみよう。",
