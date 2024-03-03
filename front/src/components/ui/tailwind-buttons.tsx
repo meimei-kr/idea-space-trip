@@ -33,7 +33,7 @@ export function BorderMagic({ children, onClick }: TailwindButtonProps) {
 export function BackButton({ children, onClick }: TailwindButtonProps) {
   return (
     <button
-      className="shadow-[inset_0_0_0_2px_#616467] px-8 py-4 rounded-full tracking-widest uppercase font-normal text-xs bg-transparent hover:bg-[#616467] hover:text-white transition duration-200"
+      className="shadow-[inset_0_0_0_2px_#616467] px-12 py-4 rounded-full tracking-widest uppercase font-normal text-xs bg-transparent hover:bg-[#616467] hover:text-white transition duration-200"
       onClick={onClick}
     >
       {children}

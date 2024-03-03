@@ -61,3 +61,11 @@ $back-button-length-lg: 96px;
     left: var(--page-padding-lg);
   }
 }
+
+.arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  margin-left: 0.75rem;
+}

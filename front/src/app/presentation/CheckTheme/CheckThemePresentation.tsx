@@ -8,6 +8,7 @@ import { IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoChevronBack } from "react-icons/io5";
 
 export default function CheckThemePresentation({
   ideaSession,
@@ -88,6 +89,7 @@ export default function CheckThemePresentation({
         </div>
       </div>
       <div className={styles.back}>
+        <IoChevronBack className={styles.arrow} />
         <BackButton onClick={handleBack}>BACK</BackButton>
       </div>
     </main>
