@@ -5,7 +5,6 @@
   padding: 16px 24px 0;
   height: var(--header-height);
   width: 100%;
-  z-index: 10;
 
   @media screen and (min-width: 1024px) {
     padding: 16px 80px 0;
@@ -17,7 +16,7 @@
   position: fixed;
   height: 72px;
   width: 112px;
-  z-index: 10;
+  z-index: 30;
 }
 
 .logo {
@@ -28,7 +27,7 @@
 /* Menuボタン */
 .hamburger {
   position: fixed;
-  z-index: 30;
+  z-index: 45;
   top: 16px;
   right: 24px;
   width: 56px;
@@ -37,6 +36,7 @@
   background-color: var(--white);
   opacity: 0.8;
   cursor: pointer;
+  margin-top: 8px;
 
   span {
     display: inline-block;
@@ -128,7 +128,7 @@
 
   &.active {
     opacity: 1;
-    z-index: 20;
+    z-index: 40;
   }
 }
 
