@@ -31,19 +31,19 @@ export function SelectModePresentation() {
   // 途中セッションの中断時のパスを判定
   const checkPath = (ideaSession: IdeaSessionType) => {
     if (ideaSession.isAiAnswerGenerated) {
-      return "idea-generation"; // アイデア出し画面（回答生成後）
+      return "generate-ideas"; // アイデア出し画面（回答生成後）
     }
 
     if (ideaSession.theme) {
-      return "idea-generation"; // アイデア出し画面（回答生成前）
+      return "generate-ideas"; // アイデア出し画面（回答生成前）
     }
 
     if (ideaSession.isThemeDetermined) {
-      return "theme"; // テーマ入力画面
+      return "input-theme"; // テーマ入力画面
     }
 
     if (ideaSession.isAiThemeGenerated) {
-      return "theme-generation"; // テーマ生成画面
+      return "generate-theme"; // テーマ生成画面
     }
 
     if (ideaSession.category !== 0) {

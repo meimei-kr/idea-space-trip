@@ -2,12 +2,13 @@
 
 type TailwindButtonProps = {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
+  type: "button" | "submit";
 };
 
-export function LitUpBorders({ children, onClick }: TailwindButtonProps) {
+export function LitUpBorders({ children, onClick, type }: TailwindButtonProps) {
   return (
-    <button className="p-[3px] relative" onClick={onClick}>
+    <button type={type} className="p-[3px] relative" onClick={onClick}>
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
       <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
         {children}
@@ -16,9 +17,10 @@ export function LitUpBorders({ children, onClick }: TailwindButtonProps) {
   );
 }
 
-export function BorderMagic({ children, onClick }: TailwindButtonProps) {
+export function BorderMagic({ children, onClick, type }: TailwindButtonProps) {
   return (
     <button
+      type={type}
       className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
       onClick={onClick}
     >
@@ -30,9 +32,10 @@ export function BorderMagic({ children, onClick }: TailwindButtonProps) {
   );
 }
 
-export function BackButton({ children, onClick }: TailwindButtonProps) {
+export function BackButton({ children, onClick, type }: TailwindButtonProps) {
   return (
     <button
+      type={type}
       className="shadow-[inset_0_0_0_2px_#616467] px-12 py-4 rounded-full tracking-widest uppercase font-normal text-xs bg-transparent hover:bg-[#616467] hover:text-white transition duration-200"
       onClick={onClick}
     >
@@ -41,9 +44,10 @@ export function BackButton({ children, onClick }: TailwindButtonProps) {
   );
 }
 
-export function Shimmer({ children, onClick }: TailwindButtonProps) {
+export function Shimmer({ children, onClick, type }: TailwindButtonProps) {
   return (
     <button
+      type={type}
       className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
       onClick={onClick}
     >
@@ -52,9 +56,10 @@ export function Shimmer({ children, onClick }: TailwindButtonProps) {
   );
 }
 
-export function Simle({ children, onClick }: TailwindButtonProps) {
+export function Simle({ children, onClick, type }: TailwindButtonProps) {
   return (
     <button
+      type={type}
       className="px-4 py-2 rounded-md border border-neutral-300 bg-neutral-100 text-neutral-500 text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md"
       onClick={onClick}
     >

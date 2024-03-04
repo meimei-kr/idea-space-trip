@@ -1,8 +1,8 @@
 "use server";
 
+import { authOptions } from "@/lib/options";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 

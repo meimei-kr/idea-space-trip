@@ -3,11 +3,11 @@
 import styles from "@/app/presentation/CheckTheme/CheckThemePresentation.module.scss";
 import Button from "@/components/elements/Button/Button";
 import { BackButton } from "@/components/ui/tailwind-buttons";
+import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { IoChevronBack } from "react-icons/io5";
 
 export default function CheckThemePresentation({
@@ -16,37 +16,13 @@ export default function CheckThemePresentation({
   ideaSession: IdeaSessionType | null;
 }) {
   const router = useRouter();
-  const [statusCode, setStatusCode] = useState<number | null>(null);
-
-  // セッションは開始されており、ideaSessionは必ず取得できる想定なので
-  // nullの場合は、500エラーを返す
-  if (ideaSession === null) {
-    setStatusCode(500);
-  }
-
-  // ideaSessionからUUIDを取得
-  const uuid = ideaSession?.uuid;
-  // URLからUUIDを取得
-  const uuidFromPath = usePathname().split("/")[1];
-
-  useEffect(() => {
-    // URLに含まれるUUIDがログインユーザーのものと一致するかチェック
-    if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
-      setStatusCode(404);
-    } else {
-      setStatusCode(null);
-      // 遷移先パスをprefetch
-      router.prefetch(`/select-mode`);
-      router.prefetch(`/${uuid}/theme`);
-      router.prefetch(`/${uuid}/select-theme-category`);
-    }
-  }, [uuid, uuidFromPath]);
+  const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
   const handleYesClick = async () => {
     await updateIdeaSession(uuid as string, {
       isThemeDetermined: true,
     });
-    router.push(`/${uuid}/theme`);
+    router.push(`/${uuid}/input-theme`);
   };
 
   const handleNoClick = async () => {
@@ -90,7 +66,9 @@ export default function CheckThemePresentation({
       </div>
       <div className={styles.back}>
         <IoChevronBack className={styles.arrow} />
-        <BackButton onClick={handleBack}>BACK</BackButton>
+        <BackButton onClick={handleBack} type="button">
+          BACK
+        </BackButton>
       </div>
     </main>
   );

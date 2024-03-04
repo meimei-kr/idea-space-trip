@@ -1,14 +1,10 @@
-/* 変数 */
-$back-button-length: 56px;
-$back-button-length-lg: 96px;
-
 .wrapper {
-  height: calc(100vh - var(--header-height));
+  min-height: calc(100vh - var(--header-height));
   width: 100vw;
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .container {
@@ -17,11 +13,16 @@ $back-button-length-lg: 96px;
   justify-content: flex-start;
   align-items: center;
   gap: 60px;
-  height: calc(100% - $back-button-length - var(--page-padding));
+  height: calc(100% - var(--back-button-length) - var(--page-padding));
   width: calc(100% - var(--page-padding) * 2);
+  padding-bottom: calc(var(--back-button-length) + var(--page-padding) + 80px);
 
   @media screen and (min-width: 1024px) {
-    height: calc(100% - $back-button-length-lg - var(--page-padding-lg));
+    height: calc(100% - var(--back-button-length) - var(--page-padding-lg));
+    width: calc(100% - var(--page-padding-lg) * 2);
+    padding-bottom: calc(
+      var(--back-button-length) + var(--page-padding-lg) + 160px
+    );
   }
 }
 
@@ -45,12 +46,15 @@ $back-button-length-lg: 96px;
 .question {
   text-align: center;
   font-size: 18px;
+  margin-top: 48px;
 
   @media screen and (min-width: 1024px) {
     font-size: 24px;
+    margin-top: 64px;
   }
 }
 
+/* 戻るボタン */
 .back {
   position: absolute;
   bottom: var(--page-padding);
