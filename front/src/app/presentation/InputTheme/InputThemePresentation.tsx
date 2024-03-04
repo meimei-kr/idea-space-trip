@@ -95,7 +95,7 @@ export default function InputThemePresentation({
                 </div>
               </div>
             </div>
-            <input type="hidden" value={uuid} />
+            <input type="hidden" value={uuid} id="uuid" name="uuid" />
             <LitUpBorders type="submit">決定</LitUpBorders>
           </form>
         </div>
