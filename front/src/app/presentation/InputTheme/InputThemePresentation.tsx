@@ -66,7 +66,7 @@ export default function InputThemePresentation({
               <IoCheckboxOutline />
               テーマが具体的かどうかチェック
             </p>
-            <div className={styles.checkContainer}>
+            <div className={styles.checkContainer} data-testid="check">
               <div className={styles.checkExamples}>
                 <div>
                   <div className={styles.checkDecoration}>
