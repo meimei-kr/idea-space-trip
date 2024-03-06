@@ -1,4 +1,4 @@
-import CheckThemePresentation from "@/app/presentation/InputTheme/InputThemePresentation";
+import InputThemePresentation from "@/app/presentation/InputTheme/InputThemePresentation";
 import { IdeaSessionType } from "@/types";
 import { render, screen } from "@testing-library/react";
 
@@ -29,7 +29,7 @@ const ideaSession: IdeaSessionType = {
 
 describe("InputThemePresentation", () => {
   it("should render the instruction correctly", () => {
-    render(<CheckThemePresentation ideaSession={ideaSession} />);
+    render(<InputThemePresentation ideaSession={ideaSession} />);
 
     expect(
       screen.getByText("アイデア出しのテーマを入力してね"),
@@ -37,13 +37,13 @@ describe("InputThemePresentation", () => {
   });
 
   it("should display the textarea", () => {
-    render(<CheckThemePresentation ideaSession={ideaSession} />);
+    render(<InputThemePresentation ideaSession={ideaSession} />);
 
     expect(screen.getByRole("textbox", { name: "theme" })).toBeInTheDocument();
   });
 
   it("should render the checkItem correctly", () => {
-    render(<CheckThemePresentation ideaSession={ideaSession} />);
+    render(<InputThemePresentation ideaSession={ideaSession} />);
 
     expect(
       screen.getByText("テーマが具体的かどうかチェック"),
@@ -52,13 +52,13 @@ describe("InputThemePresentation", () => {
   });
 
   it("should display the submit button", () => {
-    render(<CheckThemePresentation ideaSession={ideaSession} />);
+    render(<InputThemePresentation ideaSession={ideaSession} />);
 
     expect(screen.getByRole("button", { name: "決定" })).toBeInTheDocument();
   });
 
   it("should display the BackButton", () => {
-    render(<CheckThemePresentation ideaSession={ideaSession} />);
+    render(<InputThemePresentation ideaSession={ideaSession} />);
 
     expect(screen.getByText("BACK")).toBeInTheDocument();
   });

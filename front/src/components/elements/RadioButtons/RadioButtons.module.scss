@@ -11,10 +11,6 @@
 .radioButton {
   width: 100%;
   height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
   border: 4px solid var(--light-gray);
   border-radius: 10px;
   font-size: 20px;
@@ -30,8 +26,14 @@
 }
 
 .input {
+  margin-left: 16px;
+  opacity: 0;
+}
+
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   height: 100%;
-  margin-left: 16px;
-  display: none;
 }

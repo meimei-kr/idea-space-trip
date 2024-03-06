@@ -11,7 +11,7 @@ export default function AlienDecoration({ number }: { number: number }) {
 
   return (
     <div className={styles.decoration}>
-      <Alien className={styles.svg} />
+      <Alien className={styles.svg} data-testid="svg" />
       <span className={styles.number}>{addZero(number)}</span>
     </div>
   );
