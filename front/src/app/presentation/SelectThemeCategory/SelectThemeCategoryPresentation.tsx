@@ -35,7 +35,7 @@ export default function SelectThemePresentation({
   };
 
   // エラーがある場合はエラーページを表示
-  if (statusCode !== 200) {
+  if (statusCode >= 400) {
     return <Error statusCode={statusCode} />;
   }
 
