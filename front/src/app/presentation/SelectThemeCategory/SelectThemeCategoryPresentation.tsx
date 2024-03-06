@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
 import { IoChevronBack } from "react-icons/io5";
 
-export default function InputThemePresentation({
+export default function SelectThemePresentation({
   ideaSession,
 }: {
   ideaSession: IdeaSessionType | null;
@@ -44,7 +44,7 @@ export default function InputThemePresentation({
       <div className={styles.container}>
         <div className={styles.content}>
           <p className={styles.question}>どの発明家になってみる？</p>
-          <form action={dispatch} className={styles.form}>
+          <form action={dispatch} className={styles.form} aria-label="form">
             {state?.errors?.option &&
               state?.errors?.option.map((error, index) => (
                 <div
@@ -59,7 +59,7 @@ export default function InputThemePresentation({
               options={options}
               ariaDescribedby="theme-category-error"
             />
-            <input type="hidden" value={uuid} />
+            <input type="hidden" name="uuid" value={uuid} />
             <LitUpBorders type="submit">決定</LitUpBorders>
           </form>
         </div>

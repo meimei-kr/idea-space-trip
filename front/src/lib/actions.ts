@@ -51,9 +51,9 @@ export const submitTheme = async (
  */
 // Enumの定義
 enum ThemeCategoryEnum {
-  アプリ = 1,
-  商品 = 2,
-  サービス = 3,
+  アプリ = 10,
+  商品 = 20,
+  サービス = 30,
 }
 
 export type ThemeCategoryState = {
