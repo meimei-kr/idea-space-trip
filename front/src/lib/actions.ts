@@ -68,7 +68,7 @@ const ThemeCategorySchema = z.object({
     .string()
     .nullable()
     .refine((value) => value !== null && options.includes(value), {
-      message: "Error: 以下は選択は必須だよ",
+      message: "Error: 以下は選択必須だよ",
     }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });

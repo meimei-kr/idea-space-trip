@@ -21,6 +21,6 @@ class IdeaSessionSerializer
 
   set_type :idea_session
   attributes :uuid, :is_theme_determined, :is_ai_theme_generated,
-             :category, :question, :is_ai_answer_generated,
+             :theme_category, :theme_question, :is_ai_answer_generated,
              :theme, :is_finished, :user_id
 end
