@@ -4,7 +4,7 @@ import styles from "@/app/presentation/InputTheme/InputThemePresentation.module.
 import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { Textarea } from "@/components/ui/textarea";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
-import { State, submitTheme } from "@/lib/actions";
+import { ThemeState, submitTheme } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ export default function InputThemePresentation({
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
   // フォーム送信時の処理
-  const initialState: State = {
+  const initialState: ThemeState = {
     errors: {},
   };
   const [state, dispatch] = useFormState(submitTheme, initialState);
@@ -37,7 +37,7 @@ export default function InputThemePresentation({
   };
 
   // エラーがある場合はエラーページを表示
-  if (statusCode) {
+  if (statusCode >= 400) {
     return <Error statusCode={statusCode} />;
   }
 

@@ -26,8 +26,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_160448) do
     t.string "uuid", null: false
     t.boolean "is_theme_determined", default: false, null: false
     t.boolean "is_ai_theme_generated", default: false, null: false
-    t.integer "category", default: 0, null: false
-    t.integer "question", default: 0, null: false
+    t.integer "theme_category", default: 0, null: false
+    t.integer "theme_question", default: 0, null: false
     t.boolean "is_ai_answer_generated", default: false, null: false
     t.text "theme"
     t.boolean "is_finished", default: false, null: false
