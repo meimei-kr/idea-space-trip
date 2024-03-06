@@ -7,8 +7,8 @@
 #  uuid                   :string(255)      not null
 #  is_theme_determined    :boolean          default(FALSE), not null
 #  is_ai_theme_generated  :boolean          default(FALSE), not null
-#  category               :integer          default(0), not null
-#  question               :integer          default(0), not null
+#  theme_category               :integer          default(0), not null
+#  theme_question               :integer          default(0), not null
 #  is_ai_answer_generated :boolean          default(FALSE), not null
 #  theme                  :text(65535)
 #  is_finished            :boolean          default(FALSE), not null
@@ -39,13 +39,13 @@ RSpec.describe IdeaSession do
       expect(idea_session).not_to be_valid
     end
 
-    it 'is invalid without category' do
-      idea_session = build(:idea_session, category: nil)
+    it 'is invalid without theme_category' do
+      idea_session = build(:idea_session, theme_category: nil)
       expect(idea_session).not_to be_valid
     end
 
-    it 'is invalid without question' do
-      idea_session = build(:idea_session, question: nil)
+    it 'is invalid without theme_question' do
+      idea_session = build(:idea_session, theme_question: nil)
       expect(idea_session).not_to be_valid
     end
 

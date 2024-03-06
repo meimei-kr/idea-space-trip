@@ -7,8 +7,8 @@
 #  uuid                   :string(255)      not null
 #  is_theme_determined    :boolean          default(FALSE), not null
 #  is_ai_theme_generated  :boolean          default(FALSE), not null
-#  category               :integer          default(0), not null
-#  question               :integer          default(0), not null
+#  theme_category               :integer          default(0), not null
+#  theme_question               :integer          default(0), not null
 #  is_ai_answer_generated :boolean          default(FALSE), not null
 #  theme                  :text(65535)
 #  is_finished            :boolean          default(FALSE), not null

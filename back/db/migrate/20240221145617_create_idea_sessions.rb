@@ -5,8 +5,8 @@ class CreateIdeaSessions < ActiveRecord::Migration[7.1]
       t.string :uuid, null: false
       t.boolean :is_theme_determined, null: false, default: false
       t.boolean :is_ai_theme_generated, null: false, default: false
-      t.integer :category, null: false, default: 0
-      t.integer :question, null: false, default: 0
+      t.integer :theme_category, null: false, default: 0
+      t.integer :theme_question, null: false, default: 0
       t.boolean :is_ai_answer_generated, null: false, default: false
       t.text :theme
       t.boolean :is_finished, null: false, default: false
