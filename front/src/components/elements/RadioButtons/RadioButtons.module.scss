@@ -8,7 +8,15 @@
   gap: 8px;
 }
 
-.radioButton {
+.input {
+  margin-left: 16px;
+  opacity: 0;
+}
+
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   height: 80px;
   border: 4px solid var(--light-gray);
@@ -25,15 +33,6 @@
   }
 }
 
-.input {
-  margin-left: 16px;
-  opacity: 0;
-}
-
-.label {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+.selected {
+  background-color: var(--light-gray);
 }
