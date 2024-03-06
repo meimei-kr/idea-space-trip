@@ -11,17 +11,17 @@ export default function RadioButtonForm({
   return (
     <div className={styles.container}>
       {options.map((option, index) => (
-        <div className={styles.radioButton} key={index + 1}>
-          <AlienDecoration number={index + 1} />
+        <div className={styles.radioButton} key={(index + 1) * 10}>
+          <AlienDecoration number={(index + 1) * 10} />
           <input
             type="radio"
-            id={`option${index + 1}`}
+            id={`option${(index + 1) * 10}`}
             name="option"
             value={option}
             aria-describedby={ariaDescribedby}
             className={styles.input}
           />
-          <label htmlFor={`option${index + 1}`}>{option}</label>
+          <label htmlFor={`option${(index + 1) * 10}`}>{option}</label>
         </div>
       ))}
     </div>
