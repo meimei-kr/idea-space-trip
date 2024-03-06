@@ -1,0 +1,21 @@
+.decoration {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 4px 16px;
+}
+
+.svg {
+  height: 50px;
+  width: auto;
+}
+
+.number {
+  color: var(--light-green);
+  text-shadow: 0 0 30px var(--light-green);
+  font-size: 14px;
+  line-height: 1rem;
+  font-weight: bold;
+}

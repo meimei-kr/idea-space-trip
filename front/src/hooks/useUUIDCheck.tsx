@@ -16,7 +16,7 @@ export const useUUIDCheck = ({
   ideaSession: IdeaSessionType | null;
 }) => {
   const router = useRouter();
-  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [statusCode, setStatusCode] = useState<number>(200);
 
   // セッションは開始されており、ideaSessionは必ず取得できる想定なので
   // nullの場合は、500エラーを返す
@@ -34,7 +34,7 @@ export const useUUIDCheck = ({
     if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
       setStatusCode(404);
     } else {
-      setStatusCode(null);
+      setStatusCode(200);
       // 遷移先パスをprefetch
       router.prefetch(`/select-mode`);
       router.prefetch(`/${uuid}/input-theme`);

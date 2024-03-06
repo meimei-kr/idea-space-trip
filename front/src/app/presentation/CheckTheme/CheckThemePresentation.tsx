@@ -37,7 +37,7 @@ export default function CheckThemePresentation({
   };
 
   // エラーがある場合はエラーページを表示
-  if (statusCode) {
+  if (statusCode !== 200) {
     return <Error statusCode={statusCode} />;
   }
 

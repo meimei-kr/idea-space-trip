@@ -1,0 +1,37 @@
+.container {
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.radioButton {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  border: 4px solid var(--light-gray);
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--light-gray);
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 50%;
+  }
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  margin-left: 16px;
+  display: none;
+}

@@ -1,8 +1,30 @@
 import CheckThemePresentation from "@/app/presentation/InputTheme/InputThemePresentation";
+import { IdeaSessionType } from "@/types";
 import { render, screen } from "@testing-library/react";
 
-const ideaSession = {
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
+
+jest.mock("@/hooks/useUUIDCheck", () => ({
+  useUUIDCheck: () => ({
+    uuid: "uuid",
+    statusCode: 200,
+  }),
+}));
+
+jest.mock("react-dom", () => ({
+  ...jest.requireActual("react-dom"),
+  useFormState: jest.fn(() => [{ errors: {} }, jest.fn()]),
+}));
+
+jest.mock("@/components/ui/textarea", () => ({
+  Textarea: () => <textarea name="theme" aria-label="theme" />,
+}));
+
+const ideaSession: IdeaSessionType = {
   uuid: "uuid",
+  isThemeDetermined: true,
 };
 
 describe("InputThemePresentation", () => {
@@ -10,9 +32,7 @@ describe("InputThemePresentation", () => {
     render(<CheckThemePresentation ideaSession={ideaSession} />);
 
     expect(
-      screen.getByRole("paragraph", {
-        name: "アイデア出しのテーマを入力してね",
-      }),
+      screen.getByText("アイデア出しのテーマを入力してね"),
     ).toBeInTheDocument();
   });
 
@@ -26,9 +46,7 @@ describe("InputThemePresentation", () => {
     render(<CheckThemePresentation ideaSession={ideaSession} />);
 
     expect(
-      screen.getByRole("paragraph", {
-        name: "テーマが具体的かどうかチェック",
-      }),
+      screen.getByText("テーマが具体的かどうかチェック"),
     ).toBeInTheDocument();
     expect(screen.getByTestId("check")).toBeInTheDocument();
   });
