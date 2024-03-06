@@ -1,6 +1,10 @@
 "use server";
 
 import { updateIdeaSession } from "@/lib/idea-sessions";
+import {
+  getJapaneseNamesFromThemeCategoryEnum,
+  getThemeCategoryEnumValueFromJapanese,
+} from "@/utils/enums";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -42,27 +46,20 @@ export const submitTheme = async (
   // idea_sessionテーブルのthemeカラムを更新
   await updateIdeaSession(uuid, { theme });
 
-  revalidatePath(`${uuid}/generate-ideas`);
-  redirect(`${uuid}/generate-ideas`);
+  revalidatePath("/generate-ideas");
+  redirect("generate-ideas");
 };
 
 /**
  * テーマのカテゴリーを受け取り、idea_sessionテーブルのtheme_categoryカラムを更新する
  */
-// Enumの定義
-enum ThemeCategoryEnum {
-  アプリ = 10,
-  商品 = 20,
-  サービス = 30,
-}
-
 export type ThemeCategoryState = {
   errors?: {
     option?: string[];
   };
 };
 
-const options = ["アプリ", "商品", "サービス"];
+const options = getJapaneseNamesFromThemeCategoryEnum();
 const ThemeCategorySchema = z.object({
   option: z
     .string()
@@ -93,13 +90,13 @@ export const submitThemeCategory = async (
 
   const { option, uuid } = validatedThemeCategory.data;
 
-  // 送信されたoption(string)をキーに対応するEnumの数値を取得
-  const themeCategory =
-    ThemeCategoryEnum[option as keyof typeof ThemeCategoryEnum];
+  if (option !== null) {
+    // 送信されたoption(string)をキーに、対応するEnumの数値を取得
+    const themeCategory = getThemeCategoryEnumValueFromJapanese(option);
+    // idea_sessionテーブルのthemeカラムを更新
+    await updateIdeaSession(uuid, { themeCategory });
 
-  // idea_sessionテーブルのthemeカラムを更新
-  await updateIdeaSession(uuid, { themeCategory });
-
-  revalidatePath(`${uuid}/generate-theme`);
-  redirect(`${uuid}/generate-theme`);
+    revalidatePath("/generate-theme");
+    redirect("/generate-theme");
+  }
 };
