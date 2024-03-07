@@ -20,8 +20,14 @@ export type IdeaSessionType = {
   isAiThemeGenerated?: boolean;
   themeCategory?: string | null;
   themeQuestion?: string | null;
+  themeAnswer?: string;
   isAiAnswerGenerated?: boolean;
   theme?: string;
   isFinished?: boolean;
   userId?: number;
+};
+
+export type AiGeneratedThemeType = {
+  ideaSessionId?: number;
+  theme?: string;
 };

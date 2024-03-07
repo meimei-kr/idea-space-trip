@@ -32,7 +32,6 @@
     "react-dom": "^18",
     "react-element-to-jsx-string": "^15.0.0",
     "react-icons": "^5.0.1",
-    "react-ztext": "^1.0.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
@@ -69,7 +68,8 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "string-width": "4.2.3"
+    "string-width": "4.2.3",
+    "wrap-ansi": "^7.0.0"
   },
   "license": "MIT"
 }
