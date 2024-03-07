@@ -7,6 +7,7 @@ import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
+import { ThemeCategoryEnum } from "@/utils/enums";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
@@ -27,7 +28,7 @@ export default function SelectThemePresentation({
   const [state, dispatch] = useFormState(submitThemeCategory, initialState);
 
   // ラジオボタンの選択肢
-  const options = ["アプリ", "商品", "サービス"];
+  const options = Object.keys(ThemeCategoryEnum);
 
   // 戻るボタンの処理
   const handleBack = () => {

@@ -1,5 +1,6 @@
 import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecoration";
 import styles from "@/components/elements/RadioButtons/RadioButtons.module.scss";
+import { ThemeCategoryEnum } from "@/utils/enums";
 import { useState } from "react";
 
 export default function RadioButtons({
@@ -34,7 +35,7 @@ export default function RadioButtons({
             className={styles.input}
             onChange={handleOptionChange}
           />
-          {option}
+          {ThemeCategoryEnum[option as keyof typeof ThemeCategoryEnum]}
         </label>
       ))}
     </div>

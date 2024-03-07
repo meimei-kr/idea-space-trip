@@ -46,7 +46,7 @@ export function SelectModePresentation() {
       return "generate-theme"; // テーマ生成画面
     }
 
-    if (ideaSession.themeCategory !== 0) {
+    if (ideaSession.themeCategory !== "unselected") {
       return "select-theme-category"; // テーマカテゴリ選択画面
     }
 

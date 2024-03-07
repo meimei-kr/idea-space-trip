@@ -18,8 +18,8 @@ export type IdeaSessionType = {
   uuid?: string;
   isThemeDetermined?: boolean;
   isAiThemeGenerated?: boolean;
-  themeCategory?: number;
-  themeQuestion?: number;
+  themeCategory?: string | null;
+  themeQuestion?: string | null;
   isAiAnswerGenerated?: boolean;
   theme?: string;
   isFinished?: boolean;

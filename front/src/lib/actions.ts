@@ -1,17 +1,14 @@
 "use server";
 
 import { updateIdeaSession } from "@/lib/idea-sessions";
-import {
-  getJapaneseNamesFromThemeCategoryEnum,
-  getThemeCategoryEnumValueFromJapanese,
-} from "@/utils/enums";
-import { revalidatePath } from "next/cache";
+import { ThemeCategoryEnum } from "@/utils/enums";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 /**
  * テーマの入力を受け取り、idea_sessionテーブルのthemeカラムを更新する
  */
+
 export type ThemeState = {
   errors?: {
     theme?: string[];
@@ -46,20 +43,21 @@ export const submitTheme = async (
   // idea_sessionテーブルのthemeカラムを更新
   await updateIdeaSession(uuid, { theme });
 
-  revalidatePath("/generate-ideas");
-  redirect("generate-ideas");
+  redirect(`/${uuid}/generate-ideas`);
 };
 
 /**
  * テーマのカテゴリーを受け取り、idea_sessionテーブルのtheme_categoryカラムを更新する
  */
+
 export type ThemeCategoryState = {
   errors?: {
     option?: string[];
   };
 };
 
-const options = getJapaneseNamesFromThemeCategoryEnum();
+const options = Object.keys(ThemeCategoryEnum);
+
 const ThemeCategorySchema = z.object({
   option: z
     .string()
@@ -71,7 +69,7 @@ const ThemeCategorySchema = z.object({
 });
 
 export const submitThemeCategory = async (
-  prevState: ThemeCategoryState,
+  prevState: ThemeCategoryState | undefined,
   formData: FormData,
 ) => {
   // ThemeCategorySchemaによるバリデーション
@@ -91,12 +89,9 @@ export const submitThemeCategory = async (
   const { option, uuid } = validatedThemeCategory.data;
 
   if (option !== null) {
-    // 送信されたoption(string)をキーに、対応するEnumの数値を取得
-    const themeCategory = getThemeCategoryEnumValueFromJapanese(option);
     // idea_sessionテーブルのthemeカラムを更新
-    await updateIdeaSession(uuid, { themeCategory });
+    await updateIdeaSession(uuid, { themeCategory: option });
 
-    revalidatePath("/generate-theme");
-    redirect("/generate-theme");
+    redirect(`/${uuid}/generate-theme`);
   }
 };
