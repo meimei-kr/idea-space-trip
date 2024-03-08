@@ -2,7 +2,7 @@ module Api
   module V1
     class IdeaSessionsController < ApplicationController
       def show_in_progress
-        idea_session = policy_scope(@current_user.idea_sessions).where(is_finished: false).first
+        idea_session = @current_user.idea_sessions.where(is_finished: false).first
         if idea_session.nil?
           render json: nil, status: :ok
         else
@@ -54,6 +54,7 @@ module Api
           :is_ai_theme_generated,
           :theme_category,
           :theme_question,
+          :theme_answer,
           :is_ai_answer_generated,
           :theme,
           :is_finished,

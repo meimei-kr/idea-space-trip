@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_27_160448) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_08_054702) do
+  create_table "ai_generated_themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "theme", null: false
+    t.bigint "idea_session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_session_id"], name: "index_ai_generated_themes_on_idea_session_id"
+  end
+
   create_table "ai_usage_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "date", null: false
@@ -28,6 +36,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_160448) do
     t.boolean "is_ai_theme_generated", default: false, null: false
     t.integer "theme_category", default: 0, null: false
     t.integer "theme_question", default: 0, null: false
+    t.text "theme_answer"
     t.boolean "is_ai_answer_generated", default: false, null: false
     t.text "theme"
     t.boolean "is_finished", default: false, null: false
@@ -140,6 +149,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_160448) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "ai_generated_themes", "idea_sessions"
   add_foreign_key "ai_usage_histories", "users"
   add_foreign_key "idea_sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
