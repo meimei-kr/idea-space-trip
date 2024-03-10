@@ -6,6 +6,7 @@ import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
+import type { Option } from "@/types";
 import { IdeaSessionType } from "@/types";
 import { ThemeCategoryEnum } from "@/utils/enums";
 import Error from "next/error";
@@ -28,7 +29,12 @@ export default function SelectThemePresentation({
   const [state, dispatch] = useFormState(submitThemeCategory, initialState);
 
   // ラジオボタンの選択肢
-  const options = Object.keys(ThemeCategoryEnum);
+  const options: Option[] = Object.entries(ThemeCategoryEnum).map(([key, val]) => {
+    return {
+      value: key,
+      label: val,
+    };
+  });
 
   // 戻るボタンの処理
   const handleBack = () => {

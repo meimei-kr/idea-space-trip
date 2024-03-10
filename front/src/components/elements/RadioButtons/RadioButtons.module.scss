@@ -9,7 +9,6 @@
 }
 
 .input {
-  margin-left: 16px;
   opacity: 0;
 }
 
@@ -18,18 +17,16 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 80px;
   border: 4px solid var(--light-gray);
   border-radius: 10px;
   font-size: 20px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-right: 16px;
   cursor: pointer;
 
   &:hover {
     background-color: var(--light-gray);
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 50%;
   }
 }
 
