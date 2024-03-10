@@ -1,8 +1,17 @@
 "use client";
 
 import styles from "@/app/presentation/GenerateTheme/GenerateThemePresentation.module.scss";
+import AiGenerationLoading from "@/components/elements/AiGenerationLoading/AiGenerationLoading";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
@@ -20,11 +29,16 @@ import {
   confirmTheme,
   generateThemes,
 } from "@/lib/actions";
+import { updateAIUsageHistory } from "@/lib/ai-usage-history";
+import { createIdeaSession, deleteIdeaSession } from "@/lib/idea-sessions";
+import { generateUUID } from "@/lib/uuid";
+import type { Option } from "@/types";
 import { IdeaSessionType } from "@/types";
 import { ThemeCategoryEnum, ThemeQuestionEnum } from "@/utils/enums";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
-import { useFormState } from "react-dom";
+import { useEffect, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { BsExclamationTriangle } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa6";
 import { IoChevronBack } from "react-icons/io5";
@@ -34,8 +48,13 @@ export default function GenerateThemePresentation({
   aiGeneratedThemesArray,
 }: {
   ideaSession: IdeaSessionType | null;
-  aiGeneratedThemesArray: string[] | null;
+  aiGeneratedThemesArray: Option[] | null;
 }) {
+  const [isThemeGenerated, setIsThemeGenerated] = useState(
+    ideaSession?.isAiThemeGenerated,
+  );
+  const [retryCount, setRetryCount] = useState(0);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
@@ -55,9 +74,43 @@ export default function GenerateThemePresentation({
     initialGeneratedThemesState,
   );
 
+  // テーマ生成ボタンの状態更新
+  useEffect(() => {
+    if (aiGeneratedThemesArray && aiGeneratedThemesArray.length > 0) {
+      setIsThemeGenerated(true);
+    }
+  }, [aiGeneratedThemesArray]);
+
+  // 無効な入力によるリトライ回数を2回許可する
+  const handleRetryCount = () => {
+    console.log("retryCount: ", retryCount);
+    if (retryCount <= 2) {
+      setRetryCount((prev) => prev + 1);
+    } else {
+      // リトライ回数が2回を超えた場合、エラーメッセージを表示
+      setIsAlertModalOpen(true);
+      console.log("isAlertModalOpen: ", isAlertModalOpen);
+    }
+  };
+
+  // 無効な入力エラー画面でOKクリック時の処理
+  // 当該アイデア出しセッションを終了
+  // テーマ有無選択画面に遷移し、新しいアイデア出しセッションを開始
+  const handleOkClick = async () => {
+    setIsAlertModalOpen(false);
+    // ai_usage_historiesテーブルの使用回数を1増やす
+    await updateAIUsageHistory();
+    // idea_sessionsテーブルから当該セッションを削除
+    await deleteIdeaSession(uuid);
+    // 新しいアイデア出しセッションを開始
+    const newUUID = generateUUID();
+    await createIdeaSession(newUUID);
+    router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
+  };
+
   // 戻るボタンの処理
   const handleBack = () => {
-    router.push(`/${uuid}/check-theme`);
+    router.push(`/${uuid}/select-theme-category`);
   };
 
   // エラーがある場合はエラーページを表示
@@ -90,7 +143,9 @@ export default function GenerateThemePresentation({
               </p>
             </div>
           </div>
-          <form action={dispatchQuestion} className={styles.form}>
+
+          {/* 回答送信フォーム */}
+          <form action={dispatchQuestion} className={styles.answerForm}>
             <div className={styles.question}>
               <div className={styles.questionTitle}>
                 <SectionTitle>質問</SectionTitle>
@@ -138,7 +193,7 @@ export default function GenerateThemePresentation({
                   <Textarea
                     id="answer"
                     name="answer"
-                    placeholder="回答を入力してね"
+                    placeholder="回答を入力してね。複数回答してもOKだよ。"
                     aria-describedby="theme-answer-error"
                     className={styles.textarea}
                   />
@@ -154,12 +209,45 @@ export default function GenerateThemePresentation({
                 入力内容がこれでいいか確認してからボタンを押してね。
               </div>
             </div>
-            <LitUpBorders type="submit">テーマ生成</LitUpBorders>
+            <SubmitButton
+              isThemeGenerated={isThemeGenerated}
+              handleRetryCount={handleRetryCount}
+            />
+            {/* AIテーマ生成中のローディング */}
+            <AiLoading />
+
+            {/* エラーダイアログ */}
+            <AlertDialog
+              open={isAlertModalOpen}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogDescription>
+                    無効な入力が複数回続けて検知されたよ。
+                    <br />
+                    新しいセッションを作成するので、もう一度やってみてね。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+                  <AlertDialogAction onClick={handleOkClick}>
+                    OK
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </form>
+
+          {/* AIが生成したテーマ表示 */}
           {aiGeneratedThemesArray && (
-            <div className={styles.themeGenerated}>
-              <p>こんなテーマはどうかな？</p>
-              <form action={dispatchGeneratedThemes}>
+            <div className={styles.themesGenerated}>
+              <p className={styles.themesSuggestion}>
+                こんなテーマはどうかな？
+              </p>
+              <form
+                action={dispatchGeneratedThemes}
+                className={styles.selectThemeForm}
+              >
                 {generatedThemesState?.errors?.option &&
                   generatedThemesState?.errors?.option.map((error, index) => (
                     <div
@@ -181,6 +269,8 @@ export default function GenerateThemePresentation({
           )}
         </div>
       </div>
+
+      {/* 戻るボタン */}
       <div className={styles.back}>
         <IoChevronBack className={styles.arrow} />
         <BackButton onClick={handleBack} type="button">
@@ -190,3 +280,37 @@ export default function GenerateThemePresentation({
     </main>
   );
 }
+
+const SubmitButton = ({
+  isThemeGenerated,
+  handleRetryCount,
+}: {
+  isThemeGenerated: boolean | undefined;
+  handleRetryCount: () => void;
+}) => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBorders
+      type="submit"
+      disabled={isThemeGenerated || pending}
+      onClick={handleRetryCount}
+    >
+      テーマ生成
+    </LitUpBorders>
+  );
+};
+
+const AiLoading = () => {
+  const { pending } = useFormStatus();
+  return (
+    <>
+      {pending && (
+        <AlertDialog open={pending} aria-labelledby="responsive-dialog-title">
+          <AlertDialogContent className={styles.loadingContainer}>
+            <AiGenerationLoading />
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+    </>
+  );
+};

@@ -29,12 +29,14 @@ export default function SelectThemePresentation({
   const [state, dispatch] = useFormState(submitThemeCategory, initialState);
 
   // ラジオボタンの選択肢
-  const options: Option[] = Object.entries(ThemeCategoryEnum).map(([key, val]) => {
-    return {
-      value: key,
-      label: val,
-    };
-  });
+  const options: Option[] = Object.entries(ThemeCategoryEnum).map(
+    ([key, val]) => {
+      return {
+        value: key,
+        label: val,
+      };
+    },
+  );
 
   // 戻るボタンの処理
   const handleBack = () => {

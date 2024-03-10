@@ -1,7 +1,7 @@
 import GenerateThemePresentation from "@/app/presentation/GenerateTheme/GenerateThemePresentation";
 import { getAIGeneratedThemes } from "@/lib/ai-generated-themes";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
-import { AiGeneratedThemeType } from "@/types";
+import { AiGeneratedThemeType, Option } from "@/types";
 
 export default async function page() {
   // 進行中のアイデアセッションを取得
@@ -14,11 +14,14 @@ export default async function page() {
   }
 
   // AIによるテーマ案を文字列配列に変換
-  let aiGeneratedThemesArray: string[] | null = null;
+  let aiGeneratedThemesArray: Option[] | null = null;
   if (aiGeneratedThemes) {
-    aiGeneratedThemesArray = aiGeneratedThemes
-      .map((aiGeneratedTheme) => aiGeneratedTheme?.theme)
-      .filter((theme): theme is string => theme !== undefined); // Type Guard: filterメソッドのコールバック関数がtrueの場合、themeがstring型になる
+    aiGeneratedThemesArray = aiGeneratedThemes.map((aiGeneratedTheme) => {
+      return {
+        value: aiGeneratedTheme?.theme as string,
+        label: aiGeneratedTheme?.theme as string,
+      };
+    });
   }
 
   return (

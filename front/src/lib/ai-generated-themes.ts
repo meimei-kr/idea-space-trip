@@ -1,6 +1,6 @@
 "use server";
 
-import { IdeaSessionType } from "@/types";
+import { AiGeneratedThemeType, IdeaSessionType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./options";
@@ -13,7 +13,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function createAIGeneratedThemes(
   uuid: string,
   data: IdeaSessionType,
-) {
+): Promise<AiGeneratedThemeType | null> {
   const session = await getServerSession(authOptions);
 
   try {
@@ -27,7 +27,9 @@ export async function createAIGeneratedThemes(
         },
         body: JSON.stringify({
           idea_session: {
-            ...data,
+            theme_category: data.themeCategory,
+            theme_question: data.themeQuestion,
+            theme_answer: data.themeAnswer,
           },
         }),
       },
@@ -36,6 +38,9 @@ export async function createAIGeneratedThemes(
       throw new Error(`AIによるテーマ案生成に失敗しました: ${response.json()}`);
     }
     const serializedData = await response.json();
+    if (serializedData === null) {
+      return null;
+    }
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
@@ -50,7 +55,9 @@ export async function createAIGeneratedThemes(
 /**
  * AIによるテーマ生成案を取得
  */
-export async function getAIGeneratedThemes(uuid: string) {
+export async function getAIGeneratedThemes(
+  uuid: string,
+): Promise<AiGeneratedThemeType[] | null> {
   const session = await getServerSession(authOptions);
 
   try {

@@ -18,18 +18,19 @@ export const useUUIDCheck = ({
   const router = useRouter();
   const [statusCode, setStatusCode] = useState<number>(200);
 
-  // セッションは開始されており、ideaSessionは必ず取得できる想定なので
-  // nullの場合は、500エラーを返す
-  if (ideaSession === null) {
-    setStatusCode(500);
-  }
-
   // ideaSessionからUUIDを取得
-  const uuid = ideaSession?.uuid;
+  const uuid = ideaSession?.uuid ?? "";
   // URLからUUIDを取得
   const uuidFromPath = usePathname().split("/")[1];
 
   useEffect(() => {
+    // セッションは開始されており、ideaSessionは必ず取得できる想定なので
+    // nullの場合は、500エラーを返す
+    if (ideaSession === null) {
+      setStatusCode(500);
+      return;
+    }
+
     // URLに含まれるUUIDがログインユーザーのものと一致するかチェック
     if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
       setStatusCode(404);

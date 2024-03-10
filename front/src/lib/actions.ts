@@ -143,16 +143,28 @@ export const generateThemes = async (
   const { option, answer, uuid } = validatedThemeQuestion.data;
 
   if (option !== null && answer !== "") {
-    // idea_sessionsテーブルのthemeカラムを更新
+    // idea_sessionsテーブルのthemeQuestion, themeAnswerカラムを更新
     const updatedIdeaSession = await updateIdeaSession(uuid, {
       themeQuestion: option,
       themeAnswer: answer,
     });
 
-    // 質問と回答を元にテーマを生成
-    await createAIGeneratedThemes(uuid, updatedIdeaSession);
+    // updatedIdeaSessionの情報を元にテーマを生成
+    const aiGeneratedThemes = await createAIGeneratedThemes(
+      uuid,
+      updatedIdeaSession,
+    );
+    if (!aiGeneratedThemes) {
+      return {
+        errors: {
+          answer: [
+            "Error: 無効なデータが入力されたよ。適切な入力に修正して、再度実行してね。",
+          ],
+        },
+      };
+    }
 
-    revalidatePath("/[uuid]/generate-theme");
+    revalidatePath("/[uuid]/generate-theme", "page");
   }
 };
 
@@ -173,7 +185,7 @@ export const confirmTheme = async (
     option: z
       .string()
       .nullable()
-      .refine((value) => value !== null && options.includes(value), {
+      .refine((value) => value !== null, {
         message: "Error: 以下は選択必須だよ",
       }),
     uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
