@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/components/elements/LinkButton/LinkButton.module.scss";
-import { LinkButtonType } from "@/types";
+import { LinkButtonProps } from "@/types";
 import Link from "next/link";
 
 export default function LinkButton({
@@ -10,7 +10,7 @@ export default function LinkButton({
   color,
   size,
   flicker,
-}: LinkButtonType) {
+}: LinkButtonProps) {
   return (
     <Link
       href={href}

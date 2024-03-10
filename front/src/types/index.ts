@@ -1,4 +1,4 @@
-export type LinkButtonType = {
+export type LinkButtonProps = {
   children: React.ReactNode;
   color: "pink" | "light-blue";
   size: "large";
@@ -6,12 +6,22 @@ export type LinkButtonType = {
   flicker: "flicker" | "no-flicker";
 };
 
-export type ButtonType = {
+export type ButtonProps = {
   children: React.ReactNode;
   onClick: () => void;
   color: "pink" | "light-blue";
   size: "large";
   flicker: "flicker" | "no-flicker";
+};
+
+export type Option = {
+  value: string;
+  label: string;
+};
+
+export type RadioButtonsProps = {
+  options: Option[];
+  ariaDescribedby: string;
 };
 
 export type IdeaSessionType = {

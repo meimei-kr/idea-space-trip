@@ -1,5 +1,5 @@
 import styles from "@/components/elements/Button/Button.module.scss";
-import type { ButtonType } from "@/types/index";
+import type { ButtonProps } from "@/types/index";
 
 export default function Button({
   children,
@@ -7,7 +7,7 @@ export default function Button({
   color,
   size,
   flicker,
-}: ButtonType) {
+}: ButtonProps) {
   return (
     <button
       onClick={onClick}
