@@ -95,6 +95,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    docile (1.4.0)
     dockerfile-rails (1.6.3)
       rails (>= 3.0.0)
     drb (2.2.0)
@@ -105,6 +106,10 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.1.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -133,6 +138,8 @@ GEM
     msgpack (1.7.2)
     mutex_m (0.2.0)
     mysql2 (0.5.5)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.9.1)
       date
       net-protocol
@@ -259,6 +266,12 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     solid_queue (0.2.1)
       rails (~> 7.1)
     stringio (3.1.0)
@@ -268,6 +281,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
+    uri (0.13.0)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -286,6 +300,7 @@ DEPENDENCIES
   debug
   dockerfile-rails (>= 1.6)
   factory_bot_rails
+  faraday
   jsonapi-serializer
   jwt
   mysql2 (~> 0.5)
@@ -299,6 +314,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  simplecov
   solid_queue
   tzinfo-data
 
