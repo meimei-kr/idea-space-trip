@@ -34,7 +34,7 @@ class IdeaSessionPolicy < ApplicationPolicy
   end
 
   def create?
-    general_check? && record_owner?
+    general_check?
   end
 
   def update?
