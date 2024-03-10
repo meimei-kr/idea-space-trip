@@ -66,4 +66,6 @@ back/config/master.key
 
 back/.DS_Store
 
+back/coverage
+
 redis/data/*

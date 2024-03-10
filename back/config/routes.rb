@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         collection do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
         end
+        resources :ai_generated_themes, only: %i[create index]
       end
       resource :ai_usage_history, only: %i[show update]
     end

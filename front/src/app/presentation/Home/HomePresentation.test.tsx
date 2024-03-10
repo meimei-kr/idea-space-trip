@@ -1,5 +1,5 @@
 import { HomePresentation } from "@/app/presentation/Home/HomePresentation";
-import { LinkButtonType } from "@/types";
+import { LinkButtonProps } from "@/types";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Session } from "next-auth";
@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 const mockButton = jest.fn();
 jest.mock("@/components/elements/LinkButton/LinkButton", () => ({
   __esModule: true,
-  default: (props: LinkButtonType) => {
+  default: (props: LinkButtonProps) => {
     mockButton(props);
     return <a href="#">{props.children}</a>;
   },

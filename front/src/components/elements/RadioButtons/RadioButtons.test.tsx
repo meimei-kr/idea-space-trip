@@ -3,7 +3,20 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
 describe("RadioButtons", () => {
-  const options = ["option1", "option2", "option3"];
+  const options = [
+    {
+      label: "option1",
+      value: "option1",
+    },
+    {
+      label: "option2",
+      value: "option2",
+    },
+    {
+      label: "option3",
+      value: "option3",
+    },
+  ];
   beforeEach(() => {
     render(
       <RadioButtonForm
@@ -15,7 +28,7 @@ describe("RadioButtons", () => {
 
   it("should render the radio buttons correctly", () => {
     options.forEach((option) => {
-      expect(screen.getByLabelText(option)).toBeInTheDocument();
+      expect(screen.getByLabelText(option.label)).toBeInTheDocument();
     });
   });
 });

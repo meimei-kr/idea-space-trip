@@ -1,5 +1,6 @@
 .loadingWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: calc(100vh - var(--header-height));
@@ -9,74 +10,64 @@
   width: 300px;
   height: 300px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: transparent;
-
-  p {
-    color: var(--white);
-    font-size: 20px;
-    letter-spacing: 2px;
-  }
 }
 
-.solarSystem {
-  width: 250px;
-  height: 250px;
+.leo {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.orbit {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #fafbfc;
   border-radius: 50%;
 }
 
-.earthOrbit {
+.blueOrbit {
   width: 165px;
   height: 165px;
-  -webkit-animation: spin 12s linear 0s infinite;
+  border: 1px solid #91daffa5;
+  -webkit-animation: spin3D 3s linear 0.2s infinite;
 }
 
-.venusOrbit {
+.greenOrbit {
   width: 120px;
   height: 120px;
-  -webkit-animation: spin 7.4s linear 0s infinite;
+  border: 1px solid #91ffbfa5;
+  -webkit-animation: spin3D 2s linear 0s infinite;
 }
 
-.mercuryOrbit {
+.redOrbit {
   width: 90px;
   height: 90px;
-  -webkit-animation: spin 3s linear 0s infinite;
+  border: 1px solid #ffca91a5;
+  -webkit-animation: spin3D 1s linear 0s infinite;
 }
 
-.planet {
-  position: absolute;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--light-blue);
+.whiteOrbit {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ffffff;
+  -webkit-animation: spin3D 10s linear 0s infinite;
 }
 
-.sun {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: var(--purple);
+.w1 {
+  transform: rotate3D(1, 1, 1, 90deg);
 }
 
-@keyframes spin {
+.w2 {
+  transform: rotate3D(1, 2, 0.5, 90deg);
+}
+
+.w3 {
+  transform: rotate3D(0.5, 1, 2, 90deg);
+}
+
+@keyframes spin3D {
   from {
-    transform: rotate(0);
+    transform: rotate3d(0.5, 0.5, 0.5, 360deg);
   }
   to {
-    transform: rotate(359deg);
+    transform: rotate3d(0deg);
   }
 }

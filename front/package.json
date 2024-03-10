@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tabler/icons-react": "^2.47.0",
@@ -31,7 +32,6 @@
     "react-dom": "^18",
     "react-element-to-jsx-string": "^15.0.0",
     "react-icons": "^5.0.1",
-    "react-ztext": "^1.0.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
@@ -66,6 +66,10 @@
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "string-width": "4.2.3",
+    "wrap-ansi": "^7.0.0"
   },
   "license": "MIT"
 }

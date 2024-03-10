@@ -6,6 +6,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-factory_bot
 
 # 人の手で変更しないことが前提のファイルは除外
 AllCops:
@@ -28,6 +29,7 @@ Style/AsciiComments:
 
 # DBディレクトリのファイルはABCサイズをチェックしない
 Metrics/AbcSize:
+  Max: 30
   Exclude:
     - "db/**/*"
 

@@ -42,5 +42,7 @@ module App
     end
 
     config.active_job.queue_adapter = :solid_queue
+
+    config.eager_load_paths << Rails.root.join('app/services')
   end
 end

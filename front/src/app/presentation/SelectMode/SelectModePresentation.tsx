@@ -5,10 +5,7 @@ import Button from "@/components/elements/Button/Button";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  ANSWER_GENERATED_COUNT_LIMIT,
-  THEME_GENERATED_COUNT_LIMIT,
-} from "@/constants/constants";
+import { COUNT_LIMIT } from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
 import { getAIUsageHistory } from "@/lib/ai-usage-history";
 import {
@@ -42,12 +39,11 @@ export function SelectModePresentation() {
       return "input-theme"; // テーマ入力画面
     }
 
-    if (ideaSession.isAiThemeGenerated) {
+    if (
+      ideaSession.isAiThemeGenerated ||
+      ideaSession.themeCategory !== "unselected"
+    ) {
       return "generate-theme"; // テーマ生成画面
-    }
-
-    if (ideaSession.themeCategory !== 0) {
-      return "select-theme-category"; // テーマカテゴリ選択画面
     }
 
     return "check-theme"; // テーマ有無選択画面
@@ -62,13 +58,9 @@ export function SelectModePresentation() {
   // OpenAI APIの使用制限回数に達していないかチェック
   const checkOpenAIUsageLimit = async (): Promise<boolean> => {
     const aiUsage = await getAIUsageHistory();
-    const themeGeneratedCount = aiUsage.themeGeneratedCount;
-    const answerGeneratedCount = aiUsage.answerGeneratedCount;
+    const answerGeneratedCount = aiUsage?.count;
 
-    if (
-      themeGeneratedCount >= THEME_GENERATED_COUNT_LIMIT ||
-      answerGeneratedCount >= ANSWER_GENERATED_COUNT_LIMIT
-    ) {
+    if (answerGeneratedCount && answerGeneratedCount >= COUNT_LIMIT) {
       return true;
     }
     return false;
