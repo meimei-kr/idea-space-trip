@@ -39,7 +39,9 @@ export async function getIdeaSessionInProgress(): Promise<IdeaSessionType | null
 }
 
 // アイデアセッションを作成
-export async function createIdeaSession(uuid: string) {
+export async function createIdeaSession(
+  uuid: string,
+): Promise<IdeaSessionType> {
   const session = await getServerSession(authOptions);
 
   try {
@@ -93,7 +95,10 @@ export async function deleteIdeaSession(uuid: string) {
 }
 
 // アイデアセッションを更新
-export async function updateIdeaSession(uuid: string, data: IdeaSessionType) {
+export async function updateIdeaSession(
+  uuid: string,
+  data: IdeaSessionType,
+): Promise<IdeaSessionType> {
   const session = await getServerSession(authOptions);
 
   try {
