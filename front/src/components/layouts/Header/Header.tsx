@@ -3,10 +3,7 @@
 import styles from "@/components/layouts/Header/Header.module.scss";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import {
-  ANSWER_GENERATED_COUNT_LIMIT,
-  THEME_GENERATED_COUNT_LIMIT,
-} from "@/constants/constants";
+import { count_LIMIT } from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
 import { getAIUsageHistory } from "@/lib/ai-usage-history";
 import {
@@ -76,13 +73,9 @@ export default function Header() {
   // OpenAI APIの使用制限回数に達していないかチェック
   const checkOpenAIUsageLimit = async (): Promise<boolean> => {
     const aiUsage = await getAIUsageHistory();
-    const themeGeneratedCount = aiUsage.themeGeneratedCount;
-    const answerGeneratedCount = aiUsage.answerGeneratedCount;
+    const answerGeneratedCount = aiUsage?.count;
 
-    if (
-      themeGeneratedCount >= THEME_GENERATED_COUNT_LIMIT ||
-      answerGeneratedCount >= ANSWER_GENERATED_COUNT_LIMIT
-    ) {
+    if (answerGeneratedCount && answerGeneratedCount >= count_LIMIT) {
       return true;
     }
     return false;

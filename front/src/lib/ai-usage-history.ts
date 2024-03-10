@@ -1,13 +1,14 @@
 "use server";
 
 import { authOptions } from "@/lib/options";
+import { AiUsageHistoryType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // OpenAI APIの使用回数を取得
-export async function getAIUsageHistory() {
+export async function getAIUsageHistory(): Promise<AiUsageHistoryType | null> {
   const session = await getServerSession(authOptions);
 
   try {

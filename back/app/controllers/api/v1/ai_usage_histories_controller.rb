@@ -12,16 +12,15 @@ module Api
         end
       end
 
-      def update; end
-
-      private
-
-      def ai_usage_history_params
-        params.require(:ai_usage_history).permit(
-          :date,
-          :theme_generated_count,
-          :answer_generated_count
-        )
+      def update
+        ai_usage_history = @current_user.ai_usage_history
+        authorize ai_usage_history
+        if ai_usage_history.update(count)
+          render json: AiUsageHistorySerializer.new(ai_usage_history).serializable_hash.to_json,
+                 status: :ok
+        else
+          render json: ai_usage_history.errors, status: :unprocessable_entity
+        end
       end
     end
   end

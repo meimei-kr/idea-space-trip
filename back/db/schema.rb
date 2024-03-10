@@ -22,8 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_054702) do
   create_table "ai_usage_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "date", null: false
-    t.integer "theme_generated_count", default: 0, null: false
-    t.integer "answer_generated_count", default: 0, null: false
+    t.integer "count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ai_usage_histories_on_user_id"

@@ -31,3 +31,9 @@ export type AiGeneratedThemeType = {
   ideaSessionId?: number;
   theme?: string;
 };
+
+export type AiUsageHistoryType = {
+  date?: string;
+  count?: number;
+  userId?: number;
+};
