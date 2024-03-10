@@ -15,7 +15,7 @@ module Api
       def update
         ai_usage_history = @current_user.ai_usage_history
         authorize ai_usage_history
-        if ai_usage_history.update(count)
+        if ai_usage_history.update(count: ai_usage_history.count + 1)
           render json: AiUsageHistorySerializer.new(ai_usage_history).serializable_hash.to_json,
                  status: :ok
         else
