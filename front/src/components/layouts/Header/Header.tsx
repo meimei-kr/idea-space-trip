@@ -53,12 +53,11 @@ export default function Header() {
       return "input-theme"; // テーマ入力画面
     }
 
-    if (ideaSession.isAiThemeGenerated) {
+    if (
+      ideaSession.isAiThemeGenerated ||
+      ideaSession.themeCategory !== "unselected"
+    ) {
       return "generate-theme"; // テーマ生成画面
-    }
-
-    if (ideaSession.themeCategory !== "unselected") {
-      return "select-theme-category"; // テーマカテゴリ選択画面
     }
 
     return "check-theme"; // テーマ有無選択画面
