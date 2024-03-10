@@ -148,8 +148,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_054702) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "ai_generated_themes", "idea_sessions"
-  add_foreign_key "ai_usage_histories", "users"
   add_foreign_key "idea_sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
