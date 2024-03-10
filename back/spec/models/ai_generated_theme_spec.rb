@@ -12,19 +12,19 @@ require 'rails_helper'
 
 RSpec.describe AiGeneratedTheme do
   describe 'validations' do
-    it("should valid with valid attributes") do
+    it('valids with valid attributes') do
       ai_generated_theme = build(:ai_generated_theme)
       expect(ai_generated_theme).to be_valid
     end
 
-    it("should not valid without theme") do
+    it('does not valid without theme') do
       ai_generated_theme = build(:ai_generated_theme, theme: nil)
-      expect(ai_generated_theme).to be_invalid
+      expect(ai_generated_theme).not_to be_valid
     end
 
-    it("should not valid with theme longer than 255 letters") do
+    it('does not valid with theme longer than 255 letters') do
       ai_generated_theme = build(:ai_generated_theme, theme: 'a' * 256)
-      expect(ai_generated_theme).to be_invalid
+      expect(ai_generated_theme).not_to be_valid
     end
   end
 end
