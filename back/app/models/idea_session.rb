@@ -18,6 +18,7 @@
 #
 class IdeaSession < ApplicationRecord
   belongs_to :user
+  has_many :ai_generated_themes, dependent: :destroy
 
   validates :uuid, presence: true, uniqueness: true
   validates :is_theme_determined, inclusion: { in: [true, false] }
@@ -28,5 +29,8 @@ class IdeaSession < ApplicationRecord
   validates :is_finished, inclusion: { in: [true, false] }
   validates :theme, length: { maximum: 255 }
 
-  enum theme_category: { unselected: 0, application: 10, product: 20, service: 30 }
+  attribute :theme_category, :integer
+  attribute :theme_question, :integer
+  enum :theme_category, { unselected: 0, application: 10, product: 20, service: 30 }, prefix: true
+  enum :theme_question, { unselected: 0, question1: 10, question2: 20, question3: 30 }, prefix: true
 end
