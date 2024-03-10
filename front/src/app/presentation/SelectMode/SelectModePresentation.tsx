@@ -5,7 +5,7 @@ import Button from "@/components/elements/Button/Button";
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { count_LIMIT } from "@/constants/constants";
+import { COUNT_LIMIT } from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
 import { getAIUsageHistory } from "@/lib/ai-usage-history";
 import {
@@ -60,7 +60,7 @@ export function SelectModePresentation() {
     const aiUsage = await getAIUsageHistory();
     const answerGeneratedCount = aiUsage?.count;
 
-    if (answerGeneratedCount && answerGeneratedCount >= count_LIMIT) {
+    if (answerGeneratedCount && answerGeneratedCount >= COUNT_LIMIT) {
       return true;
     }
     return false;

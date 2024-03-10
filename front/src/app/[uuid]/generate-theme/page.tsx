@@ -14,12 +14,18 @@ export default async function page() {
   }
 
   // AIによるテーマ案を文字列配列に変換
-  let aiGeneratedThemesArray: Option[] | null = null;
+  let aiGeneratedThemesArray: Option[] = [];
   if (aiGeneratedThemes) {
     aiGeneratedThemesArray = aiGeneratedThemes.map((aiGeneratedTheme) => {
       return {
-        value: aiGeneratedTheme?.theme as string,
-        label: aiGeneratedTheme?.theme as string,
+        value:
+          typeof aiGeneratedTheme?.theme === "string"
+            ? aiGeneratedTheme.theme
+            : "",
+        label:
+          typeof aiGeneratedTheme?.theme === "string"
+            ? aiGeneratedTheme.theme
+            : "",
       };
     });
   }

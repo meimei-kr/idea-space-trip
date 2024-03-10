@@ -1,1 +1,1 @@
-export const count_LIMIT = 3;
+export const COUNT_LIMIT = 3;

@@ -48,7 +48,7 @@ export default function GenerateThemePresentation({
   aiGeneratedThemesArray,
 }: {
   ideaSession: IdeaSessionType | null;
-  aiGeneratedThemesArray: Option[] | null;
+  aiGeneratedThemesArray: Option[];
 }) {
   const [isThemeGenerated, setIsThemeGenerated] = useState(
     ideaSession?.isAiThemeGenerated,
@@ -76,7 +76,7 @@ export default function GenerateThemePresentation({
 
   // テーマ生成ボタンの状態更新
   useEffect(() => {
-    if (aiGeneratedThemesArray && aiGeneratedThemesArray.length > 0) {
+    if (aiGeneratedThemesArray.length > 0) {
       setIsThemeGenerated(true);
     }
   }, [aiGeneratedThemesArray]);
@@ -239,7 +239,7 @@ export default function GenerateThemePresentation({
           </form>
 
           {/* AIが生成したテーマ表示 */}
-          {aiGeneratedThemesArray && (
+          {aiGeneratedThemesArray.length > 0 && (
             <div className={styles.themesGenerated}>
               <p className={styles.themesSuggestion}>
                 こんなテーマはどうかな？
