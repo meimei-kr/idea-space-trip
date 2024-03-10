@@ -4,20 +4,20 @@ export default function Loading() {
   return (
     <div className={styles.loadingWrapper}>
       <div className={styles.spinnerBox}>
-        <div className={styles.solarSystem}>
-          <div className={`${styles.earthOrbit} ${styles.orbit}`}>
-            <div className={styles.planet}></div>
-            <div className={`${styles.venusOrbit} ${styles.orbit}`}>
-              <div className={styles.planet}></div>
-              <div className={`${styles.mercuryOrbit} ${styles.orbit}`}>
-                <div className={styles.planet}></div>
-                <div className={styles.sun}></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p>LOADING...</p>
+        <div className={`${styles.blueOrbit} ${styles.leo}`}></div>
+        <div className={`${styles.greenOrbit} ${styles.leo}`}></div>
+        <div className={`${styles.redOrbit} ${styles.leo}`}></div>
+        <div
+          className={`${styles.whiteOrbit} ${styles.w1} ${styles.leo}`}
+        ></div>
+        <div
+          className={`${styles.whiteOrbit} ${styles.w2} ${styles.leo}`}
+        ></div>
+        <div
+          className={`${styles.whiteOrbit} ${styles.w3} ${styles.leo}`}
+        ></div>
       </div>
+      <p>LOADING...</p>
     </div>
   );
 }
