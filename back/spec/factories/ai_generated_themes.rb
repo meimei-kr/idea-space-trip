@@ -11,6 +11,6 @@
 FactoryBot.define do
   factory :ai_generated_theme do
     theme { 'MyText' }
-    idea_session { nil }
+    idea_session
   end
 end
