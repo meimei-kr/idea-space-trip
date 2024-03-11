@@ -2,6 +2,7 @@
 
 import styles from "@/app/presentation/GenerateTheme/GenerateThemePresentation.module.scss";
 import AiGenerationLoading from "@/components/elements/AiGenerationLoading/AiGenerationLoading";
+import BackButton from "@/components/elements/BackButton/BackButton";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
@@ -21,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import {
   GeneratedThemesState,
@@ -40,7 +41,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { BsExclamationTriangle } from "react-icons/bs";
-import { IoChevronBack } from "react-icons/io5";
 
 export default function GenerateThemePresentation({
   ideaSession,
@@ -265,13 +265,7 @@ export default function GenerateThemePresentation({
         </div>
       </div>
 
-      {/* 戻るボタン */}
-      <div className={styles.back}>
-        <IoChevronBack className={styles.arrow} />
-        <BackButton onClick={handleBack} type="button">
-          BACK
-        </BackButton>
-      </div>
+      <BackButton onClick={handleBack} />
     </main>
   );
 }
