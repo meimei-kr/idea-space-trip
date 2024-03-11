@@ -1,8 +1,9 @@
 "use client";
 
 import styles from "@/app/presentation/SelectThemeCategory/SelectThemeCategoryPresentation.module.scss";
+import BackButton from "@/components/elements/BackButton/BackButton";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
-import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
@@ -12,7 +13,6 @@ import { ThemeCategoryEnum } from "@/utils/enums";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import { IoChevronBack } from "react-icons/io5";
 
 export default function SelectThemePresentation({
   ideaSession,
@@ -73,12 +73,7 @@ export default function SelectThemePresentation({
           </form>
         </div>
       </div>
-      <div className={styles.back}>
-        <IoChevronBack className={styles.arrow} />
-        <BackButton onClick={handleBack} type="button">
-          BACK
-        </BackButton>
-      </div>
+      <BackButton onClick={handleBack} />
     </main>
   );
 }
