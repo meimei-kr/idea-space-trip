@@ -4,6 +4,7 @@ import styles from "@/app/presentation/GenerateTheme/GenerateThemePresentation.m
 import AiGenerationLoading from "@/components/elements/AiGenerationLoading/AiGenerationLoading";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
+import Textbox from "@/components/elements/Textbox/Textbox";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
-import { Textarea } from "@/components/ui/textarea";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import {
   GeneratedThemesState,
@@ -40,7 +40,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { BsExclamationTriangle } from "react-icons/bs";
-import { FaMicrophone } from "react-icons/fa6";
 import { IoChevronBack } from "react-icons/io5";
 
 export default function GenerateThemePresentation({
@@ -189,16 +188,12 @@ export default function GenerateThemePresentation({
                       {error}
                     </div>
                   ))}
-                <div className={styles.textareaContainer}>
-                  <Textarea
-                    id="answer"
-                    name="answer"
-                    placeholder="回答を入力してね。複数回答してもOKだよ。"
-                    aria-describedby="theme-answer-error"
-                    className={styles.textarea}
-                  />
-                  <FaMicrophone className={styles.microphone} />
-                </div>
+                <Textbox
+                  id="answer"
+                  name="answer"
+                  ariaDescribedby="theme-answer-error"
+                  placeholder="回答を入力してね。複数回答してもOKだよ。"
+                />
               </div>
             </div>
             <input type="hidden" name="uuid" value={uuid} />

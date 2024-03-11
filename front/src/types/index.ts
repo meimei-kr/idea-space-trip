@@ -24,6 +24,13 @@ export type RadioButtonsProps = {
   ariaDescribedby: string;
 };
 
+export type TextboxProps = {
+  id: string;
+  name: string;
+  ariaDescribedby: string;
+  placeholder?: string;
+};
+
 export type IdeaSessionType = {
   uuid?: string;
   isThemeDetermined?: boolean;

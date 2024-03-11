@@ -1,0 +1,21 @@
+.textareaContainer {
+  width: 100%;
+  position: relative;
+}
+
+.textarea {
+  height: 6rem;
+
+  @media screen and (min-width: 768px) {
+    height: 8rem;
+  }
+}
+
+.microphone {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: var(--black);
+  width: 20px;
+  height: 20px;
+}
