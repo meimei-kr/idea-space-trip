@@ -11,8 +11,8 @@
 
 .arrow {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
-  height: 100%;
+  transform: translateY(-50%);
   margin-left: 0.25rem;
 }
