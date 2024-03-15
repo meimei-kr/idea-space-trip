@@ -101,6 +101,7 @@ export const submitThemeCategory = async (
 /**
  * 質問への回答をもとに、テーマ案を生成する
  */
+
 export type ThemeQuestionState = {
   errors?: {
     option?: string[];
@@ -171,6 +172,7 @@ export const generateThemes = async (
 /**
  * 生成されたテーマ案の中から選択されたものを受取り、idea_sessionsテーブルのthemeカラムを更新する
  */
+
 export type GeneratedThemesState = {
   errors?: {
     option?: string[];

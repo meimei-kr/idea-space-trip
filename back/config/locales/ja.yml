@@ -1,13 +1,17 @@
 ja:
   activerecord:
     attributes:
-      idea_session/theme_category:
-        unselected: 未選択
-        application: アプリ
-        product: 商品
-        service: サービス
-      idea_session/theme_question:
-        unselected: 未選択
-        question1: あなたの好きなものは？
-        question2: こんなものがあったらいいな、と思うものは？
-        question3: 普段、課題・不満に思っていることは？
+      idea_session:
+        theme_category:
+          unselected: 未選択
+          application: アプリ
+          product: 商品
+          service: サービス
+        theme_question:
+          unselected: 未選択
+          question1: あなたの好きなものは？
+          question2: こんなものがあったらいいな、と思うものは？
+          question3: 普段、課題・不満に思っていることは？
+  errors:
+    messages:
+      record_invalid: "バリデーションに失敗しました: %{errors}"

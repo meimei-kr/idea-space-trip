@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check
 
+  mount ActionCable.server => '/cable'
+
   post 'auth/:provider/callback', to: 'api/v1/users#create'
 
   namespace :api do
@@ -12,6 +14,7 @@ Rails.application.routes.draw do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
         end
         resources :ai_generated_themes, only: %i[create index]
+        resources :ai_generated_answers, only: %i[create index]
       end
       resource :ai_usage_history, only: %i[show update]
     end

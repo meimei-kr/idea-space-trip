@@ -2,7 +2,6 @@ module Api
   module V1
     class AiGeneratedThemesController < ApplicationController
       def index
-        Rails.logger.info params.to_unsafe_h
         set_idea_session
 
         ai_generated_themes = policy_scope(@idea_session.ai_generated_themes)
@@ -21,8 +20,8 @@ module Api
         set_idea_session
 
         # テーマ生成
-        input = set_input
-        themes = ::OpenAiService.new.call(input) # グローバル名前空間にあるOpenAIServiceを参照
+        input = build_input
+        themes = Openai::OpenAiService.new.call(input) # グローバル名前空間にあるOpenAIServiceを参照
         render json: nil and return if themes.casecmp('invalid').zero? # 無効な入力の場合は、nilを返す
 
         themes_array = themes.split("\n")
@@ -55,7 +54,7 @@ module Api
         )
       end
 
-      def set_input
+      def build_input
         {
           type: 'theme',
           data: {

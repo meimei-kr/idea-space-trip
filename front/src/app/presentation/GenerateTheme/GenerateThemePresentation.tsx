@@ -82,13 +82,11 @@ export default function GenerateThemePresentation({
 
   // 無効な入力によるリトライ回数を2回許可する
   const handleRetryCount = () => {
-    console.log("retryCount: ", retryCount);
     if (retryCount <= 2) {
       setRetryCount((prev) => prev + 1);
     } else {
       // リトライ回数が2回を超えた場合、エラーメッセージを表示
       setIsAlertModalOpen(true);
-      console.log("isAlertModalOpen: ", isAlertModalOpen);
     }
   };
 

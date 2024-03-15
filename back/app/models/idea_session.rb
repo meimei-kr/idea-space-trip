@@ -19,6 +19,7 @@
 class IdeaSession < ApplicationRecord
   belongs_to :user
   has_many :ai_generated_themes, dependent: :destroy
+  has_many :ai_generated_answers, dependent: :destroy
 
   validates :uuid, presence: true, uniqueness: true
   validates :is_theme_determined, inclusion: { in: [true, false] }
