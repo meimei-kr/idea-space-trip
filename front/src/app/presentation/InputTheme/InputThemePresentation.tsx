@@ -53,7 +53,12 @@ export default function InputThemePresentation({
                   {error}
                 </div>
               ))}
-            <Textbox id="theme" name="theme" ariaDescribedby="theme-error" />
+            <Textbox
+              id="theme"
+              name="theme"
+              ariaDescribedby="theme-error"
+              placeholder="255文字以内で入力してね"
+            />
             <p className={styles.checkItem}>
               <IoCheckboxOutline />
               テーマが具体的かどうかチェック

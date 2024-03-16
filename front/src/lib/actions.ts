@@ -22,7 +22,11 @@ export type ThemeState = {
 };
 
 const ThemeSchema = z.object({
-  theme: z.string().trim().min(1, { message: "Error: テーマの入力は必須だよ" }),
+  theme: z
+    .string()
+    .trim()
+    .min(1, { message: "Error: テーマの入力は必須だよ" })
+    .max(255, { message: "Error: テーマは255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 
@@ -122,7 +126,11 @@ const ThemeQuestionSchema = z.object({
     .refine((value) => value !== null && selectOptions.includes(value), {
       message: "Error: 質問は選択必須だよ",
     }),
-  answer: z.string().trim().min(1, { message: "Error: 回答入力は必須だよ" }),
+  answer: z
+    .string()
+    .trim()
+    .min(1, { message: "Error: 回答入力は必須だよ" })
+    .max(255, { message: "Error: 回答は255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 

@@ -188,7 +188,7 @@ export default function GenerateThemePresentation({
                   id="answer"
                   name="answer"
                   ariaDescribedby="theme-answer-error"
-                  placeholder="回答を入力してね。複数回答してもOKだよ。"
+                  placeholder="255文字以内で回答を入力してね。複数回答してもOKだよ。"
                 />
               </div>
             </div>
