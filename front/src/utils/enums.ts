@@ -27,9 +27,12 @@ enum PerspectiveEnum {
   magnify = "拡大",
   minify = "縮小",
 }
+
+const perspectiveValueToKey: { [key: string]: string } = Object.entries(
+  PerspectiveEnum,
+).reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
+
 // 値からキーを取得する関数
 export function getKeyByValue(value: string) {
-  return Object.keys(PerspectiveEnum).find(
-    (key) => PerspectiveEnum[key as keyof typeof PerspectiveEnum] === value,
-  );
+  return perspectiveValueToKey[value];
 }

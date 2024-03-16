@@ -30,10 +30,10 @@ export async function createIdeaMemos(
         body: JSON.stringify({ idea_memo: { ...memo } }),
       },
     );
-    if (!response.ok) {
-      throw new Error(`アイデアの保存に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`アイデアの保存に失敗しました: ${serializedData}`);
+    }
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
@@ -64,10 +64,10 @@ export async function getCurrentIdeaMemos(
         },
       },
     );
-    if (!response.ok) {
-      throw new Error(`アイデアの取得に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`アイデアの取得に失敗しました: ${serializedData}`);
+    }
     if (serializedData === null) {
       return null;
     }

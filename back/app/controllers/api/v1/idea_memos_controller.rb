@@ -23,7 +23,7 @@ module Api
         set_idea_session
         idea_memos = policy_scope(@idea_session.idea_memos)
 
-        if idea_memos.nil?
+        if idea_memos.empty?
           render json: nil, status: :ok
         else
           render json: IdeaMemoSerializer.new(idea_memos).serializable_hash.to_json, status: :ok
@@ -38,9 +38,10 @@ module Api
 
       def set_idea_session
         @idea_session = @current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
-        return if @idea_session
-
-        render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
+        if @idea_session.nil?
+          render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
+          return
+        end
       end
 
       def idea_memo_params

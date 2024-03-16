@@ -30,10 +30,10 @@ export async function getAiGeneratedAnswers(
         cache: "no-store",
       },
     );
-    if (!response.ok) {
-      throw new Error(`AIによる回答取得に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`AIによる回答取得に失敗しました: ${serializedData}`);
+    }
     if (serializedData === null) {
       return null;
     }
@@ -80,8 +80,9 @@ export async function createAiGeneratedAnswers(
         }),
       },
     );
+    const serializedData = await response.json();
     if (!response.ok) {
-      throw new Error(`AIによる回答生成に失敗しました: ${response.json()}`);
+      throw new Error(`AIによる回答生成に失敗しました: ${serializedData}`);
     }
   } catch (error) {
     console.error(error);

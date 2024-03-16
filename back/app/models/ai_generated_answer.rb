@@ -32,7 +32,7 @@ class AiGeneratedAnswer < ApplicationRecord
     end
   # rescue ActiveRecord::RecordInvalid => e
   rescue StandardError => e
-    Rails.logger.error("AIが生成したアイデアの保存に失敗しました。#{e.message}")
+    Rails.logger.error("AIが生成したアイデアの保存に失敗しました。#{e.message}\n#{e.backtrace.join("\n")}")
     raise # 捕捉した例外をそのまま再スロー
   end
 
@@ -40,7 +40,7 @@ class AiGeneratedAnswer < ApplicationRecord
   def self.parse_json_to_hash(json)
     JSON.parse(json, symbolize_names: true)
   rescue JSON::ParserError => e
-    Rails.logger.error("JSONのパースに失敗しました。#{e.message}")
+    Rails.logger.error("JSONのパースに失敗しました。#{e.message}\n#{e.backtrace.join("\n")}")
   end
 
   # 　ヒント内から「」で囲まれた部分を抽出する

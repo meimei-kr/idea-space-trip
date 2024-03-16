@@ -34,10 +34,10 @@ export async function createAIGeneratedThemes(
         }),
       },
     );
-    if (!response.ok) {
-      throw new Error(`AIによるテーマ案生成に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`AIによるテーマ案生成に失敗しました: ${serializedData}`);
+    }
     if (serializedData === null) {
       return null;
     }

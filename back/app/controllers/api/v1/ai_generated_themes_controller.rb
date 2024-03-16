@@ -72,7 +72,10 @@ module Api
       # uuidをもとにIdeaSessionを取得
       def set_idea_session
         @idea_session = @current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
-        authorize @idea_session
+        if @idea_session.nil?
+          render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
+          return
+        end
       end
     end
   end

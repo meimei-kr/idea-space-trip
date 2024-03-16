@@ -3,6 +3,6 @@ FactoryBot.define do
     perspective { 1 }
     hint { 'MyText' }
     answer { 'MyText' }
-    idea_session { nil }
+    idea_session
   end
 end
