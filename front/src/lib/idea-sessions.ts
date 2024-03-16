@@ -88,7 +88,7 @@ export async function deleteIdeaSession(uuid: string) {
     if (!response.ok) {
       throw new Error(`データ削除に失敗しました: ${responseData}`);
     }
-    return responseData();
+    return responseData;
   } catch (error) {
     console.error(error);
     throw new Error(`データ削除に失敗しました: ${error}`);

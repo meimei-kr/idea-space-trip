@@ -81,10 +81,11 @@ export default function GenerateThemePresentation({
   }, [aiGeneratedThemesArray]);
 
   // 無効な入力によるリトライ回数を2回許可する
-  const handleRetryCount = () => {
+  const handleRetryCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (retryCount <= 2) {
       setRetryCount((prev) => prev + 1);
     } else {
+      e.preventDefault();
       // リトライ回数が2回を超えた場合、エラーメッセージを表示
       setIsAlertModalOpen(true);
     }
@@ -271,9 +272,10 @@ const SubmitButton = ({
   handleRetryCount,
 }: {
   isThemeGenerated: boolean | undefined;
-  handleRetryCount: () => void;
+  handleRetryCount: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }) => {
   const { pending } = useFormStatus();
+
   return (
     <LitUpBorders
       type="submit"
