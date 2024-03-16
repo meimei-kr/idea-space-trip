@@ -78,3 +78,11 @@ export type AiGeneratedAnswerType = {
   hint?: string;
   answer?: string;
 };
+
+export type IdeaMemoType = {
+  ideaSessionId?: number;
+  perspective?: string;
+  hint?: string | null;
+  answer?: string;
+  comment?: string | null;
+};

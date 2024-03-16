@@ -1,5 +1,6 @@
 import GenerateIdeasPresentation from "@/app/presentation/GenerateIdeas/GenerateIdeasPresentation";
 import { getAiGeneratedAnswers } from "@/lib/ai-generated-answers";
+import { getCurrentIdeaMemos } from "@/lib/idea-memos";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 import { PerspectiveType, PerspectivesType } from "@/types";
 
@@ -89,11 +90,18 @@ export default async function page() {
     }
   }
 
+  // 進行中のアイデアセッションで出したアイデアを取得
+  let myIdeas = null;
+  if (ideaSession) {
+    myIdeas = await getCurrentIdeaMemos(ideaSession.uuid!);
+  }
+
   return (
     <GenerateIdeasPresentation
       ideaSession={ideaSession}
       selectedPerspectives={selectedPerspectives}
-      answers={aiGeneratedAnswers}
+      aiAnswers={aiGeneratedAnswers}
+      myIdeas={myIdeas}
     />
   );
 }

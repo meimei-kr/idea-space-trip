@@ -15,8 +15,11 @@ Rails.application.routes.draw do
         end
         resources :ai_generated_themes, only: %i[create index]
         resources :ai_generated_answers, only: %i[create index]
+        resources :idea_memos, only: %i[create]
+        get 'idea_memos/all_in_session', to: 'idea_memos#all_in_session'
       end
       resource :ai_usage_history, only: %i[show update]
+      resources :idea_memos, only: %i[index show edit update destroy]
     end
   end
 end

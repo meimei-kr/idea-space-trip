@@ -129,14 +129,12 @@ export default function GenerateThemePresentation({
               <SectionTitle>カテゴリー</SectionTitle>
             </div>
             <div className={styles.categoryContainer}>
-              <p className={styles.bound}>
-                <span>
-                  {
-                    ThemeCategoryEnum[
-                      ideaSession?.themeCategory as keyof typeof ThemeCategoryEnum
-                    ]
-                  }
-                </span>
+              <p>
+                {
+                  ThemeCategoryEnum[
+                    ideaSession?.themeCategory as keyof typeof ThemeCategoryEnum
+                  ]
+                }
               </p>
             </div>
           </div>

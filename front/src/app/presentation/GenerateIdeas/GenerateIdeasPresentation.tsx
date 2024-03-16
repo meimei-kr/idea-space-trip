@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/tailwind-buttons";
 import { SESSION_LAST_INDEX } from "@/constants/constants";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
+import { MyIdeaState, submitAiAnswer, submitMyIdea } from "@/lib/actions";
 import { createAiGeneratedAnswers } from "@/lib/ai-generated-answers";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import {
   AiGeneratedAnswerType,
+  IdeaMemoType,
   IdeaSessionType,
   PerspectiveType,
 } from "@/types";
@@ -26,29 +28,34 @@ import { useRouter } from "next/navigation";
 import Astronaut from "public/images/astronaut.svg";
 import Blob from "public/images/white-blob.svg";
 import { useEffect, useRef, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { IoChevronForward } from "react-icons/io5";
 
 export default function GenerateIdeasPresentation({
   ideaSession,
   selectedPerspectives,
-  answers,
+  aiAnswers,
+  myIdeas,
 }: {
   ideaSession: IdeaSessionType | null;
   selectedPerspectives: PerspectiveType[];
-  answers: AiGeneratedAnswerType[] | null;
+  aiAnswers: AiGeneratedAnswerType[] | null;
+  myIdeas: IdeaMemoType[] | null;
 }) {
   const [aiGeneratedAnswers, setAiGeneratedAnswers] = useState<
     AiGeneratedAnswerType[] | null
-  >(answers); // AIによる回答
+  >(aiAnswers); // AIによる回答
   const [answerIndex, setAnswerIndex] = useState(0); // AIの回答配列のインデックス
   const [perspectiveIndex, setPerspectiveIndex] = useState(0); // ３つの観点のうち、現在表示している観点のインデックス
-  // const [count, setCount] = useState(0); // 出したアイデアの数
+  const [count, setCount] = useState(myIdeas ? myIdeas.length : 0); // 出したアイデアの数
   const [isOpenAIAnswer, setIsOpenAIAnswer] = useState(false); // AIの回答を表示するかどうか
+  const [isSentAPIRequest, setIsSentAPIRequest] = useState(false); // APIリクエストを送信中かどうか
 
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
   const session = useSession();
   const scrollTopRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLFormElement>(null);
 
   // 回答が未生成であれば、回答を生成する
   useEffect(() => {
@@ -61,8 +68,9 @@ export default function GenerateIdeasPresentation({
       perspectives: string,
       theme: string,
     ) => await createAiGeneratedAnswers(uuid, perspectives, theme);
-    if (ideaSession && !aiGeneratedAnswers) {
+    if (ideaSession && !aiGeneratedAnswers && !isSentAPIRequest) {
       createAiAnswers(ideaSession.uuid!, perspectivesStr, ideaSession.theme!);
+      setIsSentAPIRequest(true);
     }
   }, []);
 
@@ -77,10 +85,9 @@ export default function GenerateIdeasPresentation({
       { channel: "AiIdeaChannel", user_id: userId },
       {
         received: (data) => {
-          console.log(data);
           const handleReceivedData = async () => {
             if (data.error) {
-              alert(data.error);
+              console.error(data.error);
               return;
             }
             setAiGeneratedAnswers(data.body);
@@ -96,6 +103,22 @@ export default function GenerateIdeasPresentation({
       cable.disconnect();
     };
   }, [userId, uuid, session.data?.user.accessToken]);
+
+  // フォーム送信処理
+  const initialMyIdeaState: MyIdeaState = {
+    errors: {},
+  };
+  const [myIdeaState, myIdeaStateDispatch] = useFormState(
+    submitMyIdea,
+    initialMyIdeaState,
+  );
+
+  // フォーム送信後エラーがなければ、フォームクリア
+  useEffect(() => {
+    if (!myIdeaState?.errors?.idea) {
+      ref?.current?.reset();
+    }
+  }, [myIdeaState]);
 
   // スクロールを一番上に戻す
   const scrollToTop = () => {
@@ -152,9 +175,9 @@ export default function GenerateIdeasPresentation({
             <br />
             思いついたことをどんどん書いていこう！
           </Description>
-          {/* <div className={styles.count}>
+          <div className={styles.count}>
             <span>{count}個 </span>アイデアが浮かんだよ！
-          </div> */}
+          </div>
           <div className={styles.theme}>
             <SectionTitle>テーマ</SectionTitle>
             <div className={styles.themeContentConatiner}>
@@ -183,19 +206,39 @@ export default function GenerateIdeasPresentation({
               </div>
             </div>
           </div>
+          {/* ユーザー回答フォーム */}
           <div className={styles.answer}>
             <SectionTitle>回答</SectionTitle>
             <div className={styles.answerContentContainer}>
               <div className={styles.answerContent}>
-                <form action="" className={styles.form}>
+                <form
+                  ref={ref}
+                  action={async (formData) => {
+                    await myIdeaStateDispatch(formData);
+                    setCount((prev) => prev + 1);
+                  }}
+                  className={styles.form}
+                >
+                  {myIdeaState?.errors?.idea &&
+                    myIdeaState?.errors?.idea.map((error, index) => (
+                      <div key={index} id="idea-error" className={styles.error}>
+                        {error}
+                      </div>
+                    ))}
                   <Textbox
                     id="idea"
                     name="idea"
                     ariaDescribedby="idea-error"
-                    placeholder="思いついたアイデアを入力してね"
+                    placeholder="思いついたアイデアを入力してね（255文字以内）"
+                  />
+                  <input
+                    type="hidden"
+                    value={selectedPerspectives[perspectiveIndex]!.name}
+                    id="perspective"
+                    name="perspective"
                   />
                   <input type="hidden" value={uuid} id="uuid" name="uuid" />
-                  <LitUpBorders type="submit">保存</LitUpBorders>
+                  <SubmitButton />
                 </form>
               </div>
             </div>
@@ -221,10 +264,37 @@ export default function GenerateIdeasPresentation({
               {isOpenAIAnswer && (
                 <>
                   <div className={styles.aiAnswerContainer}>
-                    <div className={styles.aiAnswer}>
-                      {aiGeneratedAnswers[answerIndex]!.answer}
-                    </div>
-                    <LitUpBorders type="button">保存</LitUpBorders>
+                    <form
+                      action={async (formData) => {
+                        await submitAiAnswer(formData);
+                        setCount((prev) => prev + 1);
+                      }}
+                      className={styles.aiAnswerForm}
+                    >
+                      <div className={styles.aiAnswer}>
+                        {aiGeneratedAnswers[answerIndex]!.answer}
+                      </div>
+                      <input
+                        type="hidden"
+                        id="perspective"
+                        name="perspective"
+                        value={selectedPerspectives[perspectiveIndex]!.name}
+                      />
+                      <input
+                        type="hidden"
+                        id="hint"
+                        name="hint"
+                        value={aiGeneratedAnswers[answerIndex]!.hint}
+                      />
+                      <input
+                        type="hidden"
+                        id="answer"
+                        name="answer"
+                        value={aiGeneratedAnswers[answerIndex]!.answer}
+                      />
+                      <input type="hidden" id="uuid" name="uuid" value={uuid} />
+                      <SubmitButton />
+                    </form>
                   </div>
                   {answerIndex % 3 === 2 ? (
                     <>
@@ -268,3 +338,12 @@ export default function GenerateIdeasPresentation({
     </main>
   );
 }
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBorders type="submit" disabled={pending}>
+      保存
+    </LitUpBorders>
+  );
+};

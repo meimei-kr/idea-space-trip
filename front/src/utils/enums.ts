@@ -15,3 +15,21 @@ export enum ThemeQuestionEnum {
   question2 = "こんなものがあったらいいな、と思うものは？",
   question3 = "普段、課題・不満に思っていることは？",
 }
+
+/**
+ * 観点Enumの定義
+ */
+enum PerspectiveEnum {
+  modify = "変更",
+  substitute = "代用",
+  reverse = "逆転",
+  combine = "結合",
+  magnify = "拡大",
+  minify = "縮小",
+}
+// 値からキーを取得する関数
+export function getKeyByValue(value: string) {
+  return Object.keys(PerspectiveEnum).find(
+    (key) => PerspectiveEnum[key as keyof typeof PerspectiveEnum] === value,
+  );
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_12_124126) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
   create_table "ai_generated_answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "perspective", null: false
     t.text "hint", null: false
@@ -36,6 +36,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_124126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ai_usage_histories_on_user_id"
+  end
+
+  create_table "idea_memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "idea_session_id", null: false
+    t.integer "perspective", null: false
+    t.text "hint"
+    t.text "answer", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_session_id"], name: "index_idea_memos_on_idea_session_id"
   end
 
   create_table "idea_sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -169,6 +180,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_124126) do
   add_foreign_key "ai_generated_answers", "idea_sessions"
   add_foreign_key "ai_generated_themes", "idea_sessions"
   add_foreign_key "ai_usage_histories", "users"
+  add_foreign_key "idea_memos", "idea_sessions"
   add_foreign_key "idea_sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

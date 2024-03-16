@@ -21,7 +21,7 @@ export function LitUpBorders({
       disabled={disabled}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
-      <div className="px-8 py-2  bg-black rounded-full relative group transition duration-200 text-white text-md hover:bg-transparent">
+      <div className={`px-8 py-2  bg-black rounded-full relative group transition duration-200 text-white text-md ${disabled ? "" : "hover:bg-transparent"}`}>
         {children}
       </div>
     </button>
@@ -37,12 +37,14 @@ export function LitUpBordersLg({
   return (
     <button
       type={type}
-      className={`p-[2px] relative ${disabled ? "opacity-50" : ""}`}
+      className={`p-[2px] relative ${disabled ? "opacity-50 cursor-default" : ""}`}
       onClick={onClick}
       disabled={disabled}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
-      <div className="px-12 py-3  bg-black rounded-full relative group transition duration-200 text-white hover:bg-transparent">
+      <div
+        className={`px-12 py-3  bg-black rounded-full relative group transition duration-200 text-white ${disabled ? "" : "hover:bg-transparent"}`}
+      >
         {children}
       </div>
     </button>
