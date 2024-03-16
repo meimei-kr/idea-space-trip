@@ -1,0 +1,18 @@
+.back {
+  position: absolute;
+  bottom: var(--page-padding);
+  left: var(--page-padding);
+
+  @media screen and (min-width: 1024px) {
+    bottom: var(--page-padding-lg);
+    left: var(--page-padding-lg);
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  margin-left: 0.25rem;
+}

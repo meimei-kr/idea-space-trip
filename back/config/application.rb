@@ -42,7 +42,10 @@ module App
     end
 
     config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.silence_polling = true
 
     config.eager_load_paths << Rails.root.join('app/services')
+
+    config.action_cable.mount_path = '/cable'
   end
 end

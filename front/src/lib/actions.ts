@@ -1,11 +1,15 @@
 "use server";
 
+import { createAIGeneratedThemes } from "@/lib/ai-generated-themes";
+import { createIdeaMemos } from "@/lib/idea-memos";
 import { updateIdeaSession } from "@/lib/idea-sessions";
-import { ThemeCategoryEnum, ThemeQuestionEnum } from "@/utils/enums";
-import { revalidatePath } from "next/cache";
+import {
+  ThemeCategoryEnum,
+  ThemeQuestionEnum,
+  getKeyByValue,
+} from "@/utils/enums";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { createAIGeneratedThemes } from "./ai-generated-themes";
 
 /**
  * テーマの入力を受け取り、idea_sessionsテーブルのthemeカラムを更新する
@@ -101,6 +105,7 @@ export const submitThemeCategory = async (
 /**
  * 質問への回答をもとに、テーマ案を生成する
  */
+
 export type ThemeQuestionState = {
   errors?: {
     option?: string[];
@@ -163,14 +168,14 @@ export const generateThemes = async (
         },
       };
     }
-
-    revalidatePath("/[uuid]/generate-theme", "page");
+    redirect(`/${uuid}/generate-theme`);
   }
 };
 
 /**
  * 生成されたテーマ案の中から選択されたものを受取り、idea_sessionsテーブルのthemeカラムを更新する
  */
+
 export type GeneratedThemesState = {
   errors?: {
     option?: string[];
@@ -213,4 +218,72 @@ export const confirmTheme = async (
 
     redirect(`/${uuid}/generate-ideas`);
   }
+};
+
+/**
+ * 回答の入力を受け取り、idea_memosテーブルにデータを追加する
+ */
+
+export type MyIdeaState = {
+  errors?: {
+    idea?: string[];
+  };
+};
+
+const IdeaSchema = z.object({
+  idea: z
+    .string()
+    .trim()
+    .min(1, { message: "Error: アイデアの入力は必須だよ" })
+    .max(255, { message: "Error: アイデアは255文字以内で入力してね" }),
+  uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
+  perspective: z.string(), // perspectiveはhiddenで自動的に送信されるため、厳密なバリデーションは不要
+});
+
+export const submitMyIdea = async (
+  prevState: MyIdeaState | undefined,
+  formData: FormData,
+) => {
+  // IdeaSchemaによるバリデーション
+  const validatedIdea = IdeaSchema.safeParse({
+    idea: formData.get("idea"),
+    uuid: formData.get("uuid"),
+    perspective: formData.get("perspective"),
+  });
+
+  // バリデーション失敗なら、エラーメッセージを返す
+  if (!validatedIdea.success) {
+    const errors = {
+      errors: validatedIdea.error.flatten().fieldErrors,
+    };
+    return errors;
+  }
+
+  const { idea, uuid, perspective } = validatedIdea.data;
+
+  // idea_memosテーブルにデータを挿入
+  await createIdeaMemos(uuid, {
+    perspective: getKeyByValue(perspective),
+    answer: idea,
+  });
+};
+
+/**
+ * AIの回答を受け取り、idea_memosテーブルにデータを追加する
+ */
+
+export const submitAiAnswer = async (formData: FormData) => {
+  console.log("submitAiAnswer called");
+  // ユーザー入力はないため、バリデーションは不要
+  const uuid = formData.get("uuid") as string;
+  const perspective = formData.get("perspective") as string;
+  const hint = formData.get("hint") as string;
+  const answer = formData.get("answer") as string;
+
+  // idea_memosテーブルにデータを挿入
+  await createIdeaMemos(uuid, {
+    perspective: getKeyByValue(perspective),
+    hint: hint,
+    answer: answer,
+  });
 };

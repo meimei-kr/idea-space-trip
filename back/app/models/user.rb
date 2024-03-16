@@ -15,4 +15,16 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  # JWTをデコードしてユーザーを検索するクラスメソッド
+  def self.find_with_jwt(encoded_token)
+    decoded_token = JWT.decode(encoded_token,
+                               Rails.application.credentials.secret_key_base,
+                               true,
+                               algorithm: 'HS256')
+    payload = decoded_token.first
+    find_by(id: payload['user_id'])
+  rescue JWT::DecodeError
+    nil
+  end
 end

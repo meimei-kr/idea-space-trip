@@ -24,6 +24,21 @@ export type RadioButtonsProps = {
   ariaDescribedby: string;
 };
 
+export type RadioButtonProps = {
+  option: Option;
+  index: number;
+  selectedOption: string | null;
+  ariaDescribedby: string;
+  handleOptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type TextboxProps = {
+  id: string;
+  name: string;
+  ariaDescribedby: string;
+  placeholder?: string;
+};
+
 export type IdeaSessionType = {
   uuid?: string;
   isThemeDetermined?: boolean;
@@ -46,4 +61,28 @@ export type AiUsageHistoryType = {
   date?: string;
   count?: number;
   userId?: number;
+};
+
+export type PerspectiveType = {
+  name: string;
+  description: string;
+};
+
+export type PerspectivesType = {
+  [key: string]: PerspectiveType;
+};
+
+export type AiGeneratedAnswerType = {
+  ideaSessionId?: number;
+  perspective?: string;
+  hint?: string;
+  answer?: string;
+};
+
+export type IdeaMemoType = {
+  ideaSessionId?: number;
+  perspective?: string;
+  hint?: string | null;
+  answer?: string;
+  comment?: string | null;
 };

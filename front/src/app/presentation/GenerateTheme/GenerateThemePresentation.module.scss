@@ -77,41 +77,14 @@
 .categoryContainer {
   position: relative;
   width: 100%;
-  height: 6rem;
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-.bound span {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--pink);
-  text-shadow: 0 0 30px var(--pink);
-  text-align: center;
-  width: 500px;
-  height: 100px;
-  animation: bound-anim 1.5s infinite;
-}
-
-@keyframes bound-anim {
-  0%,
-  100% {
-    top: 0;
-    transform: scale(1);
-  }
-  30% {
-    top: -15%;
-  }
-  50% {
-    transform: scale(1);
-  }
-  90% {
-    top: 0;
-    transform: scale(1.1, 0.9);
+  p {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--pink);
   }
 }
 
@@ -236,5 +209,5 @@
   top: 0;
   left: 0;
   height: 100%;
-  margin-left: 0.75rem;
+  margin-left: 0.25rem;
 }

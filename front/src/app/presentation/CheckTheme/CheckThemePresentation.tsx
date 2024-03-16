@@ -1,14 +1,13 @@
 "use client";
 
 import styles from "@/app/presentation/CheckTheme/CheckThemePresentation.module.scss";
+import BackButton from "@/components/elements/BackButton/BackButton";
 import Button from "@/components/elements/Button/Button";
-import { BackButton } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
-import { IoChevronBack } from "react-icons/io5";
 
 export default function CheckThemePresentation({
   ideaSession,
@@ -64,12 +63,7 @@ export default function CheckThemePresentation({
           </Button>
         </div>
       </div>
-      <div className={styles.back}>
-        <IoChevronBack className={styles.arrow} />
-        <BackButton onClick={handleBack} type="button">
-          BACK
-        </BackButton>
-      </div>
+      <BackButton onClick={handleBack} />
     </main>
   );
 }

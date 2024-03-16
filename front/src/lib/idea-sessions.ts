@@ -57,10 +57,10 @@ export async function createIdeaSession(
         },
       }),
     });
-    if (!response.ok) {
-      throw new Error(`データ作成に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`データ作成に失敗しました: ${serializedData}`);
+    }
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
@@ -84,10 +84,11 @@ export async function deleteIdeaSession(uuid: string) {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },
     });
+    const responseData = await response.json();
     if (!response.ok) {
-      throw new Error(`データ削除に失敗しました: ${response.json()}`);
+      throw new Error(`データ削除に失敗しました: ${responseData}`);
     }
-    return response.json();
+    return responseData();
   } catch (error) {
     console.error(error);
     throw new Error(`データ削除に失敗しました: ${error}`);
@@ -112,10 +113,10 @@ export async function updateIdeaSession(
         idea_session: { ...data },
       }),
     });
-    if (!response.ok) {
-      throw new Error(`データ更新に失敗しました: ${response.json()}`);
-    }
     const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`データ更新に失敗しました: ${serializedData}`);
+    }
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",

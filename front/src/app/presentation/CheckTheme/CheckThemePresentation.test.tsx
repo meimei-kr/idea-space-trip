@@ -8,10 +8,6 @@ jest.mock("@/components/elements/Button/Button", () => ({
   ),
 }));
 
-jest.mock("@/components/ui/tailwind-buttons", () => ({
-  BackButton: () => <div>BackButton</div>,
-}));
-
 jest.mock("next/navigation", () => ({
   usePathname: () => "/uuid/test",
   useRouter: () => ({
@@ -43,6 +39,6 @@ describe("CheckThemePresentation", () => {
   it("should display the BackButton", () => {
     render(<CheckThemePresentation ideaSession={ideaSession} />);
 
-    expect(screen.getByText("BackButton")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "BACK" })).toBeInTheDocument();
   });
 });

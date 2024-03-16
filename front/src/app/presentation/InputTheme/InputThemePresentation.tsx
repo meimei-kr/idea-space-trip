@@ -1,21 +1,21 @@
 "use client";
 
 import styles from "@/app/presentation/InputTheme/InputThemePresentation.module.scss";
-import { BackButton, LitUpBorders } from "@/components/ui/tailwind-buttons";
-import { Textarea } from "@/components/ui/textarea";
+import BackButton from "@/components/elements/BackButton/BackButton";
+import Textbox from "@/components/elements/Textbox/Textbox";
+import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { ThemeState, submitTheme } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
-import { FaMicrophone } from "react-icons/fa";
 import {
   FaRegFaceFrown,
   FaRegFaceGrin,
   FaRegFaceGrinBeam,
 } from "react-icons/fa6";
-import { IoCheckboxOutline, IoChevronBack } from "react-icons/io5";
+import { IoCheckboxOutline } from "react-icons/io5";
 
 export default function InputThemePresentation({
   ideaSession,
@@ -53,15 +53,7 @@ export default function InputThemePresentation({
                   {error}
                 </div>
               ))}
-            <div className={styles.textareaContainer}>
-              <Textarea
-                id="theme"
-                name="theme"
-                aria-describedby="theme-error"
-                className={styles.textarea}
-              />
-              <FaMicrophone className={styles.microphone} />
-            </div>
+            <Textbox id="theme" name="theme" ariaDescribedby="theme-error" />
             <p className={styles.checkItem}>
               <IoCheckboxOutline />
               テーマが具体的かどうかチェック
@@ -100,12 +92,7 @@ export default function InputThemePresentation({
           </form>
         </div>
       </div>
-      <div className={styles.back}>
-        <IoChevronBack className={styles.arrow} />
-        <BackButton onClick={handleBack} type="button">
-          BACK
-        </BackButton>
-      </div>
+      <BackButton onClick={handleBack} />
     </main>
   );
 }
