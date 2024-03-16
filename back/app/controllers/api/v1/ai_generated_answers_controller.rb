@@ -29,10 +29,10 @@ module Api
       # uuidをもとにIdeaSessionを取得
       def set_idea_session
         @idea_session = @current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
-        if @idea_session.nil?
-          render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
-          return
-        end
+        return unless @idea_session.nil?
+
+        render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
+        nil
       end
 
       def build_input(user_input)
