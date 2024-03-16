@@ -12,7 +12,7 @@ import { IdeaSessionType } from "@/types";
 import { ThemeCategoryEnum } from "@/utils/enums";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
 export default function SelectThemePresentation({
   ideaSession,
@@ -69,7 +69,7 @@ export default function SelectThemePresentation({
               ariaDescribedby="theme-category-error"
             />
             <input type="hidden" name="uuid" value={uuid} />
-            <LitUpBorders type="submit">決定</LitUpBorders>
+            <SubmitButton />
           </form>
         </div>
       </div>
@@ -77,3 +77,12 @@ export default function SelectThemePresentation({
     </main>
   );
 }
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBorders type="submit" disabled={pending}>
+      決定
+    </LitUpBorders>
+  );
+};

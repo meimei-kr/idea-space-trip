@@ -16,6 +16,7 @@ jest.mock("@/hooks/useUUIDCheck", () => ({
 jest.mock("react-dom", () => ({
   ...jest.requireActual("react-dom"),
   useFormState: jest.fn(() => [{ errors: {} }, jest.fn()]),
+  useFormStatus: jest.fn().mockReturnValue({ pending: false }),
 }));
 
 jest.mock("@/components/ui/textarea", () => ({

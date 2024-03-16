@@ -9,7 +9,7 @@ import { ThemeState, submitTheme } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import {
   FaRegFaceFrown,
   FaRegFaceGrin,
@@ -93,7 +93,7 @@ export default function InputThemePresentation({
               </div>
             </div>
             <input type="hidden" value={uuid} id="uuid" name="uuid" />
-            <LitUpBorders type="submit">決定</LitUpBorders>
+            <SubmitButton />
           </form>
         </div>
       </div>
@@ -101,3 +101,12 @@ export default function InputThemePresentation({
     </main>
   );
 }
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBorders type="submit" disabled={pending}>
+      決定
+    </LitUpBorders>
+  );
+};
