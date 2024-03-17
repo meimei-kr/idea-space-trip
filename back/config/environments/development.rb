@@ -77,6 +77,6 @@ Rails.application.configure do
 
   config.factory_bot.definition_file_paths = [Rails.root.join('spec/factories')]
 
-  config.action_cable.url = 'wss://localhost:3000/cable'
+  config.action_cable.url = 'ws://localhost:3000/cable'
   config.action_cable.allowed_request_origins = [%r{http://localhost\.*}]
 end
