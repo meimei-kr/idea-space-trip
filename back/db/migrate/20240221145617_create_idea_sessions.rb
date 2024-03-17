@@ -9,6 +9,7 @@ class CreateIdeaSessions < ActiveRecord::Migration[7.1]
       t.integer :theme_question, null: false, default: 0
       t.text :theme_answer
       t.boolean :is_ai_answer_generated, null: false, default: false
+      t.integer :ai_answer_retry_count, null: false, default: 0
       t.text :theme
       t.boolean :is_finished, null: false, default: false
 

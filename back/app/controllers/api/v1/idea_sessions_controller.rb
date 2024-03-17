@@ -56,6 +56,7 @@ module Api
           :theme_question,
           :theme_answer,
           :is_ai_answer_generated,
+          :ai_answer_retry_count,
           :theme,
           :is_finished,
           :user_id

@@ -6,6 +6,7 @@ const withBundleAnalyzer = createBundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   webpack: (config) => {
     config.watchOptions = {
       poll: 5000,

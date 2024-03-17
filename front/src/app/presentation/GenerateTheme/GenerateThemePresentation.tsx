@@ -78,13 +78,14 @@ export default function GenerateThemePresentation({
   useEffect(() => {
     router.prefetch(`/${uuid}/select-theme-category`);
     router.prefetch(`/${uuid}/generate-ideas`);
-  }, [uuid]);
+  }, [uuid, router]);
 
   // AIによるアイデア生成済みであれば、テーマ生成はせず、アイデア出し画面に遷移
   useEffect(() => {
     if (ideaSession?.isAiAnswerGenerated) {
       setIsMoveAlertModalOpen(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // テーマ生成ボタンの状態更新

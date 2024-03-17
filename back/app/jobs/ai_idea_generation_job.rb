@@ -13,15 +13,15 @@ class AiIdeaGenerationJob < ApplicationJob
   private
 
   def process_ai_ideas(ai_ideas, user_id)
-    # OpenAIからのレスポンスが 'invalid' だった場合の処理
-    if ai_ideas == 'invalid'
+    # OpenAIからのレスポンスが 999(無効) だった場合の処理
+    if ai_ideas.include?('999')
       ActionCable.server.broadcast "ai_idea_channel_#{user_id}",
-                                   { error: '無効な入力です。テーマを変えてみてください。' }
+                                   { invalid: '無効な入力です。テーマを変えてみてください。' }
       return
     end
 
     idea_session = IdeaSession.find_by(user_id:, is_finished: false)
-    if idea_session
+    if idea_session.present?
       broadcast_ai_ideas(ai_ideas, idea_session, user_id)
     else
       Rails.logger.error("対象のidea_sessionsが見つかりませんでした。user_id: #{user_id}")

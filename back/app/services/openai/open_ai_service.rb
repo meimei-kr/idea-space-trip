@@ -27,6 +27,8 @@ module Openai
       JSON.parse(response.body)['choices'][0]['message']['content']
     rescue Faraday::TimeoutError
       raise TimeoutError, 'リクエストがタイムアウトしました。もう一度お試しください。'
+    rescue JSON::ParserError => e
+      raise JSON::ParserError, "JSONのパースに失敗しました。#{e.message}"
     end
 
     private

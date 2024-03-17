@@ -55,6 +55,16 @@ RSpec.describe IdeaSession do
       expect(idea_session).not_to be_valid
     end
 
+    it 'is invalid without ai_answer_retry_count' do
+      idea_session = build(:idea_session, ai_answer_retry_count: nil)
+      expect(idea_session).not_to be_valid
+    end
+
+    it 'is invalid when ai_answer_retry_count is not an integer' do
+      idea_session = build(:idea_session, ai_answer_retry_count: 1.5)
+      expect(idea_session).not_to be_valid
+    end
+
     it 'is invalid when is_finished is neither true nor false' do
       idea_session = build(:idea_session, is_finished: nil)
       expect(idea_session).not_to be_valid

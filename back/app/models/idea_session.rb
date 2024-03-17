@@ -28,6 +28,9 @@ class IdeaSession < ApplicationRecord
   validates :theme_category, presence: true
   validates :theme_question, presence: true
   validates :is_ai_answer_generated, inclusion: { in: [true, false] }
+  validates :ai_answer_retry_count, presence: true,
+                                    numericality: { only_integer: true,
+                                                    greater_than_or_equal_to: 0 }
   validates :is_finished, inclusion: { in: [true, false] }
   validates :theme, length: { maximum: 255 }
 

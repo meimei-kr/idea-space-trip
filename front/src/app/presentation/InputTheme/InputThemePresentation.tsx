@@ -46,13 +46,14 @@ export default function InputThemePresentation({
   useEffect(() => {
     router.prefetch(`/${uuid}/check-theme`);
     router.prefetch(`/${uuid}/generate-ideas`);
-  }, [uuid]);
+  }, [uuid, router]);
 
   // AIによるアイデア生成済みであれば、テーマ生成はせず、アイデア出し画面に遷移
   useEffect(() => {
     if (ideaSession?.isAiAnswerGenerated) {
       setIsMoveAlertModalOpen(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // AIアイデア生成済みエラー画面でOKクリック時の処理

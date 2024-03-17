@@ -47,6 +47,7 @@ export type IdeaSessionType = {
   themeQuestion?: string;
   themeAnswer?: string;
   isAiAnswerGenerated?: boolean;
+  aiAnswerRetryCount?: number;
   theme?: string;
   isFinished?: boolean;
   userId?: number;

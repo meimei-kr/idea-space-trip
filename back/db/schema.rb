@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.integer "theme_question", default: 0, null: false
     t.text "theme_answer"
     t.boolean "is_ai_answer_generated", default: false, null: false
+    t.integer "ai_answer_retry_count", default: 0, null: false
     t.text "theme"
     t.boolean "is_finished", default: false, null: false
     t.datetime "created_at", null: false
