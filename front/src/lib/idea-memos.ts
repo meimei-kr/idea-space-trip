@@ -40,7 +40,6 @@ export async function createIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ作成に失敗しました: ${error}`);
   }
 }
@@ -77,7 +76,6 @@ export async function getCurrentIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
 }

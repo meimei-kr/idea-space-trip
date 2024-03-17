@@ -26,6 +26,7 @@ module Api
       def create_ai_usage_history
         ai_usage_history = @current_user.ai_usage_history
         return if ai_usage_history.present?
+
         @current_user.create_ai_usage_history!(date: Time.zone.today)
       end
     end

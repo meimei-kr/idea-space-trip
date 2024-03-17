@@ -43,7 +43,6 @@ export async function getAiGeneratedAnswers(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
 }
@@ -85,7 +84,6 @@ export async function createAiGeneratedAnswers(
       throw new Error(`AIによる回答生成に失敗しました: ${serializedData}`);
     }
   } catch (error) {
-    console.error(error);
     throw new Error(`データ作成に失敗しました: ${error}`);
   }
 }
@@ -114,7 +112,6 @@ export async function deleteAiGeneratedAnswers(uuid: string) {
       throw new Error(`AIによる回答削除に失敗しました: ${serializedData}`);
     }
   } catch (error) {
-    console.error(error);
     throw new Error(`データ削除に失敗しました: ${error}`);
   }
 }

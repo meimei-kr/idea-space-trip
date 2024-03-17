@@ -47,7 +47,6 @@ export async function createAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ作成に失敗しました: ${error}`);
   }
 }
@@ -82,7 +81,6 @@ export async function getAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
 }
@@ -108,7 +106,6 @@ export async function deleteAIGeneratedThemes(uuid: string): Promise<void> {
       throw new Error(`AIによるテーマ案削除に失敗しました: ${response.status}`);
     }
   } catch (error) {
-    console.error(error);
     throw new Error(`データ削除に失敗しました: ${error}`);
   }
 }
