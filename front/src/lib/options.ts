@@ -50,7 +50,6 @@ export const authOptions: NextAuthOptions = {
           return false;
         }
       } catch (error) {
-        console.error(error);
         return false;
       }
     },

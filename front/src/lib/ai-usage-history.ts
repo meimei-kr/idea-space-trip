@@ -32,7 +32,6 @@ export async function getAIUsageHistory(): Promise<AiUsageHistoryType | null> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
 }
@@ -58,7 +57,6 @@ export async function updateAIUsageHistory(): Promise<AiUsageHistoryType> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ更新に失敗しました: ${error}`);
   }
 }

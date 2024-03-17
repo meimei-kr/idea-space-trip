@@ -25,6 +25,7 @@ FactoryBot.define do
     theme_question { 0 }
     theme_answer { 'MyText' }
     is_ai_answer_generated { false }
+    ai_answer_retry_count { 0 }
     theme { 'MyText' }
     is_finished { false }
     user

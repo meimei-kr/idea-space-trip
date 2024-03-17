@@ -22,7 +22,7 @@ module Api
         # テーマ生成
         input = build_input
         themes = Openai::OpenAiService.new.call(input) # グローバル名前空間にあるOpenAIServiceを参照
-        render json: nil and return if themes.casecmp('invalid').zero? # 無効な入力の場合は、nilを返す
+        render json: nil and return if themes.include?('999') # 無効な入力の場合は、nilを返す
 
         themes_array = themes.split("\n")
 
@@ -41,6 +41,12 @@ module Api
                status: :ok
       rescue StandardError => e
         render json: { error: e.message }, status: :unprocessable_entity
+      end
+
+      def destroy_all
+        set_idea_session
+        @idea_session.ai_generated_themes.destroy_all
+        render json: nil, status: :ok
       end
 
       private

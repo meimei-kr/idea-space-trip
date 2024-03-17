@@ -18,10 +18,16 @@ module Api
       def create
         input = build_input(params[:user_input])
         if AiIdeaGenerationJob.perform_later(@current_user.id, input)
-          head :ok
+          render json: nil, status: :ok
         else
           render json: { error: 'ジョブキューへの追加に失敗しました' }, status: :internal_server_error
         end
+      end
+
+      def destroy_all
+        set_idea_session
+        @idea_session.ai_generated_answers.destroy_all
+        render json: nil, status: :ok
       end
 
       private

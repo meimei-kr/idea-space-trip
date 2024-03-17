@@ -5,8 +5,8 @@ module Api
 
       def create
         @current_user = User.find_or_create_by!(user_params)
-        # AIUsageHistoryを作成/更新
-        create_or_update_ai_usage_history
+        # 初回ログイン時はAIUsageHistoryを作成
+        create_ai_usage_history
 
         # JWTを発行
         payload = { user_id: @current_user.id, exp: 24.hours.from_now.to_i }
@@ -23,13 +23,11 @@ module Api
         params.require(:user).permit(:provider, :name, :email)
       end
 
-      def create_or_update_ai_usage_history
+      def create_ai_usage_history
         ai_usage_history = @current_user.ai_usage_history
-        if ai_usage_history
-          ai_usage_history.update!(date: Time.zone.today)
-        else
-          @current_user.create_ai_usage_history!(date: Time.zone.today)
-        end
+        return if ai_usage_history.present?
+
+        @current_user.create_ai_usage_history!(date: Time.zone.today)
       end
     end
   end

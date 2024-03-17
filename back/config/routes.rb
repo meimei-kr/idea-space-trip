@@ -14,7 +14,9 @@ Rails.application.routes.draw do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
         end
         resources :ai_generated_themes, only: %i[create index]
+        delete 'ai_generated_themes', to: 'ai_generated_themes#destroy_all'
         resources :ai_generated_answers, only: %i[create index]
+        delete 'ai_generated_answers', to: 'ai_generated_answers#destroy_all'
         resources :idea_memos, only: %i[create]
         get 'idea_memos/all_in_session', to: 'idea_memos#all_in_session'
       end

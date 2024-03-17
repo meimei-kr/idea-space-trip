@@ -1,10 +1,17 @@
 "use client";
 
 import styles from "@/app/presentation/GenerateIdeas/GenerateIdeasPresentation.module.scss";
-import BackButton from "@/components/elements/BackButton/BackButton";
 import Description from "@/components/elements/Description/Description";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
 import {
   BorderMagic,
   LitUpBorders,
@@ -13,8 +20,18 @@ import {
 import { SESSION_LAST_INDEX } from "@/constants/constants";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { MyIdeaState, submitAiAnswer, submitMyIdea } from "@/lib/actions";
-import { createAiGeneratedAnswers } from "@/lib/ai-generated-answers";
-import { updateIdeaSession } from "@/lib/idea-sessions";
+import {
+  createAiGeneratedAnswers,
+  deleteAiGeneratedAnswers,
+} from "@/lib/ai-generated-answers";
+import { deleteAIGeneratedThemes } from "@/lib/ai-generated-themes";
+import { updateAIUsageHistory } from "@/lib/ai-usage-history";
+import {
+  createIdeaSession,
+  deleteIdeaSession,
+  updateIdeaSession,
+} from "@/lib/idea-sessions";
+import { generateUUID } from "@/lib/uuid";
 import {
   AiGeneratedAnswerType,
   IdeaMemoType,
@@ -50,6 +67,7 @@ export default function GenerateIdeasPresentation({
   const [count, setCount] = useState(myIdeas ? myIdeas.length : 0); // 出したアイデアの数
   const [isOpenAIAnswer, setIsOpenAIAnswer] = useState(false); // AIの回答を表示するかどうか
   const [isSentAPIRequest, setIsSentAPIRequest] = useState(false); // APIリクエストを送信中かどうか
+  const [isAlertOpen, setIsAlertOpen] = useState(false); // アラートを表示するかどうか
 
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
@@ -72,6 +90,7 @@ export default function GenerateIdeasPresentation({
       createAiAnswers(ideaSession.uuid!, perspectivesStr, ideaSession.theme!);
       setIsSentAPIRequest(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ユーザーIDをもとにActionCableチャネルをサブスクライブ
@@ -86,9 +105,18 @@ export default function GenerateIdeasPresentation({
       {
         received: (data) => {
           const handleReceivedData = async () => {
-            if (data.error) {
-              console.error(data.error);
+            // 無効な入力だと判断された場合の処理
+            if (data.invalid) {
+              setIsAlertOpen(true);
               return;
+            }
+            // 内部エラー発生時の処理
+            if (data.error) {
+              if (process.env.NEXT_PUBLIC_API_HOST === "localhost") {
+                console.error(data.error);
+                return;
+              }
+              return <Error statusCode={500} />;
             }
             setAiGeneratedAnswers(data.body);
             // AIの回答生成が成功したのでideaSessionのis_ai_answer_generatedをtrueにする
@@ -149,16 +177,44 @@ export default function GenerateIdeasPresentation({
     router.prefetch(`/${uuid}/end-session`);
   }, [router, uuid]);
   const handleEndSession = async () => {
-    await updateIdeaSession(uuid, { isFinished: true });
+    await Promise.all([
+      // idea_sessionsテーブルのis_finishedをtrueにする
+      updateIdeaSession(uuid, { isFinished: true }),
+      // ai_generated_themes と ai_generated_answersテーブルのレコードを削除
+      deleteAIGeneratedThemes(uuid),
+      deleteAiGeneratedAnswers(uuid),
+      // ai_usage_historiesテーブル の countを更新
+      updateAIUsageHistory(),
+    ]);
+
     router.push(`/${uuid}/end-session`);
   };
 
-  // 戻るボタンの処理
-  const handleBack = () => {
-    if (ideaSession?.isThemeDetermined) {
-      router.push(`/${uuid}/input-theme`);
+  // アラートでOKをクリック時の処理
+  const handleOkClick = async () => {
+    setIsAlertOpen(false);
+
+    const retryCount = ideaSession?.aiAnswerRetryCount ?? 0;
+    if (retryCount <= 2) {
+      const newRetryCount = retryCount + 1;
+      await updateIdeaSession(uuid, {
+        aiAnswerRetryCount: newRetryCount,
+      });
+      if (ideaSession?.isAiThemeGenerated) {
+        router.push(`/${uuid}/generate-theme`);
+      } else {
+        router.push(`/${uuid}/input-theme`);
+      }
     } else {
-      router.push(`/${uuid}/generate-theme`);
+      // リトライ回数制限に達した場合
+      // ai_usage_historiesテーブルの使用回数を1増やす
+      await updateAIUsageHistory();
+      // idea_sessionsテーブルから当該セッションを削除
+      await deleteIdeaSession(uuid);
+      // 新しいアイデア出しセッションを開始
+      const newUUID = generateUUID();
+      await createIdeaSession(newUUID);
+      router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
     }
   };
 
@@ -332,9 +388,36 @@ export default function GenerateIdeasPresentation({
             </div>
           )}
         </div>
-      </div>
 
-      <BackButton onClick={handleBack} />
+        {/* 無効な入力だと判断された場合のアラート */}
+        <AlertDialog
+          open={isAlertOpen}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogDescription>
+                {(ideaSession?.aiAnswerRetryCount ?? 0) <= 2 ? (
+                  <>
+                    無効なテーマだと判断されたよ。
+                    <br />
+                    テーマを変えてもう一度試してみてね。
+                  </>
+                ) : (
+                  <>
+                    無効な入力が複数回続けて検知されたよ。
+                    <br />
+                    新しいセッションを作成するので、もう一度やってみてね。
+                  </>
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+              <AlertDialogAction onClick={handleOkClick}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </main>
   );
 }

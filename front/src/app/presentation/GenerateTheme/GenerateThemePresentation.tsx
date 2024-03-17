@@ -53,7 +53,8 @@ export default function GenerateThemePresentation({
     ideaSession?.isAiThemeGenerated,
   );
   const [retryCount, setRetryCount] = useState(0);
-  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false); // 無効な入力エラー画面の表示
+  const [isMoveAlertModalOpen, setIsMoveAlertModalOpen] = useState(false); // AIアイデア生成済みエラー画面の表示
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
@@ -73,6 +74,20 @@ export default function GenerateThemePresentation({
     initialGeneratedThemesState,
   );
 
+  // 遷移先パスをプレフェッチ
+  useEffect(() => {
+    router.prefetch(`/${uuid}/select-theme-category`);
+    router.prefetch(`/${uuid}/generate-ideas`);
+  }, [uuid, router]);
+
+  // AIによるアイデア生成済みであれば、テーマ生成はせず、アイデア出し画面に遷移
+  useEffect(() => {
+    if (ideaSession?.isAiAnswerGenerated) {
+      setIsMoveAlertModalOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // テーマ生成ボタンの状態更新
   useEffect(() => {
     if (aiGeneratedThemesArray.length > 0) {
@@ -81,10 +96,11 @@ export default function GenerateThemePresentation({
   }, [aiGeneratedThemesArray]);
 
   // 無効な入力によるリトライ回数を2回許可する
-  const handleRetryCount = () => {
+  const handleRetryCount = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (retryCount <= 2) {
       setRetryCount((prev) => prev + 1);
     } else {
+      e.preventDefault();
       // リトライ回数が2回を超えた場合、エラーメッセージを表示
       setIsAlertModalOpen(true);
     }
@@ -103,6 +119,12 @@ export default function GenerateThemePresentation({
     const newUUID = generateUUID();
     await createIdeaSession(newUUID);
     router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
+  };
+
+  // AIアイデア生成済みエラー画面でOKクリック時の処理
+  const handleMoveOkClick = () => {
+    setIsMoveAlertModalOpen(false);
+    router.push(`/${uuid}/generate-ideas`);
   };
 
   // 戻るボタンの処理
@@ -188,7 +210,7 @@ export default function GenerateThemePresentation({
                   id="answer"
                   name="answer"
                   ariaDescribedby="theme-answer-error"
-                  placeholder="回答を入力してね。複数回答してもOKだよ。"
+                  placeholder="255文字以内で回答を入力してね。複数回答してもOKだよ。"
                 />
               </div>
             </div>
@@ -258,6 +280,27 @@ export default function GenerateThemePresentation({
               </form>
             </div>
           )}
+
+          {/* すでにAIによるアイデア回答を生成済みの場合、アイデア出し画面に遷移するダイアログ表示 */}
+          <AlertDialog
+            open={isMoveAlertModalOpen}
+            aria-labelledby="responsive-dialog-title"
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogDescription>
+                  このセッションで、すでにAIによるアイデア回答例を生成済みだよ。
+                  <br />
+                  アイデア出し画面に遷移するね。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+                <AlertDialogAction onClick={handleMoveOkClick}>
+                  OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
@@ -271,9 +314,10 @@ const SubmitButton = ({
   handleRetryCount,
 }: {
   isThemeGenerated: boolean | undefined;
-  handleRetryCount: () => void;
+  handleRetryCount: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }) => {
   const { pending } = useFormStatus();
+
   return (
     <LitUpBorders
       type="submit"

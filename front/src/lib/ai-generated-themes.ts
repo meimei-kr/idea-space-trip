@@ -47,7 +47,6 @@ export async function createAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ作成に失敗しました: ${error}`);
   }
 }
@@ -82,7 +81,31 @@ export async function getAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    console.error(error);
     throw new Error(`データ取得に失敗しました: ${error}`);
+  }
+}
+
+/**
+ * AIによるテーマ生成案を削除
+ */
+export async function deleteAIGeneratedThemes(uuid: string): Promise<void> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_sessions/${uuid}/ai_generated_themes`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`AIによるテーマ案削除に失敗しました: ${response.status}`);
+    }
+  } catch (error) {
+    throw new Error(`データ削除に失敗しました: ${error}`);
   }
 }
