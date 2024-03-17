@@ -98,7 +98,7 @@ export default function GenerateIdeasPresentation({
   useEffect(() => {
     const accessToken = session.data?.user.accessToken ?? "";
     const cable = createConsumer(
-      `${process.env.NEXT_PUBLIC_WEBSOCKET_PROTOCOL}://${process.env.NEXT_PUBLIC_API_HOST}:${process.env.NEXT_PUBLIC_API_PORT}/cable?token=${encodeURIComponent(accessToken)}`,
+      `${process.env.NEXT_PUBLIC_WEBSOCKET_PROTOCOL}://${process.env.NEXT_PUBLIC_API_HOST_PORT}/cable?token=${encodeURIComponent(accessToken)}`,
     );
     const subscription = cable.subscriptions.create(
       { channel: "AiIdeaChannel", user_id: userId },
