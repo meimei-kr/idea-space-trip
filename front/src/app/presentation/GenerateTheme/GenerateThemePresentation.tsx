@@ -53,7 +53,8 @@ export default function GenerateThemePresentation({
     ideaSession?.isAiThemeGenerated,
   );
   const [retryCount, setRetryCount] = useState(0);
-  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false); // 無効な入力エラー画面の表示
+  const [isMoveAlertModalOpen, setIsMoveAlertModalOpen] = useState(false); // AIアイデア生成済みエラー画面の表示
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
@@ -72,6 +73,19 @@ export default function GenerateThemePresentation({
     confirmTheme,
     initialGeneratedThemesState,
   );
+
+  // 遷移先パスをプレフェッチ
+  useEffect(() => {
+    router.prefetch(`/${uuid}/select-theme-category`);
+    router.prefetch(`/${uuid}/generate-ideas`);
+  }, [uuid]);
+
+  // AIによるアイデア生成済みであれば、テーマ生成はせず、アイデア出し画面に遷移
+  useEffect(() => {
+    if (ideaSession?.isAiAnswerGenerated) {
+      setIsMoveAlertModalOpen(true);
+    }
+  }, []);
 
   // テーマ生成ボタンの状態更新
   useEffect(() => {
@@ -104,6 +118,12 @@ export default function GenerateThemePresentation({
     const newUUID = generateUUID();
     await createIdeaSession(newUUID);
     router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
+  };
+
+  // AIアイデア生成済みエラー画面でOKクリック時の処理
+  const handleMoveOkClick = () => {
+    setIsMoveAlertModalOpen(false);
+    router.push(`/${uuid}/generate-ideas`);
   };
 
   // 戻るボタンの処理
@@ -259,6 +279,27 @@ export default function GenerateThemePresentation({
               </form>
             </div>
           )}
+
+          {/* すでにAIによるアイデア回答を生成済みの場合、アイデア出し画面に遷移するダイアログ表示 */}
+          <AlertDialog
+            open={isMoveAlertModalOpen}
+            aria-labelledby="responsive-dialog-title"
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogDescription>
+                  このセッションで、すでにAIによるアイデア回答例を生成済みだよ。
+                  <br />
+                  アイデア出し画面に遷移するね。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+                <AlertDialogAction onClick={handleMoveOkClick}>
+                  OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
