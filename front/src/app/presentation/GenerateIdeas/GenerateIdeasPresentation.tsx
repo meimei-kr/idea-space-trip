@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "@/app/presentation/GenerateIdeas/GenerateIdeasPresentation.module.scss";
-import BackButton from "@/components/elements/BackButton/BackButton";
 import Description from "@/components/elements/Description/Description";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
@@ -151,15 +150,6 @@ export default function GenerateIdeasPresentation({
   const handleEndSession = async () => {
     await updateIdeaSession(uuid, { isFinished: true });
     router.push(`/${uuid}/end-session`);
-  };
-
-  // 戻るボタンの処理
-  const handleBack = () => {
-    if (ideaSession?.isThemeDetermined) {
-      router.push(`/${uuid}/input-theme`);
-    } else {
-      router.push(`/${uuid}/generate-theme`);
-    }
   };
 
   // エラーがある場合はエラーページを表示
@@ -333,8 +323,6 @@ export default function GenerateIdeasPresentation({
           )}
         </div>
       </div>
-
-      <BackButton onClick={handleBack} />
     </main>
   );
 }

@@ -3,7 +3,10 @@ import { IdeaSessionType } from "@/types";
 import { render, screen } from "@testing-library/react";
 
 jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    prefetch: jest.fn(),
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock("@/hooks/useUUIDCheck", () => ({
