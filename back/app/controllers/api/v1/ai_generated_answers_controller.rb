@@ -24,6 +24,12 @@ module Api
         end
       end
 
+      def destroy_all
+        set_idea_session
+        @idea_session.ai_generated_answers.destroy_all
+        head :ok
+      end
+
       private
 
       # uuidをもとにIdeaSessionを取得

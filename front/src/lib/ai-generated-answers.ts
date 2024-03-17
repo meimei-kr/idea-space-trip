@@ -89,3 +89,32 @@ export async function createAiGeneratedAnswers(
     throw new Error(`データ作成に失敗しました: ${error}`);
   }
 }
+
+/**
+ * AIによる回答を削除
+ *
+ * @param uuid: string
+ */
+export async function deleteAiGeneratedAnswers(uuid: string) {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_sessions/${uuid}/ai_generated_answers`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      },
+    );
+    const serializedData = await response.json();
+    if (!response.ok) {
+      throw new Error(`AIによる回答削除に失敗しました: ${serializedData}`);
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error(`データ削除に失敗しました: ${error}`);
+  }
+}

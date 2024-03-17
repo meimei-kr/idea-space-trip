@@ -12,7 +12,12 @@ import {
 import { SESSION_LAST_INDEX } from "@/constants/constants";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { MyIdeaState, submitAiAnswer, submitMyIdea } from "@/lib/actions";
-import { createAiGeneratedAnswers } from "@/lib/ai-generated-answers";
+import {
+  createAiGeneratedAnswers,
+  deleteAiGeneratedAnswers,
+} from "@/lib/ai-generated-answers";
+import { deleteAIGeneratedThemes } from "@/lib/ai-generated-themes";
+import { updateAIUsageHistory } from "@/lib/ai-usage-history";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import {
   AiGeneratedAnswerType,
@@ -148,7 +153,16 @@ export default function GenerateIdeasPresentation({
     router.prefetch(`/${uuid}/end-session`);
   }, [router, uuid]);
   const handleEndSession = async () => {
-    await updateIdeaSession(uuid, { isFinished: true });
+    await Promise.all([
+      // idea_sessionsテーブルのis_finishedをtrueにする
+      updateIdeaSession(uuid, { isFinished: true }),
+      // ai_generated_themes と ai_generated_answersテーブルのレコードを削除
+      deleteAIGeneratedThemes(uuid),
+      deleteAiGeneratedAnswers(uuid),
+      // ai_usage_historiesテーブル の countを更新
+      updateAIUsageHistory(),
+    ]);
+
     router.push(`/${uuid}/end-session`);
   };
 

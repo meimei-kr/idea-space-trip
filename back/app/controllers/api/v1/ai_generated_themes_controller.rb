@@ -43,6 +43,12 @@ module Api
         render json: { error: e.message }, status: :unprocessable_entity
       end
 
+      def destroy_all
+        set_idea_session
+        @idea_session.ai_generated_themes.destroy_all
+        head :ok
+      end
+
       private
 
       # idea_sessionの値をもとにテーマ生成を行うため、idea_sessionの値を許容する
