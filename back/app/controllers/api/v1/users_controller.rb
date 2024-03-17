@@ -25,8 +25,12 @@ module Api
 
       def create_or_update_ai_usage_history
         ai_usage_history = @current_user.ai_usage_history
-        if ai_usage_history
-          ai_usage_history.update!(date: Time.zone.today)
+        if ai_usage_history.present?
+          # 本日のAI使用履歴がなければ、日付とAI使用回数を更新
+          return if ai_usage_history.date == Time.zone.today
+
+          ai_usage_history.update!(date: Time.zone.today, count: 0)
+
         else
           @current_user.create_ai_usage_history!(date: Time.zone.today)
         end
