@@ -36,7 +36,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   config.action_cable.url = 'wss://idea-space-trip.fly.dev/cable'
 
-  config.action_cable.allowed_request_origins = ["https://idea-space-trip.net"]
+  config.action_cable.allowed_request_origins = ['https://idea-space-trip.net']
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.

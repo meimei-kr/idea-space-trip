@@ -193,7 +193,7 @@
   width: 100%;
   margin-bottom: 40px;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1280px) {
     grid-template-columns: 120px 16px 1fr;
     grid-template-rows: 1fr 120px;
     width: 70%;
@@ -211,7 +211,7 @@
   font-size: 12px;
   color: var(--white);
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1280px) {
     width: 120px;
     font-size: 14px;
   }
@@ -248,7 +248,7 @@
   width: 80%;
   text-align: center;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1280px) {
     font-size: 20px;
   }
 
@@ -257,7 +257,7 @@
     font-weight: bold;
     color: var(--pink);
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 1280px) {
       letter-spacing: -0.1rem;
     }
   }
