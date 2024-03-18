@@ -4,4 +4,5 @@ class IdeaMemoSerializer
 
   set_type :idea_memo
   attributes :perspective, :hint, :answer, :comment, :idea_session_id
+  belongs_to :idea_session, serializer: IdeaSessionSerializer
 end

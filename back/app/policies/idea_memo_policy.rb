@@ -14,22 +14,4 @@ class IdeaMemoPolicy < ApplicationPolicy
 
     attr_reader :user, :scope
   end
-
-  # ユーザーがログインしているかどうかを確認
-  def general_check?
-    user.present?
-  end
-
-  # ログイン中のユーザーがレコードの所有者かどうかを確認
-  def record_owner?
-    record.user_id == user.id
-  end
-
-  def create?
-    general_check?
-  end
-
-  def all_in_session?
-    general_check?
-  end
 end

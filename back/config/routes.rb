@@ -9,9 +9,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :idea_sessions, param: :uuid, only: %i[index create update destroy] do
+      resources :idea_sessions, param: :uuid, only: %i[create update destroy] do
         collection do
           get 'show_in_progress', to: 'idea_sessions#show_in_progress'
+          get 'show_latest_two_with_memos', to: 'idea_sessions#show_latest_two_with_memos'
         end
         resources :ai_generated_themes, only: %i[create index]
         delete 'ai_generated_themes', to: 'ai_generated_themes#destroy_all'
@@ -21,7 +22,11 @@ Rails.application.routes.draw do
         get 'idea_memos/all_in_session', to: 'idea_memos#all_in_session'
       end
       resource :ai_usage_history, only: %i[show update]
-      resources :idea_memos, only: %i[index show edit update destroy]
+      resources :idea_memos, only: %i[index show edit update destroy] do
+        collection do
+          get 'this_month_count', to: 'idea_memos#this_month_count'
+        end
+      end
     end
   end
 end

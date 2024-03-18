@@ -9,8 +9,8 @@ module Api
 
       def create
         set_idea_session
+        authorize @idea_session, :record_owner?
         idea_memo = @idea_session.idea_memos.new(idea_memo_params)
-        authorize idea_memo
 
         if idea_memo.save
           render json: IdeaMemoSerializer.new(idea_memo).serializable_hash.to_json, status: :ok
@@ -33,6 +33,12 @@ module Api
       def update; end
 
       def destroy; end
+
+      def this_month_count
+        count = @current_user.idea_memos.where('idea_memos.created_at >= ?',
+                                               Time.current.beginning_of_month).count
+        render json: { count: }, status: :ok
+      end
 
       private
 

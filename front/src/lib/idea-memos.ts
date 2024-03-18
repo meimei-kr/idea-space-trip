@@ -79,3 +79,30 @@ export async function getCurrentIdeaMemos(
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
 }
+
+/**
+ * 今月出したアイデアの数を取得
+ */
+export async function getIdeaMemosThisMonth(): Promise<number> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_memos/this_month_count`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      },
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`アイデアの取得に失敗しました: ${data}`);
+    }
+    return data.count;
+  } catch (error) {
+    throw new Error(`データ取得に失敗しました: ${error}`);
+  }
+}

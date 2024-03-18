@@ -11,6 +11,7 @@
 #
 class User < ApplicationRecord
   has_many :idea_sessions, dependent: :destroy
+  has_many :idea_memos, through: :idea_sessions
   has_one :ai_usage_history, dependent: :destroy
 
   validates :name, presence: true

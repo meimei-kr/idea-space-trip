@@ -18,6 +18,7 @@ module Api
 
       def create
         set_idea_session
+        authorize @idea_session, :record_owner?
 
         # テーマ生成
         input = build_input
@@ -45,7 +46,7 @@ module Api
 
       def destroy_all
         set_idea_session
-        @idea_session.ai_generated_themes.destroy_all
+        policy_scope(@idea_session.ai_generated_themes).destroy_all
         render json: nil, status: :ok
       end
 

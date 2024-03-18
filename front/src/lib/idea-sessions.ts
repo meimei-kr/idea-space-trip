@@ -123,3 +123,39 @@ export async function updateIdeaSession(
     throw new Error(`データ更新に失敗しました: ${error}`);
   }
 }
+
+// 最新２つのアイデアセッションとそれに紐づくアイデアメモを取得
+export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
+  IdeaSessionType[]
+> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_sessions/show_latest_two_with_memos`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+        cache: "no-store",
+      },
+    );
+    const serializedData = await response.json();
+    console.log("serializedData", serializedData);
+    if (!response.ok) {
+      throw new Error(`データ取得に失敗しました: ${serializedData}`);
+    }
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+
+    console.log("deserializedData", deserializedData);
+
+    return deserializedData;
+  } catch (error) {
+    throw new Error(`データ取得に失敗しました: ${error}`);
+  }
+}
