@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
   end
 
   create_table "idea_memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "uuid", default: -> { "(uuid())" }, null: false
     t.bigint "idea_session_id", null: false
     t.integer "perspective", null: false
     t.text "hint"
@@ -47,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["idea_session_id"], name: "index_idea_memos_on_idea_session_id"
+    t.index ["uuid"], name: "index_idea_memos_on_uuid", unique: true
   end
 
   create_table "idea_sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

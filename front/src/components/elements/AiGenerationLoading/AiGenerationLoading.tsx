@@ -16,7 +16,11 @@ export default function AiGenerationLoading() {
             </div>
           </div>
         </div>
-        <p>テーマ案生成中...</p>
+        <p>
+          テーマ案生成中...
+          <br />
+          そのままもう少し待っててね。
+        </p>
       </div>
     </div>
   );

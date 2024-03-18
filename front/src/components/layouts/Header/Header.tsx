@@ -172,7 +172,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="#" onClick={menuFunction}>
+                <Link href="/idea-memos" onClick={menuFunction}>
                   <span className={styles.mainTitle}>MEMO</span>
                   <span className={styles.subTitle}>
                     保存したアイデアを確認

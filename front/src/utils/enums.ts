@@ -19,7 +19,7 @@ export enum ThemeQuestionEnum {
 /**
  * 観点Enumの定義
  */
-enum PerspectiveEnum {
+export enum PerspectiveEnum {
   modify = "変更",
   substitute = "代用",
   reverse = "逆転",

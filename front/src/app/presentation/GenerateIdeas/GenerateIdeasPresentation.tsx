@@ -314,9 +314,11 @@ export default function GenerateIdeasPresentation({
                   <Blob className={styles.blob} />
                 </div>
               </div>
-              <BorderMagic type="button" onClick={handleShowAnswers}>
-                AIの回答を見る
-              </BorderMagic>
+              {!isOpenAIAnswer && (
+                <BorderMagic type="button" onClick={handleShowAnswers}>
+                  AIの回答を見る
+                </BorderMagic>
+              )}
               {isOpenAIAnswer && (
                 <>
                   <div className={styles.aiAnswerContainer}>
