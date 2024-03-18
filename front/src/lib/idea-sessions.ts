@@ -143,7 +143,6 @@ export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
       },
     );
     const serializedData = await response.json();
-    console.log("serializedData", serializedData);
     if (!response.ok) {
       throw new Error(`データ取得に失敗しました: ${serializedData}`);
     }
@@ -151,8 +150,6 @@ export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
     }).deserialize(serializedData);
-
-    console.log("deserializedData", deserializedData);
 
     return deserializedData;
   } catch (error) {

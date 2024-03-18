@@ -11,6 +11,7 @@
 #  theme_question         :integer          default("unselected"), not null
 #  theme_answer           :text(65535)
 #  is_ai_answer_generated :boolean          default(FALSE), not null
+#  ai_answer_retry_count  :integer          default(0), not null
 #  theme                  :text(65535)
 #  is_finished            :boolean          default(FALSE), not null
 #  created_at             :datetime         not null

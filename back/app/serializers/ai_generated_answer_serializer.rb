@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: ai_generated_answers
+#
+#  id              :bigint           not null, primary key
+#  perspective     :integer          not null
+#  hint            :text(65535)      not null
+#  answer          :text(65535)      not null
+#  idea_session_id :bigint           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 class AiGeneratedAnswerSerializer
   include JSONAPI::Serializer
   set_key_transform :camel_lower
