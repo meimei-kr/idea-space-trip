@@ -13,7 +13,17 @@ module Api
         end
       end
 
-      def show; end
+      def show
+        set_idea_memo
+        if @idea_memo.nil?
+          render json: { error: '指定されたアイデアメモが見つかりません' }, status: :not_found
+        else
+          authorize @idea_memo
+          render json: IdeaMemoSerializer.new(@idea_memo, include: [:idea_session])
+                                         .serializable_hash.to_json,
+                 status: :ok
+        end
+      end
 
       def edit; end
 
@@ -58,6 +68,11 @@ module Api
 
         render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
         nil
+      end
+
+      def set_idea_memo
+        @idea_memo = @current_user.idea_memos.find_by(uuid: params[:uuid])
+        
       end
 
       def idea_memo_params

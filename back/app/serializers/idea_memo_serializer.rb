@@ -16,6 +16,6 @@ class IdeaMemoSerializer
   set_key_transform :camel_lower
 
   set_type :idea_memo
-  attributes :perspective, :hint, :answer, :comment, :idea_session_id, :created_at
+  attributes :uuid, :perspective, :hint, :answer, :comment, :idea_session_id, :created_at
   belongs_to :idea_session, serializer: IdeaSessionSerializer
 end
