@@ -14,8 +14,6 @@ module Api
 
       def index; end
 
-      def show; end
-
       def create
         idea_session = @current_user.idea_sessions.new(idea_session_params)
         authorize idea_session
@@ -45,6 +43,16 @@ module Api
         render json: { message: 'データ削除に成功しました。' }, status: :ok
       end
 
+      def show_latest_two_with_memos
+        idea_sessions = @current_user.idea_sessions.order(updated_at: :desc).limit(2)
+        if idea_sessions.empty?
+          render json: { error: '対象のidea_sessionデータが見つかりませんでした。' }, status: :not_found
+        else
+          render json: IdeaSessionSerializer.new(idea_sessions, options).serializable_hash.to_json,
+                 status: :ok
+        end
+      end
+
       private
 
       def idea_session_params
@@ -65,6 +73,12 @@ module Api
 
       def set_idea_session
         @current_user.idea_sessions.find_by(uuid: params[:uuid])
+      end
+
+      def options
+        options = {}
+        options[:include] = %i[idea_memos]
+        options
       end
     end
   end

@@ -51,6 +51,7 @@ export type IdeaSessionType = {
   theme?: string;
   isFinished?: boolean;
   userId?: number;
+  ideaMemos?: IdeaMemoType[];
 };
 
 export type AiGeneratedThemeType = {

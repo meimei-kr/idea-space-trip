@@ -1,0 +1,135 @@
+.wrapper {
+  min-height: calc(100vh - var(--header-height));
+  width: 100vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: calc(100% - var(--back-button-length) - var(--page-padding));
+  width: calc(100% - var(--page-padding) * 2);
+  padding-bottom: calc(var(--back-button-length) + var(--page-padding) + 80px);
+
+  @media screen and (min-width: 1024px) {
+    height: calc(100% - var(--back-button-length) - var(--page-padding-lg));
+    width: calc(100% - var(--page-padding-lg) * 2);
+    padding-bottom: calc(
+      var(--back-button-length) + var(--page-padding-lg) + 160px
+    );
+  }
+}
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: 768px) {
+    width: 50%;
+  }
+}
+
+.astronautContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.fukidashi {
+  font-size: 12px;
+
+  @media screen and (min-width: 1280px) {
+    font-size: 16px;
+  }
+}
+
+/* ブロブ */
+.endCommentContainer {
+  position: relative;
+  margin-bottom: 16px;
+  width: 85%;
+  @media screen and (min-width: 1280px) {
+    width: 50%;
+  }
+}
+
+.blob {
+  width: 100%;
+  height: auto;
+}
+
+.endComment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  color: var(--black);
+  font-size: 14px;
+  text-align: center;
+
+  span {
+    font-size: 20px;
+    color: var(--light-blue);
+  }
+}
+
+/* 結果表示 */
+.resultWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.resultTitle {
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+.resultCount {
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+
+  span {
+    font-size: 2rem;
+    color: var(--pink);
+  }
+}
+
+/* ボタン */
+.buttonContainer {
+  margin-top: 80px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 96px;
+  }
+}
