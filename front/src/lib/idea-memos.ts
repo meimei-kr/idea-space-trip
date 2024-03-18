@@ -1,4 +1,4 @@
-import { IdeaMemoType, IdeaSessionType } from "@/types";
+import { IdeaMemoType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./options";
@@ -112,9 +112,7 @@ export async function getIdeaMemosThisMonth(): Promise<number> {
 /**
  * アイデアメモ一覧を取得する
  */
-export async function getAllIdeaSessionsWithMemos(): Promise<
-  IdeaSessionType[]
-> {
+export async function getAllIdeaMemos(): Promise<IdeaMemoType[]> {
   const session = await getServerSession(authOptions);
 
   try {
@@ -127,6 +125,9 @@ export async function getAllIdeaSessionsWithMemos(): Promise<
       cache: "no-store",
     });
     const serializedData = await response.json();
+    if (serializedData === null) {
+      return [];
+    }
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",

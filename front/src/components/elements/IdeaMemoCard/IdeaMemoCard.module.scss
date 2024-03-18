@@ -5,6 +5,13 @@
   align-items: center;
   border: 4px solid var(--light-gray);
   border-radius: 16px;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background-color: var(--light-gray);
+    opacity: 0.8;
+  }
 }
 
 .cardHeader {

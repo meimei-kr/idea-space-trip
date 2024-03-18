@@ -2,7 +2,7 @@ import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecorati
 import styles from "@/components/elements/IdeaMemoCard/IdeaMemoCard.module.scss";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import { IdeaMemoType } from "@/types";
-import { getKeyByValue } from "@/utils/enums";
+import { PerspectiveEnum } from "@/utils/enums";
 
 export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
   return (
@@ -24,7 +24,11 @@ export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
           <SectionTitle>観点</SectionTitle>
           <div className={styles.sectionContentContainer}>
             <div className={styles.sectionContent}>
-              {getKeyByValue(ideaMemo.perspective!)}
+              {
+                PerspectiveEnum[
+                  ideaMemo.perspective as keyof typeof PerspectiveEnum
+                ]
+              }
             </div>
           </div>
         </div>
@@ -32,7 +36,13 @@ export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
           <SectionTitle>ヒント</SectionTitle>
           <div className={styles.sectionContentContainer}>
             <div className={styles.sectionContent}>
-              {ideaMemo.hint || "なし"}
+              {ideaMemo.hint && ideaMemo.perspective
+                ? `${ideaMemo.hint}を${
+                    PerspectiveEnum[
+                      ideaMemo.perspective as keyof typeof PerspectiveEnum
+                    ]
+                  }すると？`
+                : "なし"}
             </div>
           </div>
         </div>
@@ -51,7 +61,11 @@ export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
           </div>
         </div>
       </div>
-      <div className={styles.cardFooter}>2024/3/18</div>
+      <div className={styles.cardFooter}>
+        {ideaMemo?.createdAt
+          ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
+          : null}
+      </div>
     </div>
   );
 }

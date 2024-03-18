@@ -1,7 +1,17 @@
 module Api
   module V1
     class IdeaMemosController < ApplicationController
-      def index; end
+      def index
+        idea_memos = policy_scope(@current_user.idea_memos.includes(:idea_session))
+
+        if idea_memos.empty?
+          render json: nil, status: :ok
+        else
+          render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
+                                         .serializable_hash.to_json,
+                 status: :ok
+        end
+      end
 
       def show; end
 

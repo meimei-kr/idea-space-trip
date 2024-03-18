@@ -27,6 +27,7 @@
 
 .content {
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
@@ -36,4 +37,28 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
+}
+
+.noDataContainer {
+  height: calc(100vh - var(--back-button-length) - var(--page-padding));
+  width: 100%;
+  padding-bottom: calc(var(--back-button-length) + var(--page-padding) + 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: 1024px) {
+    height: calc(100vh - var(--back-button-length) - var(--page-padding-lg));
+    padding-bottom: calc(
+      var(--back-button-length) + var(--page-padding-lg) + 160px
+    );
+  }
+}
+
+.message {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
