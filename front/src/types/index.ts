@@ -87,4 +87,6 @@ export type IdeaMemoType = {
   hint?: string | null;
   answer?: string;
   comment?: string | null;
+  uuid?: string;
+  ideaSession?: IdeaSessionType;
 };

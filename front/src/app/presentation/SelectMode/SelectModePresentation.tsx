@@ -129,7 +129,7 @@ export function SelectModePresentation() {
           </div>
         </Button>
         <LinkButton
-          href="#"
+          href="/idea-memos"
           color="light-blue"
           size="large"
           flicker="no-flicker"

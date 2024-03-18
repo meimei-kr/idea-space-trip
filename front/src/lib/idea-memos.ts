@@ -1,4 +1,4 @@
-import { IdeaMemoType } from "@/types";
+import { IdeaMemoType, IdeaSessionType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./options";
@@ -61,6 +61,7 @@ export async function getCurrentIdeaMemos(
           "Content-Type": "application/json",
           Authorization: `Bearer ${session?.user.accessToken}`,
         },
+        cache: "no-store",
       },
     );
     const serializedData = await response.json();
@@ -95,6 +96,7 @@ export async function getIdeaMemosThisMonth(): Promise<number> {
           "Content-Type": "application/json",
           Authorization: `Bearer ${session?.user.accessToken}`,
         },
+        cache: "no-store",
       },
     );
     const data = await response.json();
@@ -102,6 +104,34 @@ export async function getIdeaMemosThisMonth(): Promise<number> {
       throw new Error(`アイデアの取得に失敗しました: ${data}`);
     }
     return data.count;
+  } catch (error) {
+    throw new Error(`データ取得に失敗しました: ${error}`);
+  }
+}
+
+/**
+ * アイデアメモ一覧を取得する
+ */
+export async function getAllIdeaSessionsWithMemos(): Promise<
+  IdeaSessionType[]
+> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(`${BASE_URL}/api/v1/idea_memos`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+      cache: "no-store",
+    });
+    const serializedData = await response.json();
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+    return deserializedData;
   } catch (error) {
     throw new Error(`データ取得に失敗しました: ${error}`);
   }
