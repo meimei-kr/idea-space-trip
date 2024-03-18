@@ -22,7 +22,7 @@ Rails.application.routes.draw do
         get 'idea_memos/all_in_session', to: 'idea_memos#all_in_session'
       end
       resource :ai_usage_history, only: %i[show update]
-      resources :idea_memos, only: %i[index show edit update destroy] do
+      resources :idea_memos, param: :uuid, only: %i[index show edit update destroy] do
         collection do
           get 'this_month_count', to: 'idea_memos#this_month_count'
         end
