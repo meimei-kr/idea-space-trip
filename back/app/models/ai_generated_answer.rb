@@ -4,8 +4,8 @@
 #
 #  id              :bigint           not null, primary key
 #  perspective     :integer          not null
-#  hint            :text(65535)      not null
-#  answer          :text(65535)      not null
+#  hint            :text             not null
+#  answer          :text             not null
 #  idea_session_id :bigint           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
