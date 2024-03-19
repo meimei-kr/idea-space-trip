@@ -142,11 +142,11 @@ export default function GenerateIdeasPresentation({
   );
 
   // フォーム送信後エラーがなければ、フォームクリア
-  useEffect(() => {
+  const handleFormClear = () => {
     if (!myIdeaState?.errors?.idea) {
       ref?.current?.reset();
     }
-  }, [myIdeaState]);
+  };
 
   // スクロールを一番上に戻す
   const scrollToTop = () => {
@@ -271,6 +271,7 @@ export default function GenerateIdeasPresentation({
                   ref={ref}
                   action={async (formData) => {
                     await myIdeaStateDispatch(formData);
+                    handleFormClear();
                     setCount((prev) => prev + 1);
                   }}
                   className={styles.form}
