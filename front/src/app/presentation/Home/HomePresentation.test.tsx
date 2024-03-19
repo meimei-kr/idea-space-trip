@@ -95,7 +95,12 @@ describe("Home", () => {
       expect(screen.getByText("AIとアイデア出し")).toBeInTheDocument();
       expect(
         screen.getByText(
-          /考え方は提示されるので、どのアイデア発想法を使おうかな？と迷う心配はありません。/,
+          /世の中には数多くのアイデア発想法がありますが、このアプリでは考え方が提示されるので、/,
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /どのアイデア発想法を使おうかな？と迷う心配はありません。/,
         ),
       ).toBeInTheDocument();
       expect(

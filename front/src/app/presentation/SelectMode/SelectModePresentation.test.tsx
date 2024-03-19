@@ -24,8 +24,7 @@ describe("SelectMode", () => {
     render(<SelectModePresentation />);
     expect(screen.getByText("アイデア出し")).toBeInTheDocument();
     expect(screen.getByText("スタート")).toBeInTheDocument();
-    expect(screen.getByText("アイデア")).toBeInTheDocument();
-    expect(screen.getByText("ストックメモ")).toBeInTheDocument();
+    expect(screen.getByText("アイデアメモ")).toBeInTheDocument();
   });
 
   it("should render two LinkButton components", () => {
