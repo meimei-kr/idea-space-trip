@@ -37,6 +37,7 @@ export type TextboxProps = {
   name: string;
   ariaDescribedby: string;
   placeholder?: string;
+  defaultValue?: string;
 };
 
 export type IdeaSessionType = {

@@ -28,4 +28,8 @@ class IdeaMemoPolicy < ApplicationPolicy
   def show?
     general_check? && record_owner?
   end
+
+  def update?
+    general_check? && record_owner?
+  end
 end

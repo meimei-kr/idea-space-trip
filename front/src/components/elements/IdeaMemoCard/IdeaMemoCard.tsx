@@ -1,12 +1,18 @@
+"use client";
+
 import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecoration";
 import styles from "@/components/elements/IdeaMemoCard/IdeaMemoCard.module.scss";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
+import Link from "next/link";
 
 export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
   return (
-    <div className={styles.cardContainer}>
+    <Link
+      href={`/idea-memos/${ideaMemo.uuid}`}
+      className={styles.cardContainer}
+    >
       <div className={styles.cardHeader}>
         <AlienDecoration />
         {/* <GoHeart className={styles.heartIcon} /> */}
@@ -66,6 +72,6 @@ export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
           ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
           : null}
       </div>
-    </div>
+    </Link>
   );
 }

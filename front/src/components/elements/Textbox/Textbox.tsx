@@ -8,6 +8,7 @@ export default function Textbox({
   name,
   ariaDescribedby,
   placeholder,
+  defaultValue,
 }: TextboxProps) {
   return (
     <div className={styles.textareaContainer}>
@@ -17,6 +18,7 @@ export default function Textbox({
         aria-describedby={ariaDescribedby}
         placeholder={placeholder}
         className={styles.textarea}
+        defaultValue={defaultValue}
       />
       <FaMicrophone className={styles.microphone} />
     </div>

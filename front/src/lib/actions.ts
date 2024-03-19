@@ -1,7 +1,7 @@
 "use server";
 
 import { createAIGeneratedThemes } from "@/lib/ai-generated-themes";
-import { createIdeaMemos } from "@/lib/idea-memos";
+import { createIdeaMemos, updateIdeaMemo } from "@/lib/idea-memos";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import {
   ThemeCategoryEnum,
@@ -294,4 +294,59 @@ export const submitAiAnswer = async (formData: FormData) => {
     hint: hint,
     answer: answer,
   });
+};
+
+/**
+ * 回答、コメントの入力を受け取り、idea_memosテーブルのデータを更新する
+ */
+
+export type IdeaMemoState = {
+  errors?: {
+    idea?: string[];
+    comment?: string[];
+  };
+  message?: string;
+};
+
+const IdeaMemoSchema = z.object({
+  idea: z
+    .string()
+    .trim()
+    .min(1, { message: "Error: 回答の入力は必須だよ" })
+    .max(255, { message: "Error: 回答は255文字以内で入力してね" }),
+  comment: z
+    .string()
+    .trim()
+    .max(255, { message: "Error: コメントは255文字以内で入力してね" }),
+  uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
+});
+
+export const submitUpdateIdeaMemo = async (
+  prevState: IdeaMemoState | undefined,
+  formData: FormData,
+) => {
+  // IdeaMemoSchemaによるバリデーション
+  const validatedIdeaMemo = IdeaMemoSchema.safeParse({
+    idea: formData.get("idea"),
+    comment: formData.get("comment"),
+    uuid: formData.get("uuid"),
+  });
+
+  // バリデーション失敗なら、エラーメッセージを返す
+  if (!validatedIdeaMemo.success) {
+    const errors = {
+      errors: validatedIdeaMemo.error.flatten().fieldErrors,
+    };
+    return errors;
+  }
+
+  const { idea, comment, uuid } = validatedIdeaMemo.data;
+
+  // idea_memosテーブルのデータを更新
+  const successMessage = await updateIdeaMemo(uuid, {
+    answer: idea,
+    comment: comment,
+  });
+
+  return successMessage;
 };

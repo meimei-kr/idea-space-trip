@@ -25,8 +25,6 @@ module Api
         end
       end
 
-      def edit; end
-
       def create
         set_idea_session
         authorize @idea_session, :record_owner?
@@ -50,7 +48,16 @@ module Api
         end
       end
 
-      def update; end
+      def update
+        set_idea_memo
+        authorize @idea_memo
+        @idea_memo.update(idea_memo_params)
+        if @idea_memo.save
+          render json: { message: 'アイデアメモの更新に成功しました' }, status: :ok
+        else
+          render json: { errors: @idea_memo.errors }, status: :unprocessable_entity
+        end
+      end
 
       def destroy; end
 
@@ -72,7 +79,6 @@ module Api
 
       def set_idea_memo
         @idea_memo = @current_user.idea_memos.find_by(uuid: params[:uuid])
-        
       end
 
       def idea_memo_params
