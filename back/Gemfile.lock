@@ -137,7 +137,6 @@ GEM
     minitest (5.21.2)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    mysql2 (0.5.5)
     net-http (0.4.1)
       uri
     net-imap (0.4.9.1)
@@ -160,6 +159,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
+    pg (1.5.6)
     psych (5.1.2)
       stringio
     puma (6.4.2)
@@ -303,7 +303,7 @@ DEPENDENCIES
   faraday
   jsonapi-serializer
   jwt
-  mysql2 (~> 0.5)
+  pg (~> 1.1)
   puma (>= 5.0)
   pundit
   rack-cors
