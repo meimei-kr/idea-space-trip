@@ -6,5 +6,7 @@ import { IdeaMemoType } from "@/types";
 export default async function page() {
   const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
   const ideaMemo: IdeaMemoType = {};
-  return <ModalHome open={false} ideaMemo={ideaMemo} ideaMemos={ideaMemos} />;
+  return (
+    <ModalHome open={false} ideaMemo={ideaMemo || null} ideaMemos={ideaMemos} />
+  );
 }
