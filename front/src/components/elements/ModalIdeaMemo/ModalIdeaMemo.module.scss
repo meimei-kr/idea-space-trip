@@ -1,0 +1,164 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* header */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px 16px 0;
+
+  @media screen and (min-width: 768px) {
+    padding: 16px 20px 20px 0;
+  }
+}
+
+// .heartIcon {
+//   height: 40px;
+//   width: auto;
+// }
+
+/* body */
+.cardBody {
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+
+  @media screen and (min-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.save {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+.sectionContentContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.sectionContent {
+  width: 98%;
+}
+
+/* footer */
+.cardFooter {
+  width: 100%;
+  text-align: end;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    padding: 20px;
+  }
+}
+
+.backButton {
+  position: absolute;
+  left: 20px;
+
+  @media screen and (min-width: 768px) {
+    left: 24px;
+  }
+}
+
+/* 編集・削除ボタン */
+.buttons {
+  display: flex;
+  justify-content: canter;
+  align-items: center;
+  margin-right: 24px;
+  gap: 8px;
+}
+
+.button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.buttonSentence {
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
+}
+
+/* エラー */
+.error {
+  color: var(--red);
+  font-size: 16px;
+  margin: 8px 0 4px;
+}
+
+/* 成功メッセージ */
+.message {
+  color: var(--light-blue);
+  font-size: 14px;
+  margin: 8px 0;
+  width: 100%;
+  text-align: center;
+}

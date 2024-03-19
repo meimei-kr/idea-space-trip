@@ -13,9 +13,17 @@ module Api
         end
       end
 
-      def show; end
-
-      def edit; end
+      def show
+        set_idea_memo
+        if @idea_memo.nil?
+          render json: { error: '指定されたアイデアメモが見つかりません' }, status: :not_found
+        else
+          authorize @idea_memo
+          render json: IdeaMemoSerializer.new(@idea_memo, include: [:idea_session])
+                                         .serializable_hash.to_json,
+                 status: :ok
+        end
+      end
 
       def create
         set_idea_session
@@ -40,9 +48,25 @@ module Api
         end
       end
 
-      def update; end
+      def update
+        set_idea_memo
+        authorize @idea_memo
+        @idea_memo.update(idea_memo_params)
+        if @idea_memo.save
+          render json: { message: 'アイデアメモの更新に成功しました' }, status: :ok
+        else
+          render json: { errors: @idea_memo.errors }, status: :unprocessable_entity
+        end
+      end
 
-      def destroy; end
+      def destroy
+        set_idea_memo
+        authorize @idea_memo
+        @idea_memo.destroy!
+        render json: { message: 'アイデアメモの削除に成功しました' }, status: :ok
+      rescue ActiveRecord::RecordNotDestroyed => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      end
 
       def this_month_count
         count = @current_user.idea_memos.where('idea_memos.created_at >= ?',
@@ -58,6 +82,10 @@ module Api
 
         render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
         nil
+      end
+
+      def set_idea_memo
+        @idea_memo = @current_user.idea_memos.find_by(uuid: params[:uuid])
       end
 
       def idea_memo_params
