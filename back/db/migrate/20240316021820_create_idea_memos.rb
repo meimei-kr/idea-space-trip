@@ -14,7 +14,7 @@ class CreateIdeaMemos < ActiveRecord::Migration[7.1]
 
     reversible do |dir|
       dir.up do
-        execute <<-SQL
+        execute <<-SQL.squish
           ALTER TABLE idea_memos ALTER COLUMN uuid SET DEFAULT gen_random_uuid();
         SQL
       end
