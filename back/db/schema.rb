@@ -11,7 +11,11 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
-  create_table "ai_generated_answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
+  enable_extension "plpgsql"
+
+  create_table "ai_generated_answers", force: :cascade do |t|
     t.integer "perspective", null: false
     t.text "hint", null: false
     t.text "answer", null: false
@@ -21,7 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["idea_session_id"], name: "index_ai_generated_answers_on_idea_session_id"
   end
 
-  create_table "ai_generated_themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ai_generated_themes", force: :cascade do |t|
     t.text "theme", null: false
     t.bigint "idea_session_id", null: false
     t.datetime "created_at", null: false
@@ -29,7 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["idea_session_id"], name: "index_ai_generated_themes_on_idea_session_id"
   end
 
-  create_table "ai_usage_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ai_usage_histories", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "date", null: false
     t.integer "count", default: 0, null: false
@@ -38,8 +42,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["user_id"], name: "index_ai_usage_histories_on_user_id"
   end
 
-  create_table "idea_memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "uuid", default: -> { "(uuid())" }, null: false
+  create_table "idea_memos", force: :cascade do |t|
+    t.string "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.bigint "idea_session_id", null: false
     t.integer "perspective", null: false
     t.text "hint"
@@ -51,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["uuid"], name: "index_idea_memos_on_uuid", unique: true
   end
 
-  create_table "idea_sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "idea_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "uuid", null: false
     t.boolean "is_theme_determined", default: false, null: false
@@ -69,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["uuid"], name: "index_idea_sessions_on_uuid", unique: true
   end
 
-  create_table "solid_queue_blocked_executions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_blocked_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -81,7 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["job_id"], name: "index_solid_queue_blocked_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_claimed_executions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_claimed_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.bigint "process_id"
     t.datetime "created_at", null: false
@@ -89,14 +93,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["process_id", "job_id"], name: "index_solid_queue_claimed_executions_on_process_id_and_job_id"
   end
 
-  create_table "solid_queue_failed_executions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_failed_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.text "error"
     t.datetime "created_at", null: false
     t.index ["job_id"], name: "index_solid_queue_failed_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_jobs", force: :cascade do |t|
     t.string "queue_name", null: false
     t.string "class_name", null: false
     t.text "arguments"
@@ -114,13 +118,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["scheduled_at", "finished_at"], name: "index_solid_queue_jobs_for_alerting"
   end
 
-  create_table "solid_queue_pauses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_pauses", force: :cascade do |t|
     t.string "queue_name", null: false
     t.datetime "created_at", null: false
     t.index ["queue_name"], name: "index_solid_queue_pauses_on_queue_name", unique: true
   end
 
-  create_table "solid_queue_processes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_processes", force: :cascade do |t|
     t.string "kind", null: false
     t.datetime "last_heartbeat_at", null: false
     t.bigint "supervisor_id"
@@ -132,7 +136,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["supervisor_id"], name: "index_solid_queue_processes_on_supervisor_id"
   end
 
-  create_table "solid_queue_ready_executions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_ready_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -142,7 +146,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["queue_name", "priority", "job_id"], name: "index_solid_queue_poll_by_queue"
   end
 
-  create_table "solid_queue_scheduled_executions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_scheduled_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -152,7 +156,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["scheduled_at", "priority", "job_id"], name: "index_solid_queue_dispatch_all"
   end
 
-  create_table "solid_queue_semaphores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_semaphores", force: :cascade do |t|
     t.string "key", null: false
     t.integer "value", default: 1, null: false
     t.datetime "expires_at", null: false
@@ -163,7 +167,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "provider"

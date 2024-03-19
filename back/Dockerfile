@@ -29,7 +29,7 @@ FROM base as build
 
 # ビルドに必要なパッケージをインストール
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev
+    apt-get install --no-install-recommends -y build-essential libpq-dev
 
 # GemfileとGemfile.lockをコピーして依存関係をインストール
 COPY --link Gemfile Gemfile.lock ./
@@ -49,7 +49,7 @@ FROM base
 
 # デプロイに必要なパッケージをインストール
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y libjemalloc2 curl default-mysql-client openssl ca-certificates && \
+    apt-get install --no-install-recommends -y libjemalloc2 curl postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # ビルド段階で作成されたアーティファクト（gems, アプリケーションコード）をコピー

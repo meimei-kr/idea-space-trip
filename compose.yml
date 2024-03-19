@@ -27,6 +27,7 @@ services:
       - ./back:/app
     depends_on:
       - redis
+      - db
     ports:
       - "3000:3000"
     tty: true
@@ -56,6 +57,19 @@ services:
     networks:
       fixed_compose_network:
         ipv4_address: 172.27.0.5
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      fixed_compose_network:
+        ipv4_address: 172.27.0.6
 networks:
   fixed_compose_network:
     ipam:
@@ -64,3 +78,4 @@ networks:
         - subnet: 172.27.0.0/24
 volumes:
   front_node_modules:
+  postgres_data:

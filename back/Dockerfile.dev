@@ -6,7 +6,7 @@ WORKDIR /app
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
-    apt-get install -y build-essential default-mysql-client vim openssl ca-certificates
+    apt-get install -y build-essential nodejs postgresql-client vim
 
 # Gemfile と Gemfile.lock を /app にコピー
 COPY Gemfile /app/Gemfile
