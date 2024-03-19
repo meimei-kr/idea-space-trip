@@ -100,7 +100,8 @@ export function HomePresentation({ session }: { session: Session | null }) {
                 <span>AIとアイデア出し</span>
               </div>
               <div className={styles.featureDescription}>
-                考え方は提示されるので、どのアイデア発想法を使おうかな？と迷う心配はありません。
+                世の中には数多くのアイデア発想法がありますが、このアプリでは考え方が提示されるので、
+                どのアイデア発想法を使おうかな？と迷う心配はありません。
                 ヒントや回答例もAIが出してくれるので、アイデア出しに詰まらずに済みます。
               </div>
             </div>

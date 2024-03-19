@@ -78,12 +78,10 @@ export function SelectModePresentation() {
           "頑張ったので、今日はAI利用回数制限に達したよ。出したアイデアをふりかえってみよう。",
         action: (
           <ToastAction
-            altText="アイデアストックメモ"
+            altText="アイデアメモ"
             className="text-white bg-slate-950 hover:bg-slate-800 z-50 h-16 sm:5"
           >
-            <Link href="/memos">
-              アイデア<span className="block sm:inline">ストックメモ</span>
-            </Link>
+            <Link href="/memos">アイデアメモ</Link>
           </ToastAction>
         ),
       });
@@ -134,10 +132,7 @@ export function SelectModePresentation() {
           size="large"
           flicker="no-flicker"
         >
-          <div>
-            アイデア
-            <span>ストックメモ</span>
-          </div>
+          <div>アイデアメモ</div>
         </LinkButton>
         <ModalDialog
           title="途中のセッションがあります。"

@@ -1,55 +1,67 @@
-# fly.toml app configuration file generated for idea-space-trip on 2024-01-25T14:14:19+09:00
+# fly.toml app configuration file generated for idea-space-trip on 2024-03-19T23:39:13+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "idea-space-trip"
-primary_region = "nrt"
-console_command = "/rails/bin/rails console"
+app = 'idea-space-trip'
+primary_region = 'nrt'
+console_command = '/rails/bin/rails console'
 
 [build]
 
-[[services]]
+[[mounts]]
+  source = 'idea_space_trip_db'
+  destination = '/data'
+
+[http_service]
   internal_port = 3000
-  protocol = "tcp"
   force_https = true
   auto_stop_machines = false
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 3000
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[services.ports]]
+    port = 80
+    handlers = ['http']
+
+[[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
 
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
 
-  [[services.ports]]
-    handlers = ["http"]
-    port = "80"
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
-
-  [[services.tcp_checks]]
-    interval = "10s"
-    timeout = "2s"
+[[services.tcp_checks]]
+    interval = '10s'
+    timeout = '2s'
 
 [checks]
   [checks.status]
     port = 3000
-    type = "http"
-    interval = "10s"
-    timeout = "2s"
-    grace_period = "5s"
-    method = "GET"
-    path = "/up"
-    protocol = "http"
+    type = 'http'
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'GET'
+    path = '/up'
+    protocol = 'http'
     tls_skip_verify = false
+
     [checks.status.headers]
-      X-Forwarded-Proto = "https"
+      X-Forwarded-Proto = 'https'
 
 [[vm]]
-  cpu_kind = "shared"
+  size = 'shared-cpu-1x'
+  memory = '1gb'
+  cpu_kind = 'shared'
   cpus = 1
-  memory = "1gb"
-  size = "shared-cpu-1x"
