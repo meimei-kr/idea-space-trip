@@ -59,7 +59,14 @@ module Api
         end
       end
 
-      def destroy; end
+      def destroy
+        set_idea_memo
+        authorize @idea_memo
+        @idea_memo.destroy!
+        render json: { message: 'アイデアメモの削除に成功しました' }, status: :ok
+      rescue ActiveRecord::RecordNotDestroyed => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      end
 
       def this_month_count
         count = @current_user.idea_memos.where('idea_memos.created_at >= ?',

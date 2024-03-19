@@ -194,3 +194,30 @@ export async function updateIdeaMemo(uuid: string, memo: IdeaMemoType) {
     throw new Error(`データ更新に失敗しました: ${error}`);
   }
 }
+
+/**
+ * アイデアメモを削除する
+ *
+ * @param uuid
+ * @returns Promise<void>
+ */
+export async function deleteIdeaMemo(uuid: string): Promise<void> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(`${BASE_URL}/api/v1/idea_memos/${uuid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`データ更新に失敗しました: ${data}`);
+    }
+    return data;
+  } catch (error) {
+    throw new Error(`データ削除に失敗しました: ${error}`);
+  }
+}

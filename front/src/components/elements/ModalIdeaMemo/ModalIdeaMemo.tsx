@@ -4,14 +4,26 @@ import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecorati
 import styles from "@/components/elements/ModalIdeaMemo/ModalIdeaMemo.module.scss";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { LitUpBorders, Simple } from "@/components/ui/tailwind-buttons";
 import { IdeaMemoState, submitUpdateIdeaMemo } from "@/lib/actions";
+import { deleteIdeaMemo } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { RiPencilFill } from "react-icons/ri";
+import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
 
 export default function ModalIdeaMemo({
   ideaMemo,
@@ -19,11 +31,35 @@ export default function ModalIdeaMemo({
   ideaMemo: IdeaMemoType;
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const router = useRouter();
 
+  // 削除ボタン押下時
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    console.log("onSubmit is called");
+    e.preventDefault();
+    setIsConfirmDialogOpen(true);
+  };
+
+  // 削除確認ダイアログのキャンセルボタン押下時
+  const handleCancel = () => {
+    setIsConfirmDialogOpen(false);
+  };
+
+  // 削除確認ダイアログのOKボタン押下時
+  const handleDeleteOK = async () => {
+    setIsConfirmDialogOpen(false);
+    // 削除処理
+    await deleteIdeaMemo(ideaMemo.uuid!);
+    router.push("/idea-memos");
+  };
+
+  // 編集ボタン押下時
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
+  // 戻るボタン押下時
   const handleBackClick = () => {
     setIsEditing(false);
   };
@@ -221,13 +257,15 @@ export default function ModalIdeaMemo({
                         <div className={styles.buttonSentence}>編集</div>
                       </div>
                     </Simple>
-                    {/* <form action="">
-                      <input type="hidden" id="uuid" name="uuid" value={ideaMemo.uuid} />
-                                      <Simple type="submit" disabled={}>
-                                        <RiDeleteBin6Fill />
-                                        削除
-                                      </Simple>
-                                    </form> */}
+                    <form onSubmit={onSubmit}>
+                      <input
+                        type="hidden"
+                        id="uuid"
+                        name="uuid"
+                        value={ideaMemo.uuid}
+                      />
+                      <SubmitDeleteButton />
+                    </form>
                   </div>
                   {ideaMemo?.createdAt
                     ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
@@ -236,6 +274,30 @@ export default function ModalIdeaMemo({
               </>
             )}
           </div>
+          {/* 削除確認ダイアログ */}
+          <AlertDialog open={isConfirmDialogOpen}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-950">
+                  本当に削除する？
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  「OK」を押すと、削除されてもとに戻せないので、注意してね。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex-gap">
+                <AlertDialogCancel
+                  className="text-slate-950"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={handleDeleteOK}>
+                  OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </main>
@@ -249,5 +311,18 @@ const SubmitUpdateButton = () => {
     <LitUpBorders type="submit" disabled={pending}>
       保存
     </LitUpBorders>
+  );
+};
+
+const SubmitDeleteButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Simple type="submit" disabled={pending}>
+      <div className={styles.button}>
+        <RiDeleteBin6Fill />
+        <div className={styles.buttonSentence}>削除</div>
+      </div>
+    </Simple>
   );
 };

@@ -32,4 +32,8 @@ class IdeaMemoPolicy < ApplicationPolicy
   def update?
     general_check? && record_owner?
   end
+
+  def destroy?
+    general_check? && record_owner?
+  end
 end
