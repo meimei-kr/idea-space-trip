@@ -7,7 +7,7 @@ export default function BackButton({ onClick }: { onClick: () => void }) {
     <div className={styles.back}>
       <IoChevronBack className={styles.arrow} />
       <Playlist onClick={onClick} type="button">
-        BACK
+        もどる
       </Playlist>
     </div>
   );

@@ -40,6 +40,6 @@ describe("SelectThemeCategoryPresentation", () => {
   it("should display the BackButton", () => {
     render(<SelectThemeCategoryPresentation ideaSession={ideaSession} />);
 
-    expect(screen.getByText("BACK")).toBeInTheDocument();
+    expect(screen.getByText("もどる")).toBeInTheDocument();
   });
 });
