@@ -152,7 +152,6 @@ describe("Home", () => {
         expect.objectContaining({
           color: "pink",
           size: "large",
-          flicker: "flicker",
           href: "/auth/signin",
         }),
       );
@@ -177,7 +176,6 @@ describe("Home", () => {
         expect.objectContaining({
           color: "pink",
           size: "large",
-          flicker: "flicker",
           href: "/auth/signin",
         }),
       );

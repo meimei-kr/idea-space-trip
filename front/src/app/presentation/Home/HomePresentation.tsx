@@ -137,21 +137,11 @@ export function HomePresentation({ session }: { session: Session | null }) {
       <section className={styles.loginWrapper}>
         <div className={styles.loginContainer}>
           {session ? (
-            <LinkButton
-              href="/select-mode"
-              color="pink"
-              size="large"
-              flicker="flicker"
-            >
+            <LinkButton href="/select-mode" color="pink" size="large">
               NEXT PAGE
             </LinkButton>
           ) : (
-            <LinkButton
-              href="/auth/signin"
-              color="pink"
-              size="large"
-              flicker="flicker"
-            >
+            <LinkButton href="/auth/signin" color="pink" size="large">
               LOGIN
             </LinkButton>
           )}

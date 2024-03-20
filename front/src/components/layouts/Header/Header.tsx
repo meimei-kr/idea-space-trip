@@ -216,12 +216,12 @@ export default function Header() {
         <span className={openMenu ? styles.open : undefined}></span>
       </div>
       <ModalDialog
-        title="途中のセッションがあります。"
+        title="途中のセッションがあるよ。"
         message={
           <>
-            アイデア出しの途中で中断されたセッションがあります。続きから始めますか？
+            アイデア出しの途中で中断されたセッションがあるよ。続きから始める？
             <br />
-            ※「新しくスタート」を選択すると、途中のセッションは削除されます。
+            ※「新しくスタート」を選択すると、途中のセッション内容や、出したアイデアメモは削除されるので注意してね。
           </>
         }
         trueVal="続きから"

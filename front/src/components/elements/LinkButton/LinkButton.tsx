@@ -9,13 +9,9 @@ export default function LinkButton({
   href,
   color,
   size,
-  flicker,
 }: LinkButtonProps) {
   return (
-    <Link
-      href={href}
-      className={`${styles[color]} ${styles[size]} ${styles[flicker]}`}
-    >
+    <Link href={href} className={`${styles[color]} ${styles[size]}`}>
       {children}
     </Link>
   );

@@ -17,6 +17,7 @@ import { generateUUID } from "@/lib/uuid";
 import { IdeaSessionType } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { PiLightbulb, PiNotepad } from "react-icons/pi";
 
 export function SelectModePresentation() {
   const { toast } = useToast();
@@ -116,36 +117,52 @@ export function SelectModePresentation() {
   return (
     <main className={styles.wrapper}>
       <div className={styles.container}>
-        <Button
-          onClick={handleStartClick}
-          color="pink"
-          size="large"
-          flicker="no-flicker"
-        >
-          <div>
-            アイデア出し<span>スタート</span>
-          </div>
-        </Button>
-        <LinkButton
-          href="/idea-memos"
-          color="light-blue"
-          size="large"
-          flicker="no-flicker"
-        >
-          <div>アイデアメモ</div>
-        </LinkButton>
-        <ModalDialog
-          title="途中のセッションがあります。"
-          message={
-            <>
-              アイデア出しの途中で中断されたセッションがあります。続きから始めますか？
+        <div className={styles.content}>
+          <div className={styles.modeSection}>
+            <div className={styles.comment}>
+              AIと一緒にアイデアをたくさん生み出そう！
               <br />
-              ※「新しくスタート」を選択すると、途中のセッションは削除されます。
-            </>
-          }
-          trueVal="続きから"
-          falseVal="新しくスタート"
-        />
+              1日3回までチャレンジできるよ。
+            </div>
+            <Button onClick={handleStartClick} color="purple" size="large">
+              <div className={styles.button}>
+                <PiLightbulb className={styles.icon} />
+                <div>
+                  アイデア出し<span>スタート</span>
+                </div>
+              </div>
+            </Button>
+          </div>
+
+          <div className={styles.modeSection}>
+            <div className={styles.comment}>
+              アイデア出しでひらめいたことを
+              <br />
+              見返してみよう！
+            </div>
+            <LinkButton href="/idea-memos" color="purple" size="large">
+              <div className={styles.button}>
+                <PiNotepad className={styles.icon} />
+                <div>
+                  アイデアメモ<span>チェック</span>
+                </div>
+              </div>
+            </LinkButton>
+          </div>
+
+          <ModalDialog
+            title="途中のセッションがあるよ。"
+            message={
+              <>
+                アイデア出しの途中で中断されたセッションがあるよ。続きから始める？
+                <br />
+                ※「新しくスタート」を選択すると、途中のセッション内容や、出したアイデアメモは削除されるので注意してね。
+              </>
+            }
+            trueVal="続きから"
+            falseVal="新しくスタート"
+          />
+        </div>
       </div>
     </main>
   );

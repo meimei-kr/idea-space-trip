@@ -18,12 +18,7 @@ jest.mock("next/link", () => ({
 describe("Button", () => {
   it("renders children prop content", () => {
     render(
-      <LinkButton
-        color="pink"
-        size="large"
-        flicker="flicker"
-        href="/auth/signin"
-      >
+      <LinkButton color="pink" size="large" href="/auth/signin">
         LOGIN
       </LinkButton>,
     );
@@ -34,12 +29,7 @@ describe("Button", () => {
 
   it("navigates to href url when clicked", async () => {
     render(
-      <LinkButton
-        color="pink"
-        size="large"
-        flicker="flicker"
-        href="/auth/signin"
-      >
+      <LinkButton color="pink" size="large" href="/auth/signin">
         LOGIN
       </LinkButton>,
     );
