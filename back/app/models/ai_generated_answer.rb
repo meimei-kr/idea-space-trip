@@ -57,7 +57,7 @@ class AiGeneratedAnswer < ApplicationRecord
   # 　ヒント内から「」で囲まれた部分を抽出する
   def self.extract_hint(full_hint)
     match = full_hint.match(/「(.*?)」/)
-    hint = match[1] if match
+    match[1] if match
   end
 
   PERSPECTIVE_MAPPING = {
