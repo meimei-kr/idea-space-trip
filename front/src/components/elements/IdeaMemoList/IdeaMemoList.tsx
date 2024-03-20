@@ -22,7 +22,7 @@ export const IdeaMemoList = async ({
           <div className={styles.content}>
             {ideaMemos.map((memo) => (
               <>
-                <IdeaMemoCard key={memo.uuid} ideaMemo={memo} />
+                <IdeaMemoCard key={memo.uuid!} ideaMemo={memo} />
               </>
             ))}
           </div>
