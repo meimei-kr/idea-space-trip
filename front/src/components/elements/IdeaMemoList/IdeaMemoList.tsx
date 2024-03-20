@@ -2,17 +2,11 @@
 
 import { IdeaMemoType } from "@/types";
 import IdeaMemoCard from "../IdeaMemoCard/IdeaMemoCard";
-import Modal from "../Modal/Modal";
 import styles from "./IdeaMemoList.module.scss";
-import ModalIdeaMemo from "../ModalIdeaMemo/ModalIdeaMemo";
 
 export const IdeaMemoList = async ({
-  open,
-  uuid,
   ideaMemos,
 }: {
-  open: boolean;
-  uuid: string;
   ideaMemos: IdeaMemoType[];
 }) => {
   return (
@@ -29,9 +23,6 @@ export const IdeaMemoList = async ({
             {ideaMemos.map((memo) => (
               <>
                 <IdeaMemoCard key={memo.uuid} ideaMemo={memo} />
-                <Modal open={memo.uuid === uuid && open}>
-                  <ModalIdeaMemo ideaMemo={memo} />
-                </Modal>
               </>
             ))}
           </div>

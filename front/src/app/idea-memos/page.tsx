@@ -1,12 +1,8 @@
-import ModalHome from "@/components/elements/ModalHome/ModalHome";
+import IdeaMemosPresentation from "@/app/presentation/IdeaMemos/IdeaMemosPresentation";
 import { getAllIdeaMemos } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 
-// モーダルが閉じているとき（アイデアメモ一覧画面）
 export default async function page() {
   const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
-  const ideaMemo: IdeaMemoType = {};
-  return (
-    <ModalHome open={false} ideaMemo={ideaMemo || null} ideaMemos={ideaMemos} />
-  );
+  return <IdeaMemosPresentation ideaMemos={ideaMemos} />;
 }
