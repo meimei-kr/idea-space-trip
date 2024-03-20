@@ -22,10 +22,10 @@ module Api
 
         # テーマ生成
         input = build_input
-        themes = Openai::OpenAiService.new.call(input) # グローバル名前空間にあるOpenAIServiceを参照
+        themes = Openai::OpenAiService.new.call(input)
         render json: nil and return if themes.include?('999') # 無効な入力の場合は、nilを返す
 
-        themes_array = themes.split("\n")
+        themes_array = JSON.parse(themes)
 
         # 生成したテーマを保存し、配列に格納
         ai_generated_themes = []
@@ -65,11 +65,11 @@ module Api
         {
           type: 'theme',
           data: {
-            theme_category: IdeaSession.human_attribute_name(
-              "theme_category.#{idea_session_params[:theme_category]}"
+            theme_category: I18n.t(
+              "activerecord.attributes.idea_session.theme_category.#{idea_session_params[:theme_category]}" # rubocop:disable Layout/LineLength
             ),
-            theme_question: IdeaSession.human_attribute_name(
-              "theme_question.#{idea_session_params[:theme_question]}"
+            theme_question: I18n.t(
+              "activerecord.attributes.idea_session.theme_question.#{idea_session_params[:theme_question]}" # rubocop:disable Layout/LineLength
             ),
             theme_answer: idea_session_params[:theme_answer]
           }
