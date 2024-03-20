@@ -67,6 +67,7 @@ export default function Header() {
   const handleModalYesClick = (sessionInProgress: IdeaSessionType) => {
     const path = checkPath(sessionInProgress);
     router.push(`/${sessionInProgress.uuid}/${path}`);
+    router.refresh();
   };
 
   // OpenAI APIの使用制限回数に達していないかチェック

@@ -60,6 +60,7 @@ export default function InputThemePresentation({
   const handleMoveOkClick = () => {
     setIsMoveAlertModalOpen(false);
     router.push(`/${uuid}/generate-ideas`);
+    router.refresh();
   };
 
   // 戻るボタンの処理
