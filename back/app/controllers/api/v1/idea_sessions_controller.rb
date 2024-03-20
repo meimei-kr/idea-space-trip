@@ -12,8 +12,6 @@ module Api
         end
       end
 
-      def index; end
-
       def create
         idea_session = @current_user.idea_sessions.new(idea_session_params)
         authorize idea_session

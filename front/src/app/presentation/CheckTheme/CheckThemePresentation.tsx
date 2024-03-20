@@ -45,20 +45,10 @@ export default function CheckThemePresentation({
       <div className={styles.container}>
         <p className={styles.question}>考えたいテーマは、すでに決まってる？</p>
         <div className={styles.buttons}>
-          <Button
-            onClick={handleYesClick}
-            color="pink"
-            size="large"
-            flicker="no-flicker"
-          >
+          <Button onClick={handleYesClick} color="pink" size="large">
             <div>YES</div>
           </Button>
-          <Button
-            onClick={handleNoClick}
-            color="light-blue"
-            size="large"
-            flicker="no-flicker"
-          >
+          <Button onClick={handleNoClick} color="light-blue" size="large">
             <div>NO</div>
           </Button>
         </div>

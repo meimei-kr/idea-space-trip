@@ -1,100 +1,36 @@
-@keyframes flicker-pink {
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
-  100% {
-    text-shadow:
-      -0.2rem -0.2rem 1rem var(--white),
-      0.2rem 0.2rem 1rem var(--white),
-      0 0 2rem var(--pink),
-      0 0 4rem var(--pink),
-      0 0 6rem var(--pink),
-      0 0 8rem var(--pink),
-      0 0 10rem var(--pink);
-
-    box-shadow:
-      0 0 0.5rem var(--white),
-      inset 0 0 0.5rem var(--white),
-      0 0 2rem var(--pink),
-      inset 0 0 2rem var(--pink),
-      0 0 4rem var(--pink),
-      inset 0 0 4rem var(--pink);
-  }
-
-  20%,
-  24%,
-  55% {
-    text-shadow: none;
-    box-shadow: none;
-  }
-}
-
-@keyframes flicker-light-blue {
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
-  100% {
-    text-shadow:
-      -0.2rem -0.2rem 1rem var(--white),
-      0.2rem 0.2rem 1rem var(--white),
-      0 0 2rem var(--light-blue),
-      0 0 4rem var(--light-blue),
-      0 0 6rem var(--light-blue),
-      0 0 8rem var(--light-blue),
-      0 0 10rem var(--light-blue);
-
-    box-shadow:
-      0 0 0.5rem var(--white),
-      inset 0 0 0.5rem var(--white),
-      0 0 2rem var(--light-blue),
-      inset 0 0 2rem var(--light-blue),
-      0 0 4rem var(--light-blue),
-      inset 0 0 4rem var(--light-blue);
-  }
-
-  20%,
-  24%,
-  55% {
-    text-shadow: none;
-    box-shadow: none;
-  }
-}
-
-@mixin baseButton($text-shadow-color) {
+@mixin baseButton($color) {
   font-weight: bold;
-  border-style: solid;
-  color: var(--white);
-  border-color: var(--white);
-  background: transparent;
-  cursor: pointer;
-  max-width: calc(100% - 48px);
+  background: $color;
+  text-align: center;
   position: relative;
+  display: block;
+  overflow: hidden;
+  transition: 0.3s;
   z-index: 10;
+  cursor: pointer;
+  border-color: $color;
+  border-style: solid;
 
-  &:focus {
-    outline: none;
+  &::before {
+    content: "";
+    width: 120%;
+    height: 200%;
+    position: absolute;
+    top: -50%;
+    right: 0;
+    z-index: -1;
+    background: var(--black);
+    border-radius: 0 100% 100% 0;
+    transform: translateX(-100%);
+    transition: transform ease 0.3s;
   }
 
-  // 選択時の挙動
-  &::-moz-selection {
-    border-color: $text-shadow-color;
-    color: $text-shadow-color;
-  }
-  &::selection {
-    border-color: $text-shadow-color;
-    color: $text-shadow-color;
+  &:hover {
+    color: $color;
   }
 
-  &:active {
-    transform: translateY(4px);
+  &:hover::before {
+    transform: translateX(10%);
   }
 
   span {
@@ -105,71 +41,31 @@
 /* Colors */
 .pink {
   @include baseButton(var(--pink));
-
-  &.flicker {
-    font-family: var(--font-neoneon);
-    animation: flicker-pink 2.5s infinite alternate;
-  }
-
-  &.no-flicker {
-    font-family: var(--font-sawarabi-gothic);
-    box-shadow:
-      0 0 0.5rem var(--white),
-      inset 0 0 0.5rem var(--white),
-      0 0 2rem var(--pink),
-      inset 0 0 2rem var(--pink),
-      0 0 4rem var(--pink),
-      inset 0 0 4rem var(--pink);
-
-    text-shadow:
-      -0.2rem -0.2rem 1rem var(--white),
-      0.2rem 0.2rem 1rem var(--white),
-      0 0 2rem var(--pink),
-      0 0 4rem var(--pink),
-      0 0 6rem var(--pink),
-      0 0 8rem var(--pink),
-      0 0 10rem var(--pink);
-  }
 }
 
 .light-blue {
   @include baseButton(var(--light-blue));
+}
 
-  &.flicker {
-    font-family: var(--font-neoneon);
-    animation: flicker-light-blue 2.5s infinite alternate;
-  }
-
-  &.no-flicker {
-    font-family: var(--font-sawarabi-gothic);
-    box-shadow:
-      0 0 0.5rem var(--white),
-      inset 0 0 0.5rem var(--white),
-      0 0 2rem var(--light-blue),
-      inset 0 0 2rem var(--light-blue),
-      0 0 4rem var(--light-blue),
-      inset 0 0 4rem var(--light-blue);
-
-    text-shadow:
-      -0.2rem -0.2rem 1rem var(--white),
-      0.2rem 0.2rem 1rem var(--white),
-      0 0 2rem var(--light-blue),
-      0 0 4rem var(--light-blue),
-      0 0 6rem var(--light-blue),
-      0 0 8rem var(--light-blue),
-      0 0 10rem var(--light-blue);
-  }
+.purple {
+  @include baseButton(var(--purple));
 }
 
 /* Sizes */
 .large {
-  font-size: 28px;
-  padding: 1.5rem 3rem;
-  border-radius: 1rem;
-  border-width: 0.2rem;
+  font-size: 24px;
+  padding: 1rem 3rem;
+  border-width: 4px;
+  border-radius: 16px;
+  width: 320px;
+  height: auto;
 
-  @media screen and (min-width: 768px) {
-    font-size: 40px;
-    padding: 2rem 6rem;
+  @media screen and (min-width: 1024px) {
+    font-size: 32px;
+    padding: 2rem;
+    border-radius: 16px;
+    border-width: 6px;
+    border-radius: 20px;
+    width: 440px;
   }
 }

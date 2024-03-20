@@ -1,26 +1,22 @@
 "use client";
 
+import styles from "@/app/presentation/IdeaMemos/IdeaMemosPresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import { IdeaMemoList } from "@/components/elements/IdeaMemoList/IdeaMemoList";
 import { IdeaMemoType } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { IdeaMemoList } from "../IdeaMemoList/IdeaMemoList";
-import styles from "./ModalHome.module.scss";
 
-export default function ModalHome({
-  ideaMemo,
+export default function IdeaMemosPresentation({
   ideaMemos,
-  open,
 }: {
-  ideaMemo: IdeaMemoType;
   ideaMemos: IdeaMemoType[];
-  open: boolean;
 }) {
   const router = useRouter();
 
   useEffect(() => {
     router.prefetch("select-mode");
-  }, []);
+  }, [router]);
 
   // 戻るボタンの処理
   const handleBack = () => {
@@ -29,11 +25,7 @@ export default function ModalHome({
 
   return (
     <main className={styles.wrapper}>
-      <IdeaMemoList
-        open={open}
-        uuid={ideaMemo.uuid ?? ""}
-        ideaMemos={ideaMemos}
-      />
+      <IdeaMemoList ideaMemos={ideaMemos} />
       <BackButton onClick={handleBack} />
     </main>
   );

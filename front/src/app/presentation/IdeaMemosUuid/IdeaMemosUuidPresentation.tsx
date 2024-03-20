@@ -1,7 +1,8 @@
 "use client";
 
+import styles from "@/app/presentation/IdeaMemosUuid/IdeaMemosUuidPresentation.module.scss";
 import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecoration";
-import styles from "@/components/elements/ModalIdeaMemo/ModalIdeaMemo.module.scss";
+import BackButton from "@/components/elements/BackButton/BackButton";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import {
@@ -22,10 +23,10 @@ import { PerspectiveEnum } from "@/utils/enums";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { GiCancel } from "react-icons/gi";
 import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
 
-export default function ModalIdeaMemo({
+export default function IdeaMemosUuidPresentation({
   ideaMemo,
 }: {
   ideaMemo: IdeaMemoType;
@@ -52,6 +53,7 @@ export default function ModalIdeaMemo({
     // 削除処理
     await deleteIdeaMemo(ideaMemo.uuid!);
     router.push("/idea-memos");
+    router.refresh();
   };
 
   // 編集ボタン押下時
@@ -59,7 +61,7 @@ export default function ModalIdeaMemo({
     setIsEditing(true);
   };
 
-  // 戻るボタン押下時
+  // 編集モードで戻るボタン押下時
   const handleBackClick = () => {
     setIsEditing(false);
   };
@@ -74,6 +76,11 @@ export default function ModalIdeaMemo({
     FormData
   >(submitUpdateIdeaMemo, initialIdeaMemoState);
 
+  // 戻るボタンの処理
+  const handleBack = () => {
+    router.push("/idea-memos");
+  };
+
   return (
     <main className={styles.wrapper}>
       <div className={styles.container}>
@@ -86,9 +93,16 @@ export default function ModalIdeaMemo({
 
             {isEditing ? (
               <>
-                <div className={styles.cardBody}>
-                  {/* 編集モードの場合 */}
-                  <form action={ideaMemoStateDispatch} className={styles.form}>
+                {/* 編集モードの場合 */}
+                <form
+                  action={async (formData: FormData) => {
+                    await ideaMemoStateDispatch(formData);
+                    setIsEditing(false);
+                    router.refresh();
+                  }}
+                  className={styles.form}
+                >
+                  <div className={styles.cardBody}>
                     {ideaMemoState?.message && (
                       <div className={styles.message}>
                         {ideaMemoState.message}
@@ -170,26 +184,29 @@ export default function ModalIdeaMemo({
                         defaultValue={ideaMemo.comment ?? ""}
                       />
                     </div>
-                    <input
-                      type="hidden"
-                      id="uuid"
-                      name="uuid"
-                      value={ideaMemo.uuid}
-                    />
-                    <div className={styles.save}>
-                      <SubmitUpdateButton />
-                    </div>
-                  </form>
-                </div>
-                <div className={styles.cardFooter}>
-                  <div className={styles.backButton}>
-                    <Simple type="button" onClick={handleBackClick}>
-                      <IoMdArrowRoundBack />
-                    </Simple>
                   </div>
-                  {ideaMemo?.createdAt
-                    ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
-                    : null}
+                  <div className={styles.cardFooter}>
+                    {ideaMemo?.createdAt
+                      ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
+                      : null}
+                  </div>
+                  <input
+                    type="hidden"
+                    id="uuid"
+                    name="uuid"
+                    value={ideaMemo.uuid}
+                  />
+                  <div className={styles.save}>
+                    <SubmitUpdateButton />
+                  </div>
+                </form>
+                <div className={styles.buttonContainer}>
+                  <Simple type="button" onClick={handleBackClick}>
+                    <div className={styles.cancelButton}>
+                      <GiCancel />
+                      キャンセル
+                    </div>
+                  </Simple>
                 </div>
               </>
             ) : (
@@ -250,6 +267,11 @@ export default function ModalIdeaMemo({
                   </div>
                 </div>
                 <div className={styles.cardFooter}>
+                  {ideaMemo?.createdAt
+                    ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
+                    : null}
+                </div>
+                <div className={styles.buttonContainer}>
                   <div className={styles.buttons}>
                     <Simple type="button" onClick={handleEditClick}>
                       <div className={styles.button}>
@@ -267,9 +289,6 @@ export default function ModalIdeaMemo({
                       <SubmitDeleteButton />
                     </form>
                   </div>
-                  {ideaMemo?.createdAt
-                    ? new Date(ideaMemo.createdAt).toLocaleDateString("ja-JP")
-                    : null}
                 </div>
               </>
             )}
@@ -300,6 +319,7 @@ export default function ModalIdeaMemo({
           </AlertDialog>
         </div>
       </div>
+      <BackButton onClick={handleBack} />
     </main>
   );
 }

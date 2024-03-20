@@ -6,13 +6,9 @@ export default function Button({
   onClick,
   color,
   size,
-  flicker,
 }: ButtonProps) {
   return (
-    <button
-      onClick={onClick}
-      className={`${styles[color]} ${styles[size]} ${styles[flicker]}`}
-    >
+    <button onClick={onClick} className={`${styles[color]} ${styles[size]}`}>
       {children}
     </button>
   );

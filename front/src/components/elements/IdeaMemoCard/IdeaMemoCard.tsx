@@ -7,11 +7,18 @@ import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
 import Link from "next/link";
 
-export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
+export default function IdeaMemoCard({
+  ideaMemo,
+  key,
+}: {
+  ideaMemo: IdeaMemoType;
+  key: string;
+}) {
   return (
     <Link
       href={`/idea-memos/${ideaMemo.uuid}`}
       className={styles.cardContainer}
+      key={key}
     >
       <div className={styles.cardHeader}>
         <AlienDecoration />

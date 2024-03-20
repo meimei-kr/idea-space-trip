@@ -33,7 +33,7 @@ class AiGeneratedAnswer < ApplicationRecord
         hints_and_answers.each do |hint, answer|
           saved_answer = idea_session.ai_generated_answers.create!(
             perspective: AiGeneratedAnswer.perspectives[perspective_key],
-            hint: extract_hint(hint),
+            hint: extract_hint(hint, perspective.to_s),
             answer:
           )
           saved_ai_generated_answers << saved_answer
@@ -42,8 +42,7 @@ class AiGeneratedAnswer < ApplicationRecord
 
       saved_ai_generated_answers
     end
-  # rescue ActiveRecord::RecordInvalid => e
-  rescue StandardError => e
+  rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error("AIが生成したアイデアの保存に失敗しました。#{e.message}\n#{e.backtrace.join("\n")}")
     raise # 捕捉した例外をそのまま再スロー
   end
@@ -56,9 +55,12 @@ class AiGeneratedAnswer < ApplicationRecord
   end
 
   # 　ヒント内から「」で囲まれた部分を抽出する
-  def self.extract_hint(full_hint)
+  def self.extract_hint(full_hint, perspective)
     match = full_hint.match(/「(.*?)」/)
-    match[1] if match
+    hint = match[1] if match
+    # ヒント内に観点も含まれていた場合、ヒントから観点を削除する
+    hint.slice!(-3, 3) if hint.include?(perspective)
+    hint
   end
 
   PERSPECTIVE_MAPPING = {

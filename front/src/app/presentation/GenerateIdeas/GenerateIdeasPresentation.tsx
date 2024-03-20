@@ -188,6 +188,7 @@ export default function GenerateIdeasPresentation({
     ]);
 
     router.push(`/${uuid}/end-session`);
+    router.refresh();
   };
 
   // アラートでOKをクリック時の処理
@@ -202,6 +203,7 @@ export default function GenerateIdeasPresentation({
       });
       if (ideaSession?.isAiThemeGenerated) {
         router.push(`/${uuid}/generate-theme`);
+        router.refresh();
       } else {
         router.push(`/${uuid}/input-theme`);
       }

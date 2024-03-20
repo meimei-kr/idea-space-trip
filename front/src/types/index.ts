@@ -1,17 +1,15 @@
 export type LinkButtonProps = {
   children: React.ReactNode;
-  color: "pink" | "light-blue";
+  color: "pink" | "light-blue" | "purple";
   size: "large";
   href: string;
-  flicker: "flicker" | "no-flicker";
 };
 
 export type ButtonProps = {
   children: React.ReactNode;
   onClick: () => void;
-  color: "pink" | "light-blue";
+  color: "pink" | "light-blue" | "purple";
   size: "large";
-  flicker: "flicker" | "no-flicker";
 };
 
 export type Option = {

@@ -125,11 +125,13 @@ export default function GenerateThemePresentation({
   const handleMoveOkClick = () => {
     setIsMoveAlertModalOpen(false);
     router.push(`/${uuid}/generate-ideas`);
+    router.refresh();
   };
 
   // 戻るボタンの処理
   const handleBack = () => {
     router.push(`/${uuid}/select-theme-category`);
+    router.refresh();
   };
 
   // エラーがある場合はエラーページを表示

@@ -39,6 +39,6 @@ describe("CheckThemePresentation", () => {
   it("should display the BackButton", () => {
     render(<CheckThemePresentation ideaSession={ideaSession} />);
 
-    expect(screen.getByRole("button", { name: "BACK" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "もどる" })).toBeInTheDocument();
   });
 });
