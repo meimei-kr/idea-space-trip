@@ -33,7 +33,7 @@ class AiGeneratedAnswer < ApplicationRecord
         hints_and_answers.each do |hint, answer|
           saved_answer = idea_session.ai_generated_answers.create!(
             perspective: AiGeneratedAnswer.perspectives[perspective_key],
-            hint: extract_hint(hint, perspective.to_s),
+            hint: extract_hint(hint),
             answer:
           )
           saved_ai_generated_answers << saved_answer
@@ -55,12 +55,9 @@ class AiGeneratedAnswer < ApplicationRecord
   end
 
   # 　ヒント内から「」で囲まれた部分を抽出する
-  def self.extract_hint(full_hint, perspective)
+  def self.extract_hint(full_hint)
     match = full_hint.match(/「(.*?)」/)
-    hint = match[1] if match
-    # ヒント内に観点も含まれていた場合、ヒントから観点を削除する
-    hint.slice!(-3, 3) if hint.include?(perspective)
-    hint
+    match[1] if match
   end
 
   PERSPECTIVE_MAPPING = {
