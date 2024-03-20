@@ -2,7 +2,8 @@ module Api
   module V1
     class IdeaMemosController < ApplicationController
       def index
-        idea_memos = policy_scope(@current_user.idea_memos.includes(:idea_session))
+        idea_memos = policy_scope(@current_user.idea_memos.includes(:idea_session)
+                      .order(created_at: :desc))
 
         if idea_memos.empty?
           render json: nil, status: :ok
