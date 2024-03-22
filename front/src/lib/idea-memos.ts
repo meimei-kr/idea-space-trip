@@ -42,7 +42,7 @@ export async function createIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ作成に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -67,9 +67,6 @@ export async function getCurrentIdeaMemos(
       },
     );
     const serializedData = await response.json();
-    if (!response.ok) {
-      throw new Error(`アイデアの取得に失敗しました: ${serializedData}`);
-    }
     if (serializedData === null) {
       return null;
     }
@@ -79,7 +76,7 @@ export async function getCurrentIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -102,12 +99,9 @@ export async function getIdeaMemosThisMonth(): Promise<number> {
       },
     );
     const data = await response.json();
-    if (!response.ok) {
-      throw new Error(`アイデアの取得に失敗しました: ${data}`);
-    }
     return data.count;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -136,7 +130,7 @@ export async function getAllIdeaMemos(): Promise<IdeaMemoType[]> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -165,7 +159,7 @@ export async function getIdeaMemo(uuid: string): Promise<IdeaMemoType> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -191,7 +185,7 @@ export async function updateIdeaMemo(uuid: string, memo: IdeaMemoType) {
     }
     return data;
   } catch (error) {
-    throw new Error(`データ更新に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -218,6 +212,6 @@ export async function deleteIdeaMemo(uuid: string): Promise<void> {
     }
     return data;
   } catch (error) {
-    throw new Error(`データ削除に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }

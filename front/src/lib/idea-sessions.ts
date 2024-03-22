@@ -33,7 +33,7 @@ export async function getIdeaSessionInProgress(): Promise<IdeaSessionType | null
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -66,7 +66,7 @@ export async function createIdeaSession(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ作成に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -88,7 +88,7 @@ export async function deleteIdeaSession(uuid: string) {
     }
     return responseData;
   } catch (error) {
-    throw new Error(`データ削除に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -120,7 +120,7 @@ export async function updateIdeaSession(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ更新に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -153,6 +153,6 @@ export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
 
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }

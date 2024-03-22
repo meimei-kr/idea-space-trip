@@ -31,9 +31,6 @@ export async function getAiGeneratedAnswers(
       },
     );
     const serializedData = await response.json();
-    if (!response.ok) {
-      throw new Error(`AIによる回答取得に失敗しました: ${serializedData}`);
-    }
     if (serializedData === null) {
       return null;
     }
@@ -43,7 +40,7 @@ export async function getAiGeneratedAnswers(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -84,7 +81,7 @@ export async function createAiGeneratedAnswers(
       throw new Error(`AIによる回答生成に失敗しました: ${serializedData}`);
     }
   } catch (error) {
-    throw new Error(`データ作成に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -97,7 +94,7 @@ export async function deleteAiGeneratedAnswers(uuid: string) {
   const session = await getServerSession(authOptions);
 
   try {
-    const response = await fetch(
+    await fetch(
       `${BASE_URL}/api/v1/idea_sessions/${uuid}/ai_generated_answers`,
       {
         method: "DELETE",
@@ -107,11 +104,7 @@ export async function deleteAiGeneratedAnswers(uuid: string) {
         },
       },
     );
-    const serializedData = await response.json();
-    if (!response.ok) {
-      throw new Error(`AIによる回答削除に失敗しました: ${serializedData}`);
-    }
   } catch (error) {
-    throw new Error(`データ削除に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }

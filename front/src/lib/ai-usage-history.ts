@@ -22,17 +22,19 @@ export async function getAIUsageHistory(): Promise<AiUsageHistoryType | null> {
       },
       cache: "no-store",
     });
-    const serializedData = await response.json();
-    if (serializedData === null) {
-      return null;
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessage = errorResponse.error;
+      throw new Error(`データ取得に失敗しました: ${errorMessage}`);
     }
+    const serializedData = await response.json();
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ取得に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
 
@@ -50,6 +52,11 @@ export async function updateAIUsageHistory(): Promise<AiUsageHistoryType> {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },
     });
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessage = errorResponse.error;
+      throw new Error(`データ更新に失敗しました: ${errorMessage}`);
+    }
     const serializedData = await response.json();
     // JSON APIのデータをデシリアライズ
     const deserializedData = await new Deserializer({
@@ -57,6 +64,6 @@ export async function updateAIUsageHistory(): Promise<AiUsageHistoryType> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
-    throw new Error(`データ更新に失敗しました: ${error}`);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
