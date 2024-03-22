@@ -96,7 +96,7 @@ export default function Header() {
             altText="アイデアメモ"
             className="text-white bg-slate-950 hover:bg-slate-800 z-50 h-16 sm:5"
           >
-            <Link href="/memos">アイデアメモ</Link>
+            <Link href="/idea-memos">アイデアメモ</Link>
           </ToastAction>
         ),
       });

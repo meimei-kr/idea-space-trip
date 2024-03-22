@@ -7,6 +7,17 @@ module Api
           render json: { error: 'AI使用履歴が見つかりません。' }, status: :not_found
         else
           authorize ai_usage_history
+          # 本日のAI使用履歴がなければ、日付とAI使用回数を更新
+          if ai_usage_history.date != Time.zone.today
+            begin
+              ai_usage_history.date = Time.zone.today
+              ai_usage_history.count = 0
+              ai_usage_history.save!
+            rescue ActiveRecord::RecordInvalid => e
+              render json: { error: "AI使用履歴のリセットに失敗しました: #{e.message}" }, status: :unprocessable_entity
+              return
+            end
+          end
           render json: AiUsageHistorySerializer.new(ai_usage_history).serializable_hash.to_json,
                  status: :ok
         end
@@ -15,12 +26,6 @@ module Api
       def update
         ai_usage_history = @current_user.ai_usage_history
         authorize ai_usage_history
-
-        # 本日のAI使用履歴がなければ、日付とAI使用回数を更新
-        if ai_usage_history.date != Time.zone.today
-          ai_usage_history.date = Time.zone.today
-          ai_usage_history.count = 0
-        end
 
         # AI使用回数を更新
         ai_usage_history.count += 1

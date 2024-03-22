@@ -343,13 +343,9 @@ export const submitUpdateIdeaMemo = async (
   const { idea, comment, uuid } = validatedIdeaMemo.data;
 
   // idea_memosテーブルのデータを更新
-  try {
-    const successMessage = await updateIdeaMemo(uuid, {
-      answer: idea,
-      comment: comment,
-    });
-    return successMessage;
-  } catch (error) {
-    return { error: "アイデアメモの更新に失敗しました" };
-  }
+  const successMessage = await updateIdeaMemo(uuid, {
+    answer: idea,
+    comment: comment,
+  });
+  return successMessage;
 };

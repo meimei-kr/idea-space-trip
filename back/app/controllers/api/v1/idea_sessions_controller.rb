@@ -39,6 +39,8 @@ module Api
         authorize idea_session
         idea_session.destroy!
         render json: { message: 'データ削除に成功しました。' }, status: :ok
+      rescue ActiveRecord::RecordNotDestroyed => e
+        render json: { error: e.message }, status: :unprocessable_entity
       end
 
       def show_latest_two_with_memos
