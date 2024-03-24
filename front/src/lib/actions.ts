@@ -25,8 +25,8 @@ const ThemeSchema = z.object({
   theme: z
     .string()
     .trim()
-    .min(1, { message: "Error: テーマの入力は必須だよ" })
-    .max(255, { message: "Error: テーマは255文字以内で入力してね" }),
+    .min(1, { message: "テーマの入力は必須だよ" })
+    .max(255, { message: "テーマは255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 
@@ -73,7 +73,7 @@ const ThemeCategorySchema = z.object({
     .string()
     .nullable()
     .refine((value) => value !== null && options.includes(value), {
-      message: "Error: 以下は選択必須だよ",
+      message: "以下は選択必須だよ",
     }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
@@ -124,13 +124,13 @@ const ThemeQuestionSchema = z.object({
     .string()
     .nullable()
     .refine((value) => value !== null && selectOptions.includes(value), {
-      message: "Error: 質問は選択必須だよ",
+      message: "質問は選択必須だよ",
     }),
   answer: z
     .string()
     .trim()
-    .min(1, { message: "Error: 回答入力は必須だよ" })
-    .max(255, { message: "Error: 回答は255文字以内で入力してね" }),
+    .min(1, { message: "回答入力は必須だよ" })
+    .max(255, { message: "回答は255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 
@@ -171,7 +171,7 @@ export const generateThemes = async (
       return {
         errors: {
           answer: [
-            "Error: 無効なデータが入力されたよ。適切な入力に修正して、再度実行してね。",
+            "無効なデータが入力されたよ。適切な入力に修正して、再度実行してね。",
           ],
         },
       };
@@ -199,7 +199,7 @@ export const confirmTheme = async (
       .string()
       .nullable()
       .refine((value) => value !== null, {
-        message: "Error: 以下は選択必須だよ",
+        message: "以下は選択必須だよ",
       }),
     uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
   });
@@ -242,8 +242,8 @@ const IdeaSchema = z.object({
   idea: z
     .string()
     .trim()
-    .min(1, { message: "Error: アイデアの入力は必須だよ" })
-    .max(255, { message: "Error: アイデアは255文字以内で入力してね" }),
+    .min(1, { message: "アイデアの入力は必須だよ" })
+    .max(255, { message: "アイデアは255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
   perspective: z.string(), // perspectiveはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
@@ -312,12 +312,12 @@ const IdeaMemoSchema = z.object({
   idea: z
     .string()
     .trim()
-    .min(1, { message: "Error: 回答の入力は必須だよ" })
-    .max(255, { message: "Error: 回答は255文字以内で入力してね" }),
+    .min(1, { message: "回答の入力は必須だよ" })
+    .max(255, { message: "回答は255文字以内で入力してね" }),
   comment: z
     .string()
     .trim()
-    .max(255, { message: "Error: コメントは255文字以内で入力してね" }),
+    .max(255, { message: "コメントは255文字以内で入力してね" }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 

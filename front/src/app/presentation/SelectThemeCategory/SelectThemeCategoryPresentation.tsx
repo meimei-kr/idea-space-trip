@@ -3,6 +3,7 @@
 import styles from "@/app/presentation/SelectThemeCategory/SelectThemeCategoryPresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
@@ -10,6 +11,7 @@ import { submitThemeCategory } from "@/lib/actions";
 import type { Option } from "@/types";
 import { IdeaSessionType } from "@/types";
 import { ThemeCategoryEnum } from "@/utils/enums";
+import { AlertCircle } from "lucide-react";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
@@ -56,13 +58,15 @@ export default function SelectThemePresentation({
           <form action={dispatch} className={styles.form} aria-label="form">
             {state?.errors?.option &&
               state?.errors?.option.map((error, index) => (
-                <div
-                  key={index}
+                <Alert
+                  variant="destructive"
                   id="theme-category-error"
-                  className={styles.error}
+                  key={index}
+                  className="mb-1"
                 >
-                  {error}
-                </div>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
               ))}
             <RadioButtons
               options={options}

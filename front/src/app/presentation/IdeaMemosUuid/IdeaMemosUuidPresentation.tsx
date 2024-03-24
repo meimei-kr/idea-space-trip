@@ -5,6 +5,7 @@ import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecorati
 import BackButton from "@/components/elements/BackButton/BackButton";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,9 +21,11 @@ import { IdeaMemoState, submitUpdateIdeaMemo } from "@/lib/actions";
 import { deleteIdeaMemo } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
+import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 import { GiCancel } from "react-icons/gi";
 import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
 
@@ -54,6 +57,7 @@ export default function IdeaMemosUuidPresentation({
     await deleteIdeaMemo(ideaMemo.uuid!);
     router.push("/idea-memos");
     router.refresh();
+    toast.success("アイデアメモを削除しました");
   };
 
   // 編集ボタン押下時
@@ -74,7 +78,15 @@ export default function IdeaMemosUuidPresentation({
   const [ideaMemoState, ideaMemoStateDispatch] = useFormState<
     IdeaMemoState | undefined,
     FormData
-  >(submitUpdateIdeaMemo, initialIdeaMemoState);
+  >(async (prev: IdeaMemoState | undefined, formData: FormData) => {
+    const result = await submitUpdateIdeaMemo(prev, formData);
+    if (result?.message) {
+      setIsEditing(false);
+      router.refresh();
+      toast.success(result.message);
+    }
+    return result;
+  }, initialIdeaMemoState);
 
   // 戻るボタンの処理
   const handleBack = () => {
@@ -94,20 +106,8 @@ export default function IdeaMemosUuidPresentation({
             {isEditing ? (
               <>
                 {/* 編集モードの場合 */}
-                <form
-                  action={async (formData: FormData) => {
-                    await ideaMemoStateDispatch(formData);
-                    setIsEditing(false);
-                    router.refresh();
-                  }}
-                  className={styles.form}
-                >
+                <form action={ideaMemoStateDispatch} className={styles.form}>
                   <div className={styles.cardBody}>
-                    {ideaMemoState?.message && (
-                      <div className={styles.message}>
-                        {ideaMemoState.message}
-                      </div>
-                    )}
                     <div className={styles.section}>
                       <SectionTitle>テーマ</SectionTitle>
                       <div className={styles.sectionContentContainer}>
@@ -147,13 +147,15 @@ export default function IdeaMemosUuidPresentation({
 
                       {ideaMemoState?.errors?.idea &&
                         ideaMemoState?.errors?.idea.map((error, index) => (
-                          <div
-                            key={index}
+                          <Alert
+                            variant="destructive"
                             id="idea-error"
-                            className={styles.error}
+                            key={index}
+                            className="mb-1"
                           >
-                            {error}
-                          </div>
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{error}</AlertDescription>
+                          </Alert>
                         ))}
                       <Textbox
                         id="idea"
@@ -168,13 +170,15 @@ export default function IdeaMemosUuidPresentation({
 
                       {ideaMemoState?.errors?.comment &&
                         ideaMemoState?.errors?.comment.map((error, index) => (
-                          <div
-                            key={index}
+                          <Alert
+                            variant="destructive"
                             id="comment-error"
-                            className={styles.error}
+                            key={index}
+                            className="mb-1"
                           >
-                            {error}
-                          </div>
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{error}</AlertDescription>
+                          </Alert>
                         ))}
                       <Textbox
                         id="comment"

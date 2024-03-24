@@ -6,6 +6,7 @@ import BackButton from "@/components/elements/BackButton/BackButton";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,6 +37,7 @@ import { generateUUID } from "@/lib/uuid";
 import type { Option } from "@/types";
 import { IdeaSessionType } from "@/types";
 import { ThemeCategoryEnum, ThemeQuestionEnum } from "@/utils/enums";
+import { AlertCircle } from "lucide-react";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -172,13 +174,15 @@ export default function GenerateThemePresentation({
               <div className={styles.inputContainer}>
                 {questionState?.errors?.option &&
                   questionState?.errors?.option.map((error, index) => (
-                    <div
-                      key={index}
+                    <Alert
+                      className="mb-1"
+                      variant="destructive"
                       id="theme-question-error"
-                      className={styles.error}
+                      key={index}
                     >
-                      {error}
-                    </div>
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
                   ))}
                 <Select name="option" aria-describedby="theme-question-error">
                   <SelectTrigger className="w-full">
@@ -200,13 +204,15 @@ export default function GenerateThemePresentation({
                 </Select>
                 {questionState?.errors?.answer &&
                   questionState?.errors?.answer.map((error, index) => (
-                    <div
-                      key={index}
+                    <Alert
+                      variant="destructive"
                       id="theme-answer-error"
-                      className={styles.error}
+                      key={index}
+                      className="mb-1"
                     >
-                      {error}
-                    </div>
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
                   ))}
                 <Textbox
                   id="answer"
@@ -265,13 +271,15 @@ export default function GenerateThemePresentation({
               >
                 {generatedThemesState?.errors?.option &&
                   generatedThemesState?.errors?.option.map((error, index) => (
-                    <div
-                      key={index}
+                    <Alert
+                      variant="destructive"
                       id="theme-category-error"
-                      className={styles.error}
+                      key={index}
+                      className="mb-1"
                     >
-                      {error}
-                    </div>
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
                   ))}
                 <RadioButtons
                   options={aiGeneratedThemesArray}

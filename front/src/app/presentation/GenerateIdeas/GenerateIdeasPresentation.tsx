@@ -4,6 +4,7 @@ import styles from "@/app/presentation/GenerateIdeas/GenerateIdeasPresentation.m
 import Description from "@/components/elements/Description/Description";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,6 +40,7 @@ import {
   PerspectiveType,
 } from "@/types";
 import { createConsumer } from "@rails/actioncable";
+import { AlertCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
@@ -280,9 +282,15 @@ export default function GenerateIdeasPresentation({
                 >
                   {myIdeaState?.errors?.idea &&
                     myIdeaState?.errors?.idea.map((error, index) => (
-                      <div key={index} id="idea-error" className={styles.error}>
-                        {error}
-                      </div>
+                      <Alert
+                        className="mb-1"
+                        variant="destructive"
+                        id="idea-error"
+                        key={index}
+                      >
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>{error}</AlertDescription>
+                      </Alert>
                     ))}
                   <Textbox
                     id="idea"
