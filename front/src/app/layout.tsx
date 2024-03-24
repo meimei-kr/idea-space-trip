@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/AuthProvider";
 import { neoneon, sawarabiGothic } from "@/fonts/fonts";
 import type { Metadata } from "next";
+import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${sawarabiGothic.variable} ${neoneon.variable}`}>
+        <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>
           <Stars />
           <Header />

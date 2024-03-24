@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Logo from "public/images/logo.svg";
 import { useState } from "react";
+import { toast as hotToast } from "react-hot-toast";
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -33,6 +34,7 @@ export default function Header() {
   const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     await signOut({ callbackUrl: "/" });
+    hotToast.success("ログアウトしました");
   };
 
   // 途中のデータがある場合のアイデアセッションの開始時モーダル処理

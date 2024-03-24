@@ -3,6 +3,7 @@
 import styles from "@/app/presentation/InputTheme/InputThemePresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import Textbox from "@/components/elements/Textbox/Textbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +16,7 @@ import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { ThemeState, submitTheme } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
+import { AlertCircle } from "lucide-react";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -81,9 +83,15 @@ export default function InputThemePresentation({
           <form action={dispatch} className={styles.form}>
             {state?.errors?.theme &&
               state?.errors?.theme.map((error, index) => (
-                <div key={index} id="theme-error" className={styles.error}>
-                  {error}
-                </div>
+                <Alert
+                  className="mb-1"
+                  variant="destructive"
+                  id="theme-error"
+                  key={index}
+                >
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
               ))}
             <Textbox
               id="theme"
