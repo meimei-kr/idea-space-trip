@@ -3,6 +3,7 @@
 import styles from "@/app/presentation/GenerateTheme/GenerateThemePresentation.module.scss";
 import AiGenerationLoading from "@/components/elements/AiGenerationLoading/AiGenerationLoading";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import Description from "@/components/elements/Description/Description";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
@@ -23,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import {
   GeneratedThemesState,
@@ -145,11 +146,11 @@ export default function GenerateThemePresentation({
     <main className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.description}>
+          <Description>
             <p>先程選んだカテゴリーと</p>
             <p>以下の質問への回答をもとに、</p>
             <p>AIがテーマを提案するよ</p>
-          </div>
+          </Description>
           <div className={styles.themeCategory}>
             <div className={styles.categoryTitle}>
               <SectionTitle>カテゴリー</SectionTitle>
@@ -286,7 +287,7 @@ export default function GenerateThemePresentation({
                   ariaDescribedby="generated_themes_error"
                 />
                 <input type="hidden" name="uuid" value={uuid} />
-                <LitUpBorders type="submit">決定</LitUpBorders>
+                <ThemeSubmitButton />
               </form>
             </div>
           )}
@@ -329,13 +330,22 @@ const SubmitButton = ({
   const { pending } = useFormStatus();
 
   return (
-    <LitUpBorders
+    <LitUpBordersLg
       type="submit"
       disabled={isThemeGenerated || pending}
       onClick={handleRetryCount}
     >
       テーマ生成
-    </LitUpBorders>
+    </LitUpBordersLg>
+  );
+};
+
+const ThemeSubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBordersLg type="submit" disabled={pending}>
+      決定
+    </LitUpBordersLg>
   );
 };
 

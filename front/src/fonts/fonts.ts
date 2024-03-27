@@ -1,20 +1,17 @@
-import { Sawarabi_Gothic } from "next/font/google";
-import localFont from "next/font/local";
+import { Open_Sans, Zen_Maru_Gothic } from "next/font/google";
 
-// グローバルフォント
-const sawarabiGothic = Sawarabi_Gothic({
-  weight: "400",
+const zenmaruGothic = Zen_Maru_Gothic({
+  weight: ["400", "500", "700"],
   display: "swap",
-  variable: "--font-sawarabi-gothic",
+  variable: "--font-zenmaru-gothic",
   preload: false,
 });
 
-// カスタムローカルフォント
-const neoneon = localFont({
-  src: "../../public/fonts/Neoneon.otf",
+const openSans = Open_Sans({
+  weight: "700",
   display: "swap",
-  variable: "--font-neoneon",
+  variable: "--font-open-sans",
   preload: false,
 });
 
-export { neoneon, sawarabiGothic };
+export { openSans, zenmaruGothic };

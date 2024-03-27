@@ -20,12 +20,13 @@ import {
 } from "@/components/ui/tailwind-buttons";
 import { SESSION_LAST_INDEX } from "@/constants/constants";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
-import { MyIdeaState, submitAiAnswer, submitMyIdea } from "@/lib/actions";
 import {
-  createAiGeneratedAnswers,
-  deleteAiGeneratedAnswers,
-} from "@/lib/ai-generated-answers";
-import { deleteAIGeneratedThemes } from "@/lib/ai-generated-themes";
+  MyIdeaState,
+  endSession,
+  submitAiAnswer,
+  submitMyIdea,
+} from "@/lib/actions";
+import { createAiGeneratedAnswers } from "@/lib/ai-generated-answers";
 import { updateAIUsageHistory } from "@/lib/ai-usage-history";
 import {
   createIdeaSession,
@@ -48,6 +49,7 @@ import Astronaut from "public/images/astronaut.svg";
 import Blob from "public/images/white-blob.svg";
 import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 import { IoChevronForward } from "react-icons/io5";
 
 export default function GenerateIdeasPresentation({
@@ -134,14 +136,34 @@ export default function GenerateIdeasPresentation({
     };
   }, [userId, uuid, session.data?.user.accessToken]);
 
+  // 出したアイデア数が一定数に達すると、トースト表示
+  useEffect(() => {
+    if (count === 5) {
+      toast("アイデア5個達成！", {
+        icon: "👏",
+      });
+    } else if (count !== 0 && count % 10 === 0) {
+      toast(`アイデア${count}個達成！`, {
+        icon: "🎉",
+      });
+    }
+  }, [count]);
+
   // フォーム送信処理
   const initialMyIdeaState: MyIdeaState = {
     errors: {},
   };
-  const [myIdeaState, myIdeaStateDispatch] = useFormState(
-    submitMyIdea,
-    initialMyIdeaState,
-  );
+  const [myIdeaState, myIdeaStateDispatch] = useFormState<
+    MyIdeaState | undefined,
+    FormData
+  >(async (prev: MyIdeaState | undefined, formData: FormData) => {
+    const result = await submitMyIdea(prev, formData);
+    if (!result?.errors?.idea) {
+      handleFormClear();
+      setCount((prev) => prev + 1);
+    }
+    return result;
+  }, initialMyIdeaState);
 
   // フォーム送信後エラーがなければ、フォームクリア
   const handleFormClear = () => {
@@ -174,24 +196,9 @@ export default function GenerateIdeasPresentation({
     scrollToTop();
   };
 
-  // セッションを終了する
   useEffect(() => {
     router.prefetch(`/${uuid}/end-session`);
   }, [router, uuid]);
-  const handleEndSession = async () => {
-    await Promise.all([
-      // idea_sessionsテーブルのis_finishedをtrueにする
-      updateIdeaSession(uuid, { isFinished: true }),
-      // ai_generated_themes と ai_generated_answersテーブルのレコードを削除
-      deleteAIGeneratedThemes(uuid),
-      deleteAiGeneratedAnswers(uuid),
-      // ai_usage_historiesテーブル の countを更新
-      updateAIUsageHistory(),
-    ]);
-
-    router.push(`/${uuid}/end-session`);
-    router.refresh();
-  };
 
   // アラートでOKをクリック時の処理
   const handleOkClick = async () => {
@@ -228,6 +235,10 @@ export default function GenerateIdeasPresentation({
   }
   return (
     <main className={styles.wrapper}>
+      <div className={styles.count}>
+        <span>{count}個 </span>
+        アイデアが浮かんだよ！
+      </div>
       <div className={styles.container} ref={scrollTopRef}>
         <div className={styles.content}>
           <Description>
@@ -235,7 +246,7 @@ export default function GenerateIdeasPresentation({
             <br />
             思いついたことをどんどん書いていこう！
           </Description>
-          <div className={styles.count}>
+          <div className={styles.mobileCount}>
             <span>{count}個 </span>アイデアが浮かんだよ！
           </div>
           <div className={styles.theme}>
@@ -273,11 +284,7 @@ export default function GenerateIdeasPresentation({
               <div className={styles.answerContent}>
                 <form
                   ref={ref}
-                  action={async (formData) => {
-                    await myIdeaStateDispatch(formData);
-                    handleFormClear();
-                    setCount((prev) => prev + 1);
-                  }}
+                  action={myIdeaStateDispatch}
                   className={styles.form}
                 >
                   {myIdeaState?.errors?.idea &&
@@ -314,15 +321,19 @@ export default function GenerateIdeasPresentation({
           {aiGeneratedAnswers ? (
             <div className={styles.aiResponse}>
               <div className={styles.hint}>
-                <div className={styles.fukidashi}>\ ヒント /</div>
-                <Astronaut className={styles.astronaut} />
                 <div className={styles.blobContainer}>
-                  <div className={styles.blobComment}>
-                    <span>{aiGeneratedAnswers[answerIndex]!.hint}</span>を
-                    {selectedPerspectives[perspectiveIndex]!.name}
-                    してみたらどうかな？
+                  <div className={styles.decoration}>
+                    <div className={styles.fukidashi}>\ ヒント /</div>
+                    <Astronaut className={styles.astronaut} />
                   </div>
-                  <Blob className={styles.blob} />
+                  <div className={styles.blobCommentContainer}>
+                    <div className={styles.blobComment}>
+                      <span>{aiGeneratedAnswers[answerIndex]!.hint}</span>を
+                      {selectedPerspectives[perspectiveIndex]!.name}
+                      してみたらどうかな？
+                    </div>
+                    <Blob className={styles.blob} />
+                  </div>
                 </div>
               </div>
               {!isOpenAIAnswer && (
@@ -378,12 +389,15 @@ export default function GenerateIdeasPresentation({
                           <IoChevronForward className={styles.nextArrow} />
                         </div>
                       ) : (
-                        <LitUpBordersLg
-                          type="button"
-                          onClick={handleEndSession}
+                        <form
+                          action={async () => {
+                            await endSession(uuid);
+                            router.push(`/${uuid}/end-session`);
+                            router.refresh();
+                          }}
                         >
-                          セッションを終了する
-                        </LitUpBordersLg>
+                          <EndSessionButton />
+                        </form>
                       )}
                     </>
                   ) : (
@@ -441,5 +455,14 @@ const SubmitButton = () => {
     <LitUpBorders type="submit" disabled={pending}>
       保存
     </LitUpBorders>
+  );
+};
+
+const EndSessionButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <LitUpBordersLg type="submit" disabled={pending}>
+      セッションを終了する
+    </LitUpBordersLg>
   );
 };

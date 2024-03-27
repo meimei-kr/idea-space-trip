@@ -2,9 +2,10 @@
 
 import styles from "@/app/presentation/SelectThemeCategory/SelectThemeCategoryPresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
-import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
+import Description from "@/components/elements/Description/Description";
+import ThemeCategoryRadioButtons from "@/components/elements/ThemeCategoryRadioButtons/ThemeCategoryRadioButtons";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
@@ -54,7 +55,7 @@ export default function SelectThemePresentation({
     <main className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <p className={styles.question}>どの発明家になってみる？</p>
+          <Description>どの発明家になってみる？</Description>
           <form action={dispatch} className={styles.form} aria-label="form">
             {state?.errors?.option &&
               state?.errors?.option.map((error, index) => (
@@ -68,7 +69,7 @@ export default function SelectThemePresentation({
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               ))}
-            <RadioButtons
+            <ThemeCategoryRadioButtons
               options={options}
               ariaDescribedby="theme-category-error"
             />
@@ -85,8 +86,8 @@ export default function SelectThemePresentation({
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <LitUpBorders type="submit" disabled={pending}>
+    <LitUpBordersLg type="submit" disabled={pending}>
       決定
-    </LitUpBorders>
+    </LitUpBordersLg>
   );
 };

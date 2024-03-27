@@ -2,6 +2,7 @@
 
 import styles from "@/app/presentation/InputTheme/InputThemePresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import Description from "@/components/elements/Description/Description";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -12,7 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
-import { LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { ThemeState, submitTheme } from "@/lib/actions";
 import { IdeaSessionType } from "@/types";
@@ -79,7 +80,7 @@ export default function InputThemePresentation({
     <main className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <p className={styles.instruction}>アイデア出しのテーマを入力してね</p>
+          <Description>アイデア出しのテーマを入力してね</Description>
           <form action={dispatch} className={styles.form}>
             {state?.errors?.theme &&
               state?.errors?.theme.map((error, index) => (
@@ -166,8 +167,8 @@ export default function InputThemePresentation({
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <LitUpBorders type="submit" disabled={pending}>
+    <LitUpBordersLg type="submit" disabled={pending}>
       決定
-    </LitUpBorders>
+    </LitUpBordersLg>
   );
 };

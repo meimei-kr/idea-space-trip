@@ -3,6 +3,7 @@
 import styles from "@/app/presentation/CheckTheme/CheckThemePresentation.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import Button from "@/components/elements/Button/Button";
+import Description from "@/components/elements/Description/Description";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
@@ -43,7 +44,7 @@ export default function CheckThemePresentation({
   return (
     <main className={styles.wrapper}>
       <div className={styles.container}>
-        <p className={styles.question}>考えたいテーマは、すでに決まってる？</p>
+        <Description>考えたいテーマは、すでに決まってる？</Description>
         <div className={styles.buttons}>
           <Button onClick={handleYesClick} color="pink" size="large">
             <div>YES</div>

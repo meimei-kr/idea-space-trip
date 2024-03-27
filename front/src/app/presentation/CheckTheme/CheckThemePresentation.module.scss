@@ -4,13 +4,13 @@
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 60px;
   height: calc(100% - var(--back-button-length) - var(--page-padding));
@@ -32,7 +32,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 32px;
 
   @media screen and (min-width: 768px) {
     gap: 80px;
@@ -40,17 +40,6 @@
 
   @media screen and (min-width: 1280px) {
     flex-direction: row;
-  }
-}
-
-.question {
-  text-align: center;
-  font-size: 18px;
-  margin-top: 48px;
-
-  @media screen and (min-width: 1024px) {
-    font-size: 24px;
-    margin-top: 64px;
   }
 }
 

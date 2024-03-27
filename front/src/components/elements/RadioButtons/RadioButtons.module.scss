@@ -1,11 +1,15 @@
 .container {
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 72px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 8px;
+
+  @media screen and (min-width: 1024px) {
+    margin-bottom: 96px;
+  }
 }
 
 .input {
@@ -27,9 +31,18 @@
 
   &:hover {
     background-color: var(--light-gray);
+    opacity: 0.8;
   }
 }
 
 .selected {
   background-color: var(--light-gray);
+}
+
+.loadMoreButton {
+  margin-top: 24px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 32px;
+  }
 }
