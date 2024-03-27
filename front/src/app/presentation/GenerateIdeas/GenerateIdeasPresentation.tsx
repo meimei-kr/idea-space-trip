@@ -246,6 +246,9 @@ export default function GenerateIdeasPresentation({
             <br />
             思いついたことをどんどん書いていこう！
           </Description>
+          <div className={styles.mobileCount}>
+            <span>{count}個 </span>アイデアが浮かんだよ！
+          </div>
           <div className={styles.theme}>
             <SectionTitle>テーマ</SectionTitle>
             <div className={styles.themeContentConatiner}>
