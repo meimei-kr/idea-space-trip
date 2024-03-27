@@ -8,7 +8,7 @@ import { IdeaMemoType, IdeaSessionType } from "@/types";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
 import Astronaut from "public/images/astronaut.svg";
-import Blob from "public/images/white-blob-2.svg";
+import Blob from "public/images/white-blob.svg";
 import { useEffect } from "react";
 
 export default function EndSessionPresentation({
@@ -55,8 +55,9 @@ export default function EndSessionPresentation({
               <div className={styles.endComment}>
                 前回のセッションと比べて、
                 <br />
-                <span>{ideaCountDifference}</span>{" "}
-                個ひらめいたアイデアがふえたよ！
+                <span>{ideaCountDifference}</span> 個
+                <br />
+                ひらめいたアイデアがふえたよ！
               </div>
             </div>
           )}

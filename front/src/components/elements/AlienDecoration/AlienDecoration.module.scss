@@ -3,20 +3,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   height: 100%;
-  width: 80px;
   padding: 4px 16px;
 }
 
 .svg {
-  height: 50px;
+  height: 32px;
   width: auto;
+
+  @media screen and (min-width: 1024px) {
+    height: 40px;
+  }
 }
 
 .number {
-  color: var(--light-green);
-  text-shadow: 0 0 30px var(--light-green);
+  color: var(--light-blue);
   font-size: 14px;
   line-height: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }

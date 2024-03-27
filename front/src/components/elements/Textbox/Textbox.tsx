@@ -1,7 +1,7 @@
 import styles from "@/components/elements/Textbox/Textbox.module.scss";
 import { Textarea } from "@/components/ui/textarea";
 import type { TextboxProps } from "@/types";
-import { FaMicrophone } from "react-icons/fa6";
+// import { FaMicrophone } from "react-icons/fa6";
 
 export default function Textbox({
   id,
@@ -20,7 +20,7 @@ export default function Textbox({
         className={styles.textarea}
         defaultValue={defaultValue}
       />
-      <FaMicrophone className={styles.microphone} />
+      {/* <FaMicrophone className={styles.microphone} /> */}
     </div>
   );
 }

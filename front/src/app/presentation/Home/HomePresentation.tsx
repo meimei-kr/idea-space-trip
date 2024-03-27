@@ -20,17 +20,6 @@ export function HomePresentation({ session }: { session: Session | null }) {
         <div className={styles.slogan}>
           <span>EXPLORE</span> <span>INFINITE</span> <span>CREATIVITY</span>
         </div>
-        <div className={styles.hero}>
-          <div className={styles.topLeftBg}>
-            <div className={styles.topLeftDecorations}></div>
-          </div>
-          <div className={styles.blobContainer}>
-            <div className={styles.blob}></div>
-          </div>
-          <div className={styles.topRightBg}>
-            <div className={styles.topRightDecorations}></div>
-          </div>
-        </div>
       </section>
       <section id="about" className={styles.aboutWrapper}>
         <div className={styles.aboutContainer}>
@@ -105,7 +94,7 @@ export function HomePresentation({ session }: { session: Session | null }) {
                 ヒントや回答例もAIが出してくれるので、アイデア出しに詰まらずに済みます。
               </div>
             </div>
-            <div className={styles.feature}>
+            <div className={`${styles.feature} ${styles.noMvpFeature}`}>
               <div className={styles.featuresTitle}>
                 <div className={styles.titleNumber}>
                   <Two className={styles.number} data-testid="two" />
@@ -116,6 +105,8 @@ export function HomePresentation({ session }: { session: Session | null }) {
               <div className={styles.featureDescription}>
                 手入力せずアイデアを記録したい方のために、音声入力機能を搭載しています。
                 話すことでさらにアイデアが湧き出し、さらなるインスピレーションを引き出せます。
+                <br />
+                <span className={styles.noMvp}>※ 本リリースにて実装</span>
               </div>
             </div>
             <div className={styles.feature}>

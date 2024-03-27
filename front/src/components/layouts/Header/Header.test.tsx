@@ -32,15 +32,10 @@ describe("Header", () => {
     const logoutLink = screen.getByRole("link", { name: "LOGOUT ログアウト" });
     expect(logoutLink).toBeInTheDocument();
 
-    const brainstormLink = screen.getByRole("link", {
-      name: "BRAINSTORM アイデア出しセッション",
+    const modeLink = screen.getByRole("link", {
+      name: "MODE モード選択",
     });
-    expect(brainstormLink).toBeInTheDocument();
-
-    const memoLink = screen.getByRole("link", {
-      name: "MEMO 保存したアイデアを確認",
-    });
-    expect(memoLink).toBeInTheDocument();
+    expect(modeLink).toBeInTheDocument();
 
     const settingsLink = screen.getByRole("link", {
       name: "SETTINGS 登録情報設定",

@@ -1,6 +1,9 @@
 "use server";
 
-import { createAIGeneratedThemes } from "@/lib/ai-generated-themes";
+import {
+  createAIGeneratedThemes,
+  deleteAIGeneratedThemes,
+} from "@/lib/ai-generated-themes";
 import { createIdeaMemos, updateIdeaMemo } from "@/lib/idea-memos";
 import { updateIdeaSession } from "@/lib/idea-sessions";
 import {
@@ -10,6 +13,8 @@ import {
 } from "@/utils/enums";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { deleteAiGeneratedAnswers } from "./ai-generated-answers";
+import { updateAIUsageHistory } from "./ai-usage-history";
 
 /**
  * テーマの入力を受け取り、idea_sessionsテーブルのthemeカラムを更新する
@@ -281,7 +286,6 @@ export const submitMyIdea = async (
  */
 
 export const submitAiAnswer = async (formData: FormData) => {
-  console.log("submitAiAnswer called");
   // ユーザー入力はないため、バリデーションは不要
   const uuid = formData.get("uuid") as string;
   const perspective = formData.get("perspective") as string;
@@ -348,4 +352,19 @@ export const submitUpdateIdeaMemo = async (
     comment: comment,
   });
   return successMessage;
+};
+
+/**
+ * セッションを終了する
+ */
+export const endSession = async (uuid: string) => {
+  await Promise.all([
+    // idea_sessionsテーブルのis_finishedをtrueにする
+    updateIdeaSession(uuid, { isFinished: true }),
+    // ai_generated_themes と ai_generated_answersテーブルのレコードを削除
+    deleteAIGeneratedThemes(uuid),
+    deleteAiGeneratedAnswers(uuid),
+    // ai_usage_historiesテーブル の countを更新
+    updateAIUsageHistory(),
+  ]);
 };

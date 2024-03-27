@@ -39,13 +39,13 @@ export function LitUpBordersLg({
   return (
     <button
       type={type}
-      className={`p-[2px] relative ${disabled ? "opacity-50 cursor-default" : ""}`}
+      className={`w-64 p-[2px] relative ${disabled ? "opacity-50 cursor-default" : ""}`}
       onClick={onClick}
       disabled={disabled}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
       <div
-        className={`px-12 py-3  bg-black rounded-full relative group transition duration-200 text-white ${disabled ? "" : "hover:bg-transparent"}`}
+        className={`px-11 py-4 bg-black rounded-full relative group transition duration-200 text-white ${disabled ? "" : "hover:bg-transparent"}`}
       >
         {children}
       </div>

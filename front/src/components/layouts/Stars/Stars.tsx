@@ -9,8 +9,8 @@ export default function Stars() {
         id="tsparticlesfullpage"
         background="transparent"
         minSize={0.6}
-        maxSize={1.4}
-        particleDensity={70}
+        maxSize={1.0}
+        particleDensity={50}
         className="w-full h-full"
         particleColor="#FFFFFF"
       />

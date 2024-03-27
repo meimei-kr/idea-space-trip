@@ -52,12 +52,16 @@
 /* フォーム */
 .form {
   width: 100%;
-  margin-top: 16px;
+  margin-top: 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 40px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 64px;
+  }
 }
 
 /* エラーメッセージ */

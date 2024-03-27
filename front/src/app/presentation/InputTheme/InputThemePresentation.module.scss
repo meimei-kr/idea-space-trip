@@ -37,18 +37,6 @@
   }
 }
 
-/* 指示文 */
-.instruction {
-  text-align: center;
-  font-size: 18px;
-  margin-top: 48px;
-
-  @media screen and (min-width: 1024px) {
-    font-size: 24px;
-    margin-top: 64px;
-  }
-}
-
 /* フォーム */
 .form {
   display: flex;
@@ -56,36 +44,17 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 48px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 64px;
+  }
 }
 
 .error {
   color: var(--red);
   font-size: 16px;
   margin: 8px 0 4px;
-}
-
-/* テキストエリア */
-.textareaContainer {
-  width: 100%;
-  position: relative;
-}
-
-.textarea {
-  height: 6rem;
-
-  @media screen and (min-width: 768px) {
-    height: 8rem;
-  }
-}
-
-.microphone {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  color: var(--black);
-  width: 20px;
-  height: 20px;
 }
 
 /* チェック事項説明 */
@@ -108,7 +77,11 @@
   border-radius: 8px;
   background-color: var(--white);
   margin-top: 8px;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
+
+  @media screen and (min-width: 1024px) {
+    margin-bottom: 64px;
+  }
 }
 
 .checkExamples {

@@ -38,20 +38,45 @@
 
 /* アイデアカウント */
 .count {
-  margin: 16px 0;
-  font-size: 16px;
+  display: none;
 
-  span {
-    font-size: 24px;
-    color: var(--light-blue);
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: var(--light-blue);
+    position: fixed;
+    top: 25vh;
+    right: var(--page-padding);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    z-index: 10;
 
-    @media screen and (min-width: 1024px) {
-      font-size: 32px;
+    span {
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::before,
+      &::after {
+        content: "";
+        background-image: url("/images/bulb.svg");
+        background-size: 3rem 3rem;
+        background-repeat: no-repeat;
+        width: 3rem;
+        height: 3rem;
+        display: inline-block;
+      }
     }
   }
-
   @media screen and (min-width: 1024px) {
-    font-size: 20px;
+    right: var(--page-padding-lg);
   }
 }
 
@@ -63,13 +88,13 @@
   align-items: flex-start;
   gap: 16px;
   width: 100%;
-  margin-bottom: 16px;
+  margin: 48px 0 16px;
   font-size: 16px;
 
   @media screen and (min-width: 1024px) {
     font-size: 20px;
     gap: 24px;
-    margin-bottom: 24px;
+    margin: 64px 0 24px;
   }
 }
 
@@ -163,8 +188,22 @@
 
   span {
     font-size: 3rem;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--pink);
+    animation: scale 1.5s infinite;
+    display: inline-block;
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -184,21 +223,40 @@
   align-items: center;
   gap: 16px;
   width: 100%;
+  margin: 40px 0;
+
+  @media screen and (min-width: 1280px) {
+    margin: 48px 0;
+  }
 }
 
 /* ヒント */
 .hint {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 60px 120px 1fr;
   width: 100%;
-  margin-bottom: 40px;
+  margin: 40px 0;
 
   @media screen and (min-width: 1280px) {
-    grid-template-columns: 120px 16px 1fr;
-    grid-template-rows: 1fr 120px;
-    width: 70%;
-    margin-bottom: 48px;
+    margin: 48px 0;
+  }
+}
+
+.decoration {
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 96px;
+  height: auto;
+
+  @media screen and (min-width: 1280px) {
+    position: relative;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
   }
 }
 
@@ -209,27 +267,20 @@
   align-items: center;
   font-size: 14px;
   color: var(--white);
-  grid-row: 1 / 2;
 
   @media screen and (min-width: 1280px) {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    grid-template-columns: 120px 1fr;
+    grid-template-rows: 1fr;
     width: 120px;
   }
 }
 
 .astronaut {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-row: 2 / 3;
-
-  @media screen and (min-width: 1280px) {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-  }
 }
 
 .blobContainer {
@@ -239,12 +290,16 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  grid-row: 3 / 4;
 
   @media screen and (min-width: 1280px) {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
   }
+}
+.blobCommentContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .blobComment {
@@ -254,7 +309,8 @@
   transform: translate(-50%, -50%);
   font-size: 16px;
   color: var(--black);
-  width: 80%;
+  width: 50%;
+  max-width: 50%;
   text-align: center;
 
   @media screen and (min-width: 1280px) {
@@ -262,12 +318,14 @@
   }
 
   span {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--pink);
+    display: block;
 
     @media screen and (min-width: 1280px) {
       letter-spacing: -0.1rem;
+      font-size: 2rem;
     }
   }
 }
@@ -287,8 +345,8 @@
   width: 100%;
   margin: 16px 0 30px;
   padding: 24px;
-  border: 2px solid var(--light-gray);
-  border-radius: 8px;
+  border: 4px solid var(--light-gray);
+  border-radius: 1rem;
 
   @media screen and (min-width: 1024px) {
     margin: 24px 0 48px;
@@ -337,7 +395,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   margin: 16px 0;
 }
 

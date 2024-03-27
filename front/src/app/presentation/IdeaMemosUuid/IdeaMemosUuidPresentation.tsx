@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "@/app/presentation/IdeaMemosUuid/IdeaMemosUuidPresentation.module.scss";
-import AlienDecoration from "@/components/elements/AlienDecoration/AlienDecoration";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
@@ -16,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { LitUpBorders, Simple } from "@/components/ui/tailwind-buttons";
+import { LitUpBordersLg, Simple } from "@/components/ui/tailwind-buttons";
 import { IdeaMemoState, submitUpdateIdeaMemo } from "@/lib/actions";
 import { deleteIdeaMemo } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
@@ -99,7 +98,6 @@ export default function IdeaMemosUuidPresentation({
         <div className={styles.content}>
           <div className={styles.cardContainer}>
             <div className={styles.cardHeader}>
-              <AlienDecoration />
               {/* <GoHeart className={styles.heartIcon} /> */}
             </div>
 
@@ -305,7 +303,7 @@ export default function IdeaMemosUuidPresentation({
                   本当に削除する？
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  「OK」を押すと、削除されてもとに戻せないので、注意してね。
+                  「OK」を押すと、削除されて元に戻せないので、注意してね。
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="flex-gap">
@@ -332,9 +330,9 @@ const SubmitUpdateButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <LitUpBorders type="submit" disabled={pending}>
+    <LitUpBordersLg type="submit" disabled={pending}>
       保存
-    </LitUpBorders>
+    </LitUpBordersLg>
   );
 };
 

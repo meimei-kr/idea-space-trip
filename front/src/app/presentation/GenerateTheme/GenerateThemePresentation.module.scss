@@ -65,6 +65,11 @@
   align-items: center;
   gap: 8px;
   width: 100%;
+  margin-top: 48px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 64px;
+  }
 }
 
 .categoryTitle {
@@ -83,7 +88,7 @@
 
   p {
     font-size: 3rem;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--pink);
   }
 }
@@ -114,7 +119,7 @@
   font-size: 14px;
 
   span {
-    color: var(--red);
+    color: var(--pink);
   }
 
   @media screen and (min-width: 1024px) {
@@ -123,32 +128,9 @@
 }
 
 .cautionIcon {
-  color: var(--red);
+  color: var(--pink);
   width: 80px;
   height: auto;
-}
-
-/* テキストエリア */
-.textareaContainer {
-  width: 100%;
-  position: relative;
-}
-
-.textarea {
-  height: 6rem;
-
-  @media screen and (min-width: 768px) {
-    height: 8rem;
-  }
-}
-
-.microphone {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  color: var(--black);
-  width: 20px;
-  height: 20px;
 }
 
 /* 生成テーマエリア */

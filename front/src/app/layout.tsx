@@ -3,7 +3,7 @@ import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/AuthProvider";
-import { neoneon, sawarabiGothic } from "@/fonts/fonts";
+import { openSans, zenmaruGothic } from "@/fonts/fonts";
 import type { Metadata } from "next";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${sawarabiGothic.variable} ${neoneon.variable}`}>
+      <body className={`${zenmaruGothic.variable} ${openSans.variable}`}>
         <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>
           <Stars />
