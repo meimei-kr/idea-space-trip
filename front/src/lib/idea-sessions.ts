@@ -3,6 +3,7 @@
 import { IdeaSessionType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -23,6 +24,9 @@ export async function getIdeaSessionInProgress(): Promise<IdeaSessionType | null
         cache: "no-store",
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (serializedData === null) {
       return null;
@@ -33,6 +37,9 @@ export async function getIdeaSessionInProgress(): Promise<IdeaSessionType | null
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -56,6 +63,9 @@ export async function createIdeaSession(
         },
       }),
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`データ作成に失敗しました: ${serializedData}`);
@@ -66,6 +76,9 @@ export async function createIdeaSession(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -82,12 +95,18 @@ export async function deleteIdeaSession(uuid: string) {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const responseData = await response.json();
     if (!response.ok) {
       throw new Error(`データ削除に失敗しました: ${responseData}`);
     }
     return responseData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -110,6 +129,9 @@ export async function updateIdeaSession(
         idea_session: { ...data },
       }),
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`データ更新に失敗しました: ${serializedData}`);
@@ -120,6 +142,9 @@ export async function updateIdeaSession(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -142,6 +167,9 @@ export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
         cache: "no-store",
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`データ取得に失敗しました: ${serializedData}`);
@@ -153,6 +181,9 @@ export async function getLatestTwoIdeaSessionsWithMemos(): Promise<
 
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }

@@ -3,6 +3,7 @@
 import { AiGeneratedThemeType, IdeaSessionType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -34,6 +35,9 @@ export async function createAIGeneratedThemes(
         }),
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`AIによるテーマ案生成に失敗しました: ${serializedData}`);
@@ -47,6 +51,9 @@ export async function createAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -71,6 +78,9 @@ export async function getAIGeneratedThemes(
         cache: "no-store",
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (serializedData === null) {
       return null;
@@ -81,6 +91,9 @@ export async function getAIGeneratedThemes(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -92,7 +105,7 @@ export async function deleteAIGeneratedThemes(uuid: string): Promise<void> {
   const session = await getServerSession(authOptions);
 
   try {
-    await fetch(
+    const response = await fetch(
       `${BASE_URL}/api/v1/idea_sessions/${uuid}/ai_generated_themes`,
       {
         method: "DELETE",
@@ -102,7 +115,13 @@ export async function deleteAIGeneratedThemes(uuid: string): Promise<void> {
         },
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }

@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/options";
 import { AiUsageHistoryType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,6 +23,9 @@ export async function getAIUsageHistory(): Promise<AiUsageHistoryType | null> {
       },
       cache: "no-store",
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     if (!response.ok) {
       const errorResponse = await response.json();
       const errorMessage = errorResponse.error;
@@ -34,6 +38,9 @@ export async function getAIUsageHistory(): Promise<AiUsageHistoryType | null> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -52,6 +59,9 @@ export async function updateAIUsageHistory(): Promise<AiUsageHistoryType> {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     if (!response.ok) {
       const errorResponse = await response.json();
       const errorMessage = errorResponse.error;
@@ -64,6 +74,9 @@ export async function updateAIUsageHistory(): Promise<AiUsageHistoryType> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
