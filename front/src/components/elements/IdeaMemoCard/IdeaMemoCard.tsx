@@ -7,18 +7,11 @@ import { PerspectiveEnum } from "@/utils/enums";
 import Link from "next/link";
 // import { GoHeart } from "react-icons/go";
 
-export default function IdeaMemoCard({
-  ideaMemo,
-  key,
-}: {
-  ideaMemo: IdeaMemoType;
-  key: string;
-}) {
+export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
   return (
     <Link
       href={`/idea-memos/${ideaMemo.uuid}`}
       className={styles.cardContainer}
-      key={key}
     >
       <div className={styles.headerBody}>
         <div className={styles.cardHeader}>
