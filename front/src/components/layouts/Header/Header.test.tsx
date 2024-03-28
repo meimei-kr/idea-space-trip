@@ -37,10 +37,10 @@ describe("Header", () => {
     });
     expect(modeLink).toBeInTheDocument();
 
-    const settingsLink = screen.getByRole("link", {
-      name: "SETTINGS 登録情報設定",
+    const myPageLink = screen.getByRole("link", {
+      name: "MY PAGE マイページ",
     });
-    expect(settingsLink).toBeInTheDocument();
+    expect(myPageLink).toBeInTheDocument();
   });
 
   it("should call signOut function when logout link is clicked", async () => {
