@@ -3,6 +3,10 @@ module Api
     class UsersController < ApplicationController
       skip_before_action :authenticate, only: [:create]
 
+      def show
+        render json: UserSerializer.new(@current_user).serializable_hash.to_json, status: :ok
+      end
+
       def create
         @current_user = User.find_or_create_by!(user_params)
         # 初回ログイン時はAIUsageHistoryを作成
@@ -15,6 +19,10 @@ module Api
         render json: { user: @current_user, accessToken: encoded_token, status: :ok }
       rescue StandardError => e
         render json: { error: "ログインに失敗しました: #{e.message}" }, status: :internal_server_error
+      end
+
+      def destroy
+        @current_user.destroy!
       end
 
       private
