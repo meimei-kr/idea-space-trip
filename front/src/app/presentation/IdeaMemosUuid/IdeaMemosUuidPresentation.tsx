@@ -35,11 +35,11 @@ export default function IdeaMemosUuidPresentation({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   // 削除ボタン押下時
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    console.log("onSubmit is called");
     e.preventDefault();
     setIsConfirmDialogOpen(true);
   };
@@ -52,11 +52,18 @@ export default function IdeaMemosUuidPresentation({
   // 削除確認ダイアログのOKボタン押下時
   const handleDeleteOK = async () => {
     setIsConfirmDialogOpen(false);
-    // 削除処理
-    await deleteIdeaMemo(ideaMemo.uuid!);
-    router.push("/idea-memos");
-    router.refresh();
-    toast.success("アイデアメモを削除しました");
+    setIsDeleting(true);
+    try {
+      // 削除処理
+      await deleteIdeaMemo(ideaMemo.uuid!);
+      router.push("/idea-memos");
+      router.refresh();
+      toast.success("アイデアメモを削除しました");
+    } catch (error) {
+      toast.error("アイデアメモの削除に失敗しました");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   // 編集ボタン押下時
@@ -288,7 +295,12 @@ export default function IdeaMemosUuidPresentation({
                         name="uuid"
                         value={ideaMemo.uuid}
                       />
-                      <SubmitDeleteButton />
+                      <Simple type="submit">
+                        <div className={styles.button}>
+                          <RiDeleteBin6Fill />
+                          <div className={styles.buttonSentence}>削除</div>
+                        </div>
+                      </Simple>
                     </form>
                   </div>
                 </div>
@@ -313,7 +325,11 @@ export default function IdeaMemosUuidPresentation({
                 >
                   Cancel
                 </AlertDialogCancel>
-                <AlertDialogAction onClick={handleDeleteOK}>
+                <AlertDialogAction
+                  onClick={handleDeleteOK}
+                  disabled={isDeleting}
+                  className="text-red-500 bg-red-200 hover:bg-red-100"
+                >
                   OK
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -333,18 +349,5 @@ const SubmitUpdateButton = () => {
     <LitUpBordersLg type="submit" disabled={pending}>
       保存
     </LitUpBordersLg>
-  );
-};
-
-const SubmitDeleteButton = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <Simple type="submit" disabled={pending}>
-      <div className={styles.button}>
-        <RiDeleteBin6Fill />
-        <div className={styles.buttonSentence}>削除</div>
-      </div>
-    </Simple>
   );
 };
