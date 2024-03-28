@@ -13,3 +13,6 @@ pre-commit:
       run: |
         docker compose exec -T back bundle exec rubocop -A &&
         docker compose exec -T back bundle exec rspec
+    staging:
+      run: |
+        git add {staged_files}

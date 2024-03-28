@@ -90,3 +90,9 @@ export type IdeaMemoType = {
   createdAt?: string;
   ideaSession?: IdeaSessionType;
 };
+
+export type UserType = {
+  name?: string;
+  email?: string;
+  provider?: string;
+};

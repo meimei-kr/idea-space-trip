@@ -60,9 +60,9 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="#" onClick={menuFunction}>
-                  <span className={styles.mainTitle}>SETTINGS</span>
-                  <span className={styles.subTitle}>登録情報設定</span>
+                <Link href="/my-page" onClick={menuFunction}>
+                  <span className={styles.mainTitle}>MY PAGE</span>
+                  <span className={styles.subTitle}>マイページ</span>
                 </Link>
               </li>
               <li>

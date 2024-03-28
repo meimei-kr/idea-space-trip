@@ -1,14 +1,10 @@
 "use client";
 
+import IdeaMemoCard from "@/components/elements/IdeaMemoCard/IdeaMemoCard";
+import styles from "@/components/elements/IdeaMemoList/IdeaMemoList.module.scss";
 import { IdeaMemoType } from "@/types";
-import IdeaMemoCard from "../IdeaMemoCard/IdeaMemoCard";
-import styles from "./IdeaMemoList.module.scss";
 
-export const IdeaMemoList = async ({
-  ideaMemos,
-}: {
-  ideaMemos: IdeaMemoType[];
-}) => {
+export const IdeaMemoList = ({ ideaMemos }: { ideaMemos: IdeaMemoType[] }) => {
   return (
     <>
       {ideaMemos.length === 0 ? (
@@ -21,9 +17,7 @@ export const IdeaMemoList = async ({
         <div className={styles.container}>
           <div className={styles.content}>
             {ideaMemos.map((memo) => (
-              <>
-                <IdeaMemoCard key={memo.uuid!} ideaMemo={memo} />
-              </>
+              <IdeaMemoCard key={memo.uuid!} ideaMemo={memo} />
             ))}
           </div>
         </div>

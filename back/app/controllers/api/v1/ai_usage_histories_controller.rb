@@ -14,7 +14,8 @@ module Api
               ai_usage_history.count = 0
               ai_usage_history.save!
             rescue ActiveRecord::RecordInvalid => e
-              render json: { error: "AI使用履歴のリセットに失敗しました: #{e.message}" }, status: :unprocessable_entity
+              render json: { error: "AI使用履歴のリセットに失敗しました: #{e.message}" },
+                     status: :unprocessable_entity
               return
             end
           end
