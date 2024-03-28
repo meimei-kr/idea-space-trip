@@ -1,7 +1,7 @@
 export { default } from "next-auth/middleware";
 
 export const config = {
-  // 未認証でも使いたいパスはログイン制限から弾く
+  // ログインが必要なページのパスを指定
   matcher: [
     "/select-mode",
     "/:path/check-theme",

@@ -3,6 +3,7 @@
 import { IdeaMemoType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -17,7 +18,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function createIdeaMemos(
   uuid: string,
   memo: IdeaMemoType,
-): Promise<IdeaMemoType> {
+): Promise<IdeaMemoType | void> {
   const session = await getServerSession(authOptions);
 
   try {
@@ -32,6 +33,9 @@ export async function createIdeaMemos(
         body: JSON.stringify({ idea_memo: { ...memo } }),
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`アイデアの保存に失敗しました: ${serializedData}`);
@@ -42,6 +46,9 @@ export async function createIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -66,6 +73,9 @@ export async function getCurrentIdeaMemos(
         cache: "no-store",
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (serializedData === null) {
       return null;
@@ -76,6 +86,9 @@ export async function getCurrentIdeaMemos(
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -98,9 +111,15 @@ export async function getIdeaMemosThisMonth(): Promise<number> {
         cache: "no-store",
       },
     );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const data = await response.json();
     return data.count;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -120,6 +139,9 @@ export async function getAllIdeaMemos(): Promise<IdeaMemoType[]> {
       },
       cache: "no-store",
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (serializedData === null) {
       return [];
@@ -130,6 +152,9 @@ export async function getAllIdeaMemos(): Promise<IdeaMemoType[]> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -149,6 +174,9 @@ export async function getIdeaMemo(uuid: string): Promise<IdeaMemoType> {
       },
       cache: "no-store",
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const serializedData = await response.json();
     if (!response.ok) {
       throw new Error(`データ取得に失敗しました: ${serializedData}`);
@@ -159,6 +187,9 @@ export async function getIdeaMemo(uuid: string): Promise<IdeaMemoType> {
     }).deserialize(serializedData);
     return deserializedData;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -179,12 +210,18 @@ export async function updateIdeaMemo(uuid: string, memo: IdeaMemoType) {
       },
       body: JSON.stringify({ idea_memo: { ...memo } }),
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const data = await response.json();
     if (!response.ok) {
       throw new Error(`データ更新に失敗しました: ${data}`);
     }
     return data;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
@@ -206,12 +243,18 @@ export async function deleteIdeaMemo(uuid: string): Promise<void> {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },
     });
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
     const data = await response.json();
     if (!response.ok) {
       throw new Error(`データ更新に失敗しました: ${data}`);
     }
     return data;
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
