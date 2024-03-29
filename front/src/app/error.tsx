@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,9 +13,8 @@ export default function Error({
 }) {
   const router = useRouter();
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_API_HOST === "localhost") {
-      console.error(error);
-    }
+    // Log the error to Sentry
+    Sentry.captureException(error);
   }, [error]);
 
   useEffect(() => {
