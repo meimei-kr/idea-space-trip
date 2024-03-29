@@ -4,6 +4,7 @@ import Stars from "@/components/layouts/Stars/Stars";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/AuthProvider";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Toaster />
           <Footer />
         </NextAuthProvider>
+        <GoogleAnalytics gaId="G-ZER08G5VVW" />
       </body>
     </html>
   );
