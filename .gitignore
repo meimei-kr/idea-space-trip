@@ -34,6 +34,9 @@ front/.vercel
 front/*.tsbuildinfo
 front/next-env.d.ts
 
+# Sentry Config File
+front/.sentryclirc
+
 
 # ignoreing files for back directory
 # Ignore bundler config.
