@@ -70,8 +70,8 @@ export default function GenerateIdeasPresentation({
   const [perspectiveIndex, setPerspectiveIndex] = useState(0); // ３つの観点のうち、現在表示している観点のインデックス
   const [count, setCount] = useState(myIdeas ? myIdeas.length : 0); // 出したアイデアの数
   const [isOpenAIAnswer, setIsOpenAIAnswer] = useState(false); // AIの回答を表示するかどうか
-  const [isSentAPIRequest, setIsSentAPIRequest] = useState(false); // APIリクエストを送信中かどうか
   const [isAlertOpen, setIsAlertOpen] = useState(false); // アラートを表示するかどうか
+  const [hasApiError, setHasApiError] = useState(false); // APIリクエスト失敗時のエラーがあるかどうか
 
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
@@ -79,21 +79,21 @@ export default function GenerateIdeasPresentation({
   const scrollTopRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLFormElement>(null);
 
+  // AIの回答生成APIリクエスト処理
+  const fetchAiAnswers = async () => {
+    const perspectivesStr = selectedPerspectives.map((p) => p.name).join("、");
+    if (ideaSession && !aiGeneratedAnswers) {
+      await createAiGeneratedAnswers(
+        ideaSession.uuid!,
+        perspectivesStr,
+        ideaSession.theme!,
+      );
+    }
+  };
+
   // 回答が未生成であれば、回答を生成する
   useEffect(() => {
-    let perspectivesStr: string = "";
-    selectedPerspectives.forEach((perspective) => {
-      perspectivesStr += perspective.name + "、";
-    });
-    const createAiAnswers = async (
-      uuid: string,
-      perspectives: string,
-      theme: string,
-    ) => await createAiGeneratedAnswers(uuid, perspectives, theme);
-    if (ideaSession && !aiGeneratedAnswers && !isSentAPIRequest) {
-      createAiAnswers(ideaSession.uuid!, perspectivesStr, ideaSession.theme!);
-      setIsSentAPIRequest(true);
-    }
+    fetchAiAnswers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,11 +116,8 @@ export default function GenerateIdeasPresentation({
             }
             // 内部エラー発生時の処理
             if (data.error) {
-              if (process.env.NEXT_PUBLIC_API_HOST === "localhost") {
-                console.error(data.error);
-                return;
-              }
-              return <Error statusCode={500} />;
+              console.error(data.error);
+              setHasApiError(true);
             }
             setAiGeneratedAnswers(data.body);
             // AIの回答生成が成功したのでideaSessionのis_ai_answer_generatedをtrueにする
@@ -229,10 +226,17 @@ export default function GenerateIdeasPresentation({
     }
   };
 
+  // APIリクエストエラー時のアラートで再試行をクリック時の処理
+  const handleRetryClick = () => {
+    setHasApiError(false);
+    fetchAiAnswers();
+  };
+
   // エラーがある場合はエラーページを表示
   if (statusCode >= 400) {
     return <Error statusCode={statusCode} />;
   }
+
   return (
     <main className={styles.wrapper}>
       <div className={styles.count}>
@@ -441,6 +445,25 @@ export default function GenerateIdeasPresentation({
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
               <AlertDialogAction onClick={handleOkClick}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* APIリクエストエラー時のアラート */}
+        <AlertDialog
+          open={hasApiError}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogDescription>
+                ごめんね、AIの回答生成失敗です。再試行してみてね。
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+              <AlertDialogAction onClick={handleRetryClick}>
+                再試行
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
