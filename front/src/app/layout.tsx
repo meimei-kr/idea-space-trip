@@ -9,11 +9,38 @@ import type { Metadata } from "next";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
 
+const siteName = "IDEA SPACE TRIP";
+const description =
+  "IDEA SPACE TRIPは、AIと一緒にアイデアを考えることで、" +
+  "アイデア出しが、簡単かつ楽しくなるようサポートするアプリです。";
+const url = "https://www.idea-space-trip.net";
+
 export const metadata: Metadata = {
-  title: "IDEA SPACE TRIP",
-  description:
-    "IDEA SPACE TRIPは、AIと一緒にアイデアを考えることで、" +
-    "アイデア出しが、簡単かつ楽しくなるようサポートするアプリです。",
+  title: {
+    default: siteName,
+    template: `%s - ${siteName}`,
+  },
+  description,
+  openGraph: {
+    title: siteName,
+    description,
+    url,
+    siteName,
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: siteName,
+    description,
+    creator: "@meimei_kr_",
+  },
+  verification: {
+    google: "ZLFhzMA6qFnzD_DTc19GMRX9cHsnhOwLcVdJfmszatk",
+  },
+  alternates: {
+    canonical: url,
+  },
 };
 
 export default function RootLayout({
