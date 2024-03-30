@@ -43,6 +43,7 @@ import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 import { BsExclamationTriangle } from "react-icons/bs";
 
 export default function GenerateThemePresentation({
@@ -85,6 +86,21 @@ export default function GenerateThemePresentation({
     confirmTheme,
     initialGeneratedThemesState,
   );
+
+  // フォームエラーがあった場合はトーストを表示
+  useEffect(() => {
+    if (
+      questionState?.errors?.option ||
+      questionState?.errors?.answer ||
+      generatedThemesState?.errors?.option
+    ) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
+  }, [
+    questionState?.errors?.option,
+    questionState?.errors?.answer,
+    generatedThemesState?.errors?.option,
+  ]);
 
   // 遷移先パスをプレフェッチ
   useEffect(() => {

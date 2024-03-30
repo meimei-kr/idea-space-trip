@@ -22,7 +22,7 @@ import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
 import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 import { GiCancel } from "react-icons/gi";
@@ -93,6 +93,13 @@ export default function IdeaMemosUuidPresentation({
     }
     return result;
   }, initialIdeaMemoState);
+
+  // フォームエラーがあった場合はトーストを表示
+  useEffect(() => {
+    if (ideaMemoState?.errors?.idea || ideaMemoState?.errors?.comment) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
+  }, [ideaMemoState?.errors?.idea, ideaMemoState?.errors?.comment]);
 
   // 戻るボタンの処理
   const handleBack = () => {

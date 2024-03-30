@@ -120,6 +120,9 @@ export default function GenerateIdeasPresentation({
               setHasApiError(true);
             }
             setAiGeneratedAnswers(data.body);
+            toast("AIからヒントと回答例が届いたよ！", {
+              icon: "🚀",
+            });
             // AIの回答生成が成功したのでideaSessionのis_ai_answer_generatedをtrueにする
             await updateIdeaSession(uuid, { isAiAnswerGenerated: true });
           };
@@ -168,6 +171,13 @@ export default function GenerateIdeasPresentation({
       ref?.current?.reset();
     }
   };
+
+  // フォーム入力エラーがあった場合はトースト表示
+  useEffect(() => {
+    if (myIdeaState?.errors?.idea) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
+  }, [myIdeaState?.errors?.idea]);
 
   // スクロールを一番上に戻す
   const scrollToTop = () => {

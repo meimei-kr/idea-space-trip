@@ -22,6 +22,7 @@ import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 import {
   FaRegFaceFrown,
   FaRegFaceGrin,
@@ -44,6 +45,13 @@ export default function InputThemePresentation({
     errors: {},
   };
   const [state, dispatch] = useFormState(submitTheme, initialState);
+
+  // フォーム入力エラーがあれば、トースト表示
+  useEffect(() => {
+    if (state?.errors?.theme) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
+  }, [state?.errors?.theme]);
 
   // 遷移先パスをプレフェッチ
   useEffect(() => {
