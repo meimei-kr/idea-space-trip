@@ -7,10 +7,10 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { COUNT_LIMIT } from "@/constants/constants";
 import { useDialog } from "@/hooks/useDialog";
+import { endSession } from "@/lib/actions";
 import { getAIUsageHistory } from "@/lib/ai-usage-history";
 import {
   createIdeaSession,
-  deleteIdeaSession,
   getIdeaSessionInProgress,
 } from "@/lib/idea-sessions";
 import { generateUUID } from "@/lib/uuid";
@@ -108,7 +108,7 @@ export function SelectModePresentation() {
       handleModalYesClick(sessionInProgress);
     } else {
       // 新しくスタートする場合
-      await deleteIdeaSession(sessionInProgress.uuid);
+      await endSession(sessionInProgress.uuid); // 旧セッション終了処理
       const uuid = generateUUID();
       await createIdeaSession(uuid);
       router.push(`/${encodeURIComponent(uuid)}/check-theme`);
@@ -157,7 +157,7 @@ export function SelectModePresentation() {
               <>
                 アイデア出しの途中で中断されたセッションがあるよ。続きから始める？
                 <br />
-                ※「新しくスタート」を選択すると、途中のセッション内容や、出したアイデアメモは削除されるので注意してね。
+                ※「新しくスタート」を選択すると、途中のセッションには戻れないので注意してね。
               </>
             }
             trueVal="続きから"
