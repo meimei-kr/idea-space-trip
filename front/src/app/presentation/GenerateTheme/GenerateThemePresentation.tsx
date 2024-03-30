@@ -61,14 +61,23 @@ export default function GenerateThemePresentation({
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
-  // フォームの状態
+  // 質問、回答送信フォームの状態
   const initialQuestionState: ThemeQuestionState = {
     errors: {},
+    invalid: false,
   };
-  const [questionState, dispatchQuestion] = useFormState(
-    generateThemes,
-    initialQuestionState,
-  );
+  const [questionState, dispatchQuestion] = useFormState<
+    ThemeQuestionState | undefined,
+    FormData
+  >(async (prev: ThemeQuestionState | undefined, formData: FormData) => {
+    const result = await generateThemes(prev, formData);
+    if (result?.invalid) {
+      setIsAlertModalOpen(true);
+    }
+    return result;
+  }, initialQuestionState);
+
+  // 生成されたテーマの選択フォームの状態
   const initialGeneratedThemesState: GeneratedThemesState = {
     errors: {},
   };
@@ -110,18 +119,19 @@ export default function GenerateThemePresentation({
   };
 
   // 無効な入力エラー画面でOKクリック時の処理
-  // 当該アイデア出しセッションを終了
-  // テーマ有無選択画面に遷移し、新しいアイデア出しセッションを開始
   const handleOkClick = async () => {
     setIsAlertModalOpen(false);
-    // ai_usage_historiesテーブルの使用回数を1増やす
-    await updateAIUsageHistory();
-    // idea_sessionsテーブルから当該セッションを削除
-    await deleteIdeaSession(uuid);
-    // 新しいアイデア出しセッションを開始
-    const newUUID = generateUUID();
-    await createIdeaSession(newUUID);
-    router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
+    if (retryCount > 2) {
+      // リトライ回数制限に達した場合
+      // ai_usage_historiesテーブルの使用回数を1増やす
+      await updateAIUsageHistory();
+      // idea_sessionsテーブルから当該セッションを削除
+      await deleteIdeaSession(uuid);
+      // 新しいアイデア出しセッションを開始
+      const newUUID = generateUUID();
+      await createIdeaSession(newUUID);
+      router.push(`/${encodeURIComponent(newUUID)}/check-theme`);
+    }
   };
 
   // AIアイデア生成済みエラー画面でOKクリック時の処理
@@ -246,9 +256,19 @@ export default function GenerateThemePresentation({
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogDescription>
-                    無効な入力が複数回続けて検知されたよ。
-                    <br />
-                    新しいセッションを作成するので、もう一度やってみてね。
+                    {retryCount <= 2 ? (
+                      <>
+                        無効な入力だと判断されたよ。
+                        <br />
+                        入力内容を変えてもう一度試してみてね。
+                      </>
+                    ) : (
+                      <>
+                        無効な入力が複数回続けて検知されたよ。
+                        <br />
+                        新しいセッションを作成するので、もう一度やってみてね。
+                      </>
+                    )}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
