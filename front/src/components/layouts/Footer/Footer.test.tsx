@@ -39,6 +39,9 @@ describe("Footer", () => {
     render(<Footer />);
 
     const contactLink = screen.getByRole("link", { name: "Contact" });
-    expect(contactLink).toHaveAttribute("href", "/contact");
+    expect(contactLink).toHaveAttribute(
+      "href",
+      "https://docs.google.com/forms/d/13za2tbR2mP3k-M6KxeXCY-akmZFMZkEalpAKsnHESgc/edit",
+    );
   });
 });
