@@ -77,6 +77,7 @@ export default function GenerateIdeasPresentation({
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
   const session = useSession();
   const scrollTopRef = useRef<HTMLDivElement>(null);
+  const scrollNextHintRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLFormElement>(null);
 
   // AIの回答生成APIリクエスト処理
@@ -184,6 +185,11 @@ export default function GenerateIdeasPresentation({
     scrollTopRef?.current?.scrollIntoView();
   };
 
+  // スクロールをヒントの位置に移動
+  const scrollToNextHint = () => {
+    scrollNextHintRef?.current?.scrollIntoView();
+  };
+
   // AIの回答を表示
   const handleShowAnswers = () => {
     setIsOpenAIAnswer(true);
@@ -193,6 +199,7 @@ export default function GenerateIdeasPresentation({
   const handleShowOtherHint = () => {
     setIsOpenAIAnswer(false);
     setAnswerIndex((prev) => prev + 1);
+    scrollToNextHint();
   };
 
   // 次の考え方に進む
@@ -292,7 +299,7 @@ export default function GenerateIdeasPresentation({
             </div>
           </div>
           {/* ユーザー回答フォーム */}
-          <div className={styles.answer}>
+          <div className={styles.answer} ref={scrollNextHintRef}>
             <SectionTitle>回答</SectionTitle>
             <div className={styles.answerContentContainer}>
               <div className={styles.answerContent}>
