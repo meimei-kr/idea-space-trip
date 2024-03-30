@@ -35,7 +35,9 @@ export default function Footer() {
             <Link href="/terms">Terms of Use</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link href="https://docs.google.com/forms/d/13za2tbR2mP3k-M6KxeXCY-akmZFMZkEalpAKsnHESgc/edit">
+              Contact
+            </Link>
           </li>
         </ul>
       </div>
