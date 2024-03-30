@@ -5,7 +5,7 @@ import styles from "@/components/layouts/Header/Header.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Logo from "public/images/logo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast as hotToast } from "react-hot-toast";
 
 export default function Header() {
@@ -16,6 +16,18 @@ export default function Header() {
   const menuFunction = () => {
     setOpenMenu((prev) => !prev);
   };
+
+  // ドロワーメニュー表示時に背景ページのスクロールを無効にするための処理
+  useEffect(() => {
+    if (openMenu) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    // コンポーネントがアンマウントされた時にスクロール制御を解除
+    return () => document.body.classList.remove("no-scroll");
+  }, [openMenu]);
 
   // ログアウト処理
   const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
