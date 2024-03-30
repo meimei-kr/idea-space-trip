@@ -2,6 +2,7 @@
 
 import styles from "@/components/elements/SignInButton/SignInButton.module.scss";
 import { signIn } from "next-auth/react";
+import error from "next/error";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -11,11 +12,9 @@ export default function SignInButton({ provider }: { provider: string }) {
     <div>
       <button
         onClick={() => {
-          signIn(provider, { callbackUrl: "/select-mode" });
-          toast.promise(signIn(provider, { callbackUrl: "/select-mode" }), {
-            loading: null,
-            success: "ログインに成功しました",
-            error: "ログインに失敗しました",
+          signIn(provider, { callbackUrl: "/select-mode" }).catch(() => {
+            console.error(error);
+            toast.error("ログインに失敗しました");
           });
         }}
         className={styles.button}
