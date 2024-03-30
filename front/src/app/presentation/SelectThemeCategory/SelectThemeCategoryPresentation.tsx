@@ -15,7 +15,9 @@ import { ThemeCategoryEnum } from "@/utils/enums";
 import { AlertCircle } from "lucide-react";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 
 export default function SelectThemePresentation({
   ideaSession,
@@ -30,6 +32,13 @@ export default function SelectThemePresentation({
     errors: {},
   };
   const [state, dispatch] = useFormState(submitThemeCategory, initialState);
+
+  // フォームエラーがあった場合はトーストを表示
+  useEffect(() => {
+    if (state?.errors?.option) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
+  }, [state?.errors?.option]);
 
   // ラジオボタンの選択肢
   const options: Option[] = Object.entries(ThemeCategoryEnum).map(

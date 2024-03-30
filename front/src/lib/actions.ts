@@ -120,6 +120,7 @@ export type ThemeQuestionState = {
     option?: string[];
     answer?: string[];
   };
+  invalid?: boolean;
 };
 
 const selectOptions = Object.keys(ThemeQuestionEnum);
@@ -142,7 +143,7 @@ const ThemeQuestionSchema = z.object({
 export const generateThemes = async (
   prevState: ThemeQuestionState | undefined,
   formData: FormData,
-) => {
+): Promise<ThemeQuestionState | undefined> => {
   // ThemeQuestionSchemaによるバリデーション
   const validatedThemeQuestion = ThemeQuestionSchema.safeParse({
     option: formData.get("option"),
@@ -174,11 +175,7 @@ export const generateThemes = async (
     );
     if (!aiGeneratedThemes) {
       return {
-        errors: {
-          answer: [
-            "無効なデータが入力されたよ。適切な入力に修正して、再度実行してね。",
-          ],
-        },
+        invalid: true,
       };
     }
     redirect(`/${uuid}/generate-theme`);
