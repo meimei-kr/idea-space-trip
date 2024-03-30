@@ -117,8 +117,9 @@
     gap: 8px;
 
     &:hover {
-      background-color: var(--gray);
-      opacity: 0.8;
+      span {
+        color: var(--purple);
+      }
     }
 
     span {
