@@ -3,6 +3,7 @@
 import IdeaMemoCard from "@/components/elements/IdeaMemoCard/IdeaMemoCard";
 import styles from "@/components/elements/IdeaMemoList/IdeaMemoList.module.scss";
 import { IdeaMemoType } from "@/types";
+import Aliens from "public/images/aliens.svg";
 
 export const IdeaMemoList = ({ ideaMemos }: { ideaMemos: IdeaMemoType[] }) => {
   return (
@@ -11,6 +12,7 @@ export const IdeaMemoList = ({ ideaMemos }: { ideaMemos: IdeaMemoType[] }) => {
         <div className={styles.noDataContainer}>
           <div className={styles.message}>
             <div>まだアイデアメモがないよ。</div>
+            <Aliens className={styles.svg} />
           </div>
         </div>
       ) : (
