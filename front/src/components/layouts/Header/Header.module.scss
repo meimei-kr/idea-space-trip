@@ -114,7 +114,9 @@
     padding: 24px;
     gap: 8px;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &.touched {
       span {
         color: var(--purple);
       }
