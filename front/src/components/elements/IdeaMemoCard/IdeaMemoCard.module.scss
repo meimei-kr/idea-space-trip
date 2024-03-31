@@ -6,10 +6,14 @@
   border: 4px solid var(--light-gray);
   border-radius: 16px;
   cursor: pointer;
+  background-image: url("/images/idea-memo-bg.svg");
+  background-position: center;
+  background-size: cover;
+  transition: all 0.3s ease 0s;
 
   &:hover,
   &:active {
-    opacity: 0.7;
+    transform: translateY(-5px);
   }
 }
 
@@ -24,10 +28,6 @@
   width: 100%;
   height: 80px;
   padding: 16px;
-
-  background-image: url("/images/bulb_background.webp");
-  background-position: center;
-  background-size: cover;
 
   @media screen and (min-width: 768px) {
     padding: 20px;
@@ -82,10 +82,6 @@
   align-items: center;
   text-align: end;
   padding: 16px;
-
-  background-image: url("/images/bulb_background.webp");
-  background-position: center;
-  background-size: cover;
 
   @media screen and (min-width: 768px) {
     padding: 20px;
