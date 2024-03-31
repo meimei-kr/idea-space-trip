@@ -124,6 +124,7 @@ export default function GenerateIdeasPresentation({
             if (data.error) {
               console.error(data.error);
               setHasApiError(true);
+              return;
             }
             setAiGeneratedAnswers(data.body);
             toast("AIからヒントと回答例が届いたよ！", {
