@@ -17,6 +17,7 @@ const description =
 const url = "https://www.idea-space-trip.net";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(url),
   title: {
     default: siteName,
     template: `%s - ${siteName}`,
