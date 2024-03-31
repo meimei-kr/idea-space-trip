@@ -271,7 +271,7 @@ export default function GenerateThemePresentation({
             >
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogDescription>
+                  <AlertDialogDescription className="text-left">
                     {retryCount <= 2 ? (
                       <>
                         無効な入力だと判断されたよ。
@@ -335,7 +335,7 @@ export default function GenerateThemePresentation({
           >
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogDescription>
+                <AlertDialogDescription className="text-left">
                   このセッションで、すでにAIによるアイデア回答例を生成済みだよ。
                   <br />
                   アイデア出し画面に遷移するね。

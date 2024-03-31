@@ -93,8 +93,6 @@
   background-color: var(--black);
   height: 100vh;
   width: 100vw;
-  padding: 16px;
-  transition: all 0.3s;
   overflow-y: auto;
 
   a {
@@ -117,8 +115,9 @@
     gap: 8px;
 
     &:hover {
-      background-color: var(--gray);
-      opacity: 0.8;
+      span {
+        color: var(--purple);
+      }
     }
 
     span {
@@ -129,6 +128,13 @@
   &.active {
     opacity: 1;
     z-index: 40;
+    overscroll-behavior-y: contain;
+  }
+
+  &.bodyFixed {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
   }
 }
 

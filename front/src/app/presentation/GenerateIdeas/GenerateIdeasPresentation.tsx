@@ -18,7 +18,7 @@ import {
   LitUpBorders,
   LitUpBordersLg,
 } from "@/components/ui/tailwind-buttons";
-import { SESSION_LAST_INDEX } from "@/constants/constants";
+import { HEADER_HEIGHT, SESSION_LAST_INDEX } from "@/constants/constants";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import {
   MyIdeaState,
@@ -76,8 +76,14 @@ export default function GenerateIdeasPresentation({
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
   const session = useSession();
-  const scrollTopRef = useRef<HTMLDivElement>(null);
+  const scrollTopRef = useRef<HTMLElement>(null);
+  const scrollNextHintRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLFormElement>(null);
+
+  // 初回レンダリング時に画面位置を一番上に移動
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   // AIの回答生成APIリクエスト処理
   const fetchAiAnswers = async () => {
@@ -181,7 +187,19 @@ export default function GenerateIdeasPresentation({
 
   // スクロールを一番上に戻す
   const scrollToTop = () => {
-    scrollTopRef?.current?.scrollIntoView();
+    const headerHeight = HEADER_HEIGHT; // ヘッダーの高さをピクセル単位で設定
+    if (scrollTopRef.current) {
+      const topPos =
+        scrollTopRef.current.getBoundingClientRect().top +
+        window.scrollY -
+        headerHeight;
+      window.scrollTo({ top: topPos, behavior: "smooth" });
+    }
+  };
+
+  // スクロールをヒントの位置に移動
+  const scrollToNextHint = () => {
+    scrollNextHintRef?.current?.scrollIntoView();
   };
 
   // AIの回答を表示
@@ -193,6 +211,7 @@ export default function GenerateIdeasPresentation({
   const handleShowOtherHint = () => {
     setIsOpenAIAnswer(false);
     setAnswerIndex((prev) => prev + 1);
+    scrollToNextHint();
   };
 
   // 次の考え方に進む
@@ -248,12 +267,12 @@ export default function GenerateIdeasPresentation({
   }
 
   return (
-    <main className={styles.wrapper}>
+    <main className={styles.wrapper} ref={scrollTopRef}>
       <div className={styles.count}>
         <span>{count}個 </span>
         アイデアが浮かんだよ！
       </div>
-      <div className={styles.container} ref={scrollTopRef}>
+      <div className={styles.container}>
         <div className={styles.content}>
           <Description>
             アイデアの良し悪しは考えず、
@@ -292,7 +311,7 @@ export default function GenerateIdeasPresentation({
             </div>
           </div>
           {/* ユーザー回答フォーム */}
-          <div className={styles.answer}>
+          <div className={styles.answer} ref={scrollNextHintRef}>
             <SectionTitle>回答</SectionTitle>
             <div className={styles.answerContentContainer}>
               <div className={styles.answerContent}>
@@ -437,7 +456,7 @@ export default function GenerateIdeasPresentation({
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogDescription>
+              <>
                 {(ideaSession?.aiAnswerRetryCount ?? 0) <= 2 ? (
                   <>
                     無効なテーマだと判断されたよ。
@@ -451,7 +470,7 @@ export default function GenerateIdeasPresentation({
                     新しいセッションを作成するので、もう一度やってみてね。
                   </>
                 )}
-              </AlertDialogDescription>
+              </>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
               <AlertDialogAction onClick={handleOkClick}>OK</AlertDialogAction>
@@ -466,7 +485,7 @@ export default function GenerateIdeasPresentation({
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogDescription>
+              <AlertDialogDescription className="text-left">
                 ごめんね、AIの回答生成失敗です。再試行してみてね。
               </AlertDialogDescription>
             </AlertDialogHeader>

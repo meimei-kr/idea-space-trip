@@ -321,7 +321,7 @@ export default function IdeaMemosUuidPresentation({
                 <AlertDialogTitle className="text-slate-950">
                   本当に削除する？
                 </AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogDescription className="text-left">
                   「OK」を押すと、削除されて元に戻せないので、注意してね。
                 </AlertDialogDescription>
               </AlertDialogHeader>

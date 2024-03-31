@@ -34,7 +34,9 @@ const _ModalDialog: FC<DialogProps> = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-black">{title}</AlertDialogTitle>
-          <AlertDialogDescription>{message}</AlertDialogDescription>
+          <AlertDialogDescription className="text-left">
+            {message}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
           <AlertDialogAction autoFocus onClick={() => onClose(true)}>

@@ -101,17 +101,26 @@
   border-radius: 20px;
   width: 120px;
   height: 40px;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
 }
 
 .checkExample {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  font-size: 14px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 16px;
+  }
 }
 
 /* 戻るボタン */

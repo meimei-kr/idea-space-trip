@@ -2,20 +2,39 @@
 
 import styles from "@/components/layouts/Header/Header.module.scss";
 
+import { useBodyFixed } from "@/hooks/useBodyFixed";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Logo from "public/images/logo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast as hotToast } from "react-hot-toast";
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { status } = useSession();
+  const { bodyFixed, setBodyFixed } = useBodyFixed();
 
   // Drawer Menuの開閉
   const menuFunction = () => {
     setOpenMenu((prev) => !prev);
+    setBodyFixed((prev) => !prev);
   };
+
+  // ドロワーメニュー表示時に背景ページのスクロールを無効にするための処理
+  useEffect(() => {
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const hamburger = document.querySelector(".hamburgerButton") as HTMLElement;
+    const isWideScreen = window.innerWidth >= 1024;
+    const rightOffset = isWideScreen ? 80 : 24;
+
+    if (openMenu && hamburger) {
+      hamburger.style.right = `${rightOffset}px`;
+    } else if (hamburger) {
+      // ボタンのrightスタイルをスクロールバーの幅分だけ調整
+      hamburger.style.right = `${rightOffset - scrollbarWidth}px`;
+    }
+  }, [openMenu]);
 
   // ログアウト処理
   const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -30,7 +49,7 @@ export default function Header() {
         <Logo className={styles.logo} />
       </Link>
       <nav
-        className={`${styles.drawerMenu} ${openMenu ? styles.active : undefined}`}
+        className={`${styles.drawerMenu} ${openMenu ? styles.active : undefined} ${bodyFixed ? styles.bodyFixed : undefined}`}
       >
         <ul>
           <li>
@@ -89,7 +108,7 @@ export default function Header() {
         </ul>
       </nav>
       <div
-        className={styles.hamburger}
+        className={`${styles.hamburger} hamburgerButton`}
         onClick={() => menuFunction()}
         data-testid="hamburger"
       >
