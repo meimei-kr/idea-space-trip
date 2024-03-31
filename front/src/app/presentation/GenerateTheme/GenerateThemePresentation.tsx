@@ -59,6 +59,8 @@ export default function GenerateThemePresentation({
   const [retryCount, setRetryCount] = useState(0);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false); // 無効な入力エラー画面の表示
   const [isMoveAlertModalOpen, setIsMoveAlertModalOpen] = useState(false); // AIアイデア生成済みエラー画面の表示
+  const [hasApiError, setHasApiError] = useState(false); // APIリクエスト失敗時のエラーがあるかどうか
+
   const router = useRouter();
   const { uuid, statusCode } = useUUIDCheck({ ideaSession });
 
@@ -66,6 +68,7 @@ export default function GenerateThemePresentation({
   const initialQuestionState: ThemeQuestionState = {
     errors: {},
     invalid: false,
+    apiError: false,
   };
   const [questionState, dispatchQuestion] = useFormState<
     ThemeQuestionState | undefined,
@@ -74,6 +77,9 @@ export default function GenerateThemePresentation({
     const result = await generateThemes(prev, formData);
     if (result?.invalid) {
       setIsAlertModalOpen(true);
+    }
+    if (result?.apiError) {
+      setHasApiError(true);
     }
     return result;
   }, initialQuestionState);
@@ -155,6 +161,11 @@ export default function GenerateThemePresentation({
     setIsMoveAlertModalOpen(false);
     router.push(`/${uuid}/generate-ideas`);
     router.refresh();
+  };
+
+  // APIリクエストエラー時のアラートで再試行をクリック時の処理
+  const handleRetryClick = () => {
+    setHasApiError(false);
   };
 
   // 戻るボタンの処理
@@ -280,7 +291,7 @@ export default function GenerateThemePresentation({
                       </>
                     ) : (
                       <>
-                        無効な入力が複数回続けて検知されたよ。
+                        複数回続けてエラーが検知されたよ。
                         <br />
                         新しいセッションを作成するので、もう一度やってみてね。
                       </>
@@ -344,6 +355,25 @@ export default function GenerateThemePresentation({
               <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
                 <AlertDialogAction onClick={handleMoveOkClick}>
                   OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          {/* APIリクエストエラー時のアラート */}
+          <AlertDialog
+            open={hasApiError}
+            aria-labelledby="responsive-dialog-title"
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogDescription className="text-left">
+                  ごめんね、AIの回答生成失敗です。再試行してみてね。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
+                <AlertDialogAction onClick={handleRetryClick}>
+                  再試行
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
