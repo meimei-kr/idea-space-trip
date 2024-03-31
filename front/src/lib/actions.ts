@@ -11,6 +11,7 @@ import {
   ThemeQuestionEnum,
   getKeyByValue,
 } from "@/utils/enums";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { deleteAiGeneratedAnswers } from "./ai-generated-answers";
@@ -121,6 +122,7 @@ export type ThemeQuestionState = {
     answer?: string[];
   };
   invalid?: boolean;
+  apiError?: boolean;
 };
 
 const selectOptions = Object.keys(ThemeQuestionEnum);
@@ -169,16 +171,22 @@ export const generateThemes = async (
     });
 
     // updatedIdeaSessionの情報を元にテーマを生成
-    const aiGeneratedThemes = await createAIGeneratedThemes(
-      uuid,
-      updatedIdeaSession,
-    );
-    if (!aiGeneratedThemes) {
+    try {
+      const aiGeneratedThemes = await createAIGeneratedThemes(
+        uuid,
+        updatedIdeaSession,
+      );
+      if (!aiGeneratedThemes) {
+        return {
+          invalid: true,
+        };
+      }
+      revalidatePath(`/${uuid}/generate-theme`);
+    } catch (error) {
       return {
-        invalid: true,
+        apiError: true,
       };
     }
-    redirect(`/${uuid}/generate-theme`);
   }
 };
 
