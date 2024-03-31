@@ -40,7 +40,27 @@
     color: var(--light-purple);
   }
 
-  &:hover,
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border: none;
+
+      &:nth-child(1) {
+        background-color: var(--pink);
+        color: var(--white);
+      }
+
+      &:nth-child(2) {
+        background-color: var(--light-blue);
+        color: var(--white);
+      }
+
+      &:nth-child(3) {
+        background-color: var(--purple);
+        color: var(--white);
+      }
+    }
+  }
+
   &:active,
   &.selected {
     border: none;

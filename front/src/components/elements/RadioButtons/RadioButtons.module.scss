@@ -29,9 +29,11 @@
   padding-right: 16px;
   cursor: pointer;
 
-  &:hover {
-    background-color: var(--light-gray);
-    opacity: 0.8;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--light-gray);
+      opacity: 0.8;
+    }
   }
 }
 
