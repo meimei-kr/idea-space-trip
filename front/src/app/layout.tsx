@@ -3,6 +3,7 @@ import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/AuthProvider";
+import { TouchProvider } from "@/context/TouchContext";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
@@ -53,11 +54,13 @@ export default function RootLayout({
       <body className={`${zenmaruGothic.variable} ${openSans.variable}`}>
         <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>
-          <Stars />
-          <Header />
-          {children}
-          <Toaster />
-          <Footer />
+          <TouchProvider>
+            <Stars />
+            <Header />
+            {children}
+            <Toaster />
+            <Footer />
+          </TouchProvider>
         </NextAuthProvider>
         <GoogleAnalytics gaId="G-ZER08G5VVW" />
       </body>

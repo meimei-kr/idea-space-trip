@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "@/components/layouts/Header/Header.module.scss";
+import { useTouch } from "@/context/TouchContext";
 
 import { useBodyFixed } from "@/hooks/useBodyFixed";
 import { signOut, useSession } from "next-auth/react";
@@ -13,6 +14,7 @@ export default function Header() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { status } = useSession();
   const { bodyFixed, setBodyFixed } = useBodyFixed();
+  const { isTouched, handleTouchStart, handleTouchEnd } = useTouch();
 
   // Drawer Menuの開閉
   const menuFunction = () => {
@@ -53,19 +55,37 @@ export default function Header() {
       >
         <ul>
           <li>
-            <Link href="/" onClick={menuFunction}>
+            <Link
+              href="/"
+              onClick={menuFunction}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className={isTouched ? styles.touched : ""}
+            >
               <span className={styles.mainTitle}>TOP</span>
               <span className={styles.subTitle}>トップページ</span>
             </Link>
           </li>
           <li>
-            <Link href="/#about" onClick={menuFunction}>
+            <Link
+              href="/#about"
+              onClick={menuFunction}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className={isTouched ? styles.touched : ""}
+            >
               <span className={styles.mainTitle}>ABOUT</span>
               <span className={styles.subTitle}>このアプリについて</span>
             </Link>
           </li>
           <li>
-            <Link href="/#features" onClick={menuFunction}>
+            <Link
+              href="/#features"
+              onClick={menuFunction}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className={isTouched ? styles.touched : ""}
+            >
               <span className={styles.mainTitle}>FEATURES</span>
               <span className={styles.subTitle}>使える機能</span>
             </Link>
@@ -73,13 +93,25 @@ export default function Header() {
           {status === "authenticated" ? (
             <>
               <li>
-                <Link href="/select-mode" onClick={menuFunction}>
+                <Link
+                  href="/select-mode"
+                  onClick={menuFunction}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className={isTouched ? styles.touched : ""}
+                >
                   <span className={styles.mainTitle}>MODE</span>
                   <span className={styles.subTitle}>モード選択</span>
                 </Link>
               </li>
               <li>
-                <Link href="/my-page" onClick={menuFunction}>
+                <Link
+                  href="/my-page"
+                  onClick={menuFunction}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className={isTouched ? styles.touched : ""}
+                >
                   <span className={styles.mainTitle}>MY PAGE</span>
                   <span className={styles.subTitle}>マイページ</span>
                 </Link>
@@ -91,6 +123,9 @@ export default function Header() {
                     menuFunction();
                     handleLogout(e);
                   }}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className={isTouched ? styles.touched : ""}
                 >
                   <span className={styles.mainTitle}>LOGOUT</span>
                   <span className={styles.subTitle}>ログアウト</span>
@@ -99,7 +134,13 @@ export default function Header() {
             </>
           ) : (
             <li>
-              <Link href="/auth/signin" onClick={menuFunction}>
+              <Link
+                href="/auth/signin"
+                onClick={menuFunction}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                className={isTouched ? styles.touched : ""}
+              >
                 <span className={styles.mainTitle}>LOGIN</span>
                 <span className={styles.subTitle}>ログイン</span>
               </Link>

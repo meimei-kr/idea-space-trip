@@ -12,7 +12,8 @@
   transition: all 0.3s ease 0s;
 
   &:hover,
-  &:active {
+  &:active,
+  &.touched {
     transform: translateY(-5px);
   }
 }

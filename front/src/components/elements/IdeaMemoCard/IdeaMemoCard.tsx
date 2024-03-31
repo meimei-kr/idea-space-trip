@@ -2,16 +2,21 @@
 
 import styles from "@/components/elements/IdeaMemoCard/IdeaMemoCard.module.scss";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
+import { useTouch } from "@/context/TouchContext";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
 import Link from "next/link";
 // import { GoHeart } from "react-icons/go";
 
 export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
+  const { isTouched, handleTouchStart, handleTouchEnd } = useTouch();
+
   return (
     <Link
       href={`/idea-memos/${ideaMemo.uuid}`}
-      className={styles.cardContainer}
+      className={`${styles.cardContainer} ${isTouched ? styles.touched : ""}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className={styles.headerBody}>
         <div className={styles.cardHeader}>
