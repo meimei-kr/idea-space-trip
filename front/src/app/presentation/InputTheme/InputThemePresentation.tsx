@@ -152,7 +152,7 @@ export default function InputThemePresentation({
           >
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogDescription>
+                <AlertDialogDescription className="text-left">
                   このセッションで、すでにAIによるアイデア回答例を生成済みだよ。
                   <br />
                   アイデア出し画面に遷移するね。

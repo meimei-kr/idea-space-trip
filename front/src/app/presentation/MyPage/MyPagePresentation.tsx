@@ -72,7 +72,7 @@ export default function MyPagePresentation({ user }: { user: UserType }) {
             <AlertDialogTitle className="text-slate-950">
               本当にユーザーを削除する？
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="text-left">
               「OK」を押すと、以下のデータは削除されて元に戻せないので、注意してね。
               <br />
               ・ ユーザー情報
