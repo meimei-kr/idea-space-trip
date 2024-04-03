@@ -1,0 +1,15 @@
+.loginWrapper {
+  min-height: 100vh;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (min-width: 1024px) {
+    padding: 0 80px;
+  }
+}
+
+.loginContainer {
+  height: 100%;
+}

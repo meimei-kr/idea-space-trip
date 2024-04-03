@@ -1,0 +1,87 @@
+/*
+ * 変数の定義
+ */
+$earth-width: 100%;
+
+.heroWrapper {
+  position: relative;
+  height: calc(100vh - var(--header-height));
+}
+
+/* 地球の画像 */
+.earthImg {
+  position: absolute;
+  bottom: calc($earth-width / 10 * (-1));
+  left: calc($earth-width / 3 * (-1));
+  width: $earth-width;
+  translate: transform;
+  height: auto;
+  overflow: hidden;
+  animation: rotateEarth 180s linear infinite;
+
+  @media screen and (min-width: 1280px) {
+    $earth-width: 45%;
+    width: $earth-width;
+    bottom: calc($earth-width / 2 * (-1.1));
+    left: calc($earth-width / 5 * (-1));
+  }
+
+  @keyframes rotateEarth {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* 文章 */
+.slogan {
+  position: absolute;
+  font-size: 56px;
+  font-family: var(--font-open-sans);
+  font-weight: 700;
+  letter-spacing: -0.25rem;
+  text-align: center;
+  width: 100%;
+  top: calc(50% - var(--header-height));
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: calc(100% - var(--page-padding) * 2);
+
+  span {
+    line-height: 56px;
+    height: 56px;
+  }
+
+  span:nth-child(1) {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--white);
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 96px;
+
+    span {
+      line-height: 96px;
+      height: 96px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: calc(100% - var(--page-padding-lg) * 2);
+    font-size: 120px;
+
+    span {
+      line-height: 120px;
+      height: 120px;
+    }
+  }
+}
