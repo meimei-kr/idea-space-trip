@@ -64,7 +64,7 @@ export default function RootLayout({
           </TouchProvider>
         </NextAuthProvider>
       </body>
-      <GoogleAnalytics gaId="G-ZER08G5VVW" />
+      <GoogleAnalytics gaId="G-BJ7Z6RGZJF" />
     </html>
   );
 }
