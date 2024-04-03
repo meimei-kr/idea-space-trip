@@ -63,8 +63,8 @@ export default function RootLayout({
             <Footer />
           </TouchProvider>
         </NextAuthProvider>
-        <GoogleAnalytics gaId="G-ZER08G5VVW" />
       </body>
+      <GoogleAnalytics gaId="G-ZER08G5VVW" />
     </html>
   );
 }
