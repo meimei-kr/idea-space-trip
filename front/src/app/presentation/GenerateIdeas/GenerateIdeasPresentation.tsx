@@ -457,7 +457,7 @@ export default function GenerateIdeasPresentation({
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <>
+              <AlertDialogDescription className="text-left">
                 {(ideaSession?.aiAnswerRetryCount ?? 0) <= 2 ? (
                   <>
                     無効なテーマだと判断されたよ。
@@ -471,7 +471,7 @@ export default function GenerateIdeasPresentation({
                     新しいセッションを作成するので、もう一度やってみてね。
                   </>
                 )}
-              </>
+              </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
               <AlertDialogAction onClick={handleOkClick}>OK</AlertDialogAction>
