@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@/components/elements/Button/Button.module.scss";
 import type { ButtonProps } from "@/types/index";
 

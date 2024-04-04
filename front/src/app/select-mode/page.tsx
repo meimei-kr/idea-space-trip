@@ -1,5 +1,5 @@
 import { SelectModePresentation } from "@/app/presentation/SelectMode/SelectModePresentation";
 
-export default async function SelectModeContainer() {
+export default async function page() {
   return <SelectModePresentation />;
 }
