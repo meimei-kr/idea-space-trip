@@ -1,4 +1,4 @@
-import { HomePresentation } from "@/app/presentation/Home/HomePresentation";
+import { HomePresentation } from "@/app/HomePresentation";
 import { authOptions } from "@/lib/options";
 import { getServerSession } from "next-auth";
 

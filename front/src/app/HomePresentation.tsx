@@ -1,4 +1,4 @@
-import styles from "@/app/presentation/Home/HomePresentation.module.scss";
+import styles from "@/app/Home.module.scss";
 import * as Home from "@/features/home/components";
 import type { Session } from "next-auth";
 
