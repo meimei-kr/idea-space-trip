@@ -1,4 +1,4 @@
-import styles from "@/app/presentation/SelectMode/SelectModePresentation.module.scss";
+import styles from "@/app/select-mode/SelectMode.module.scss";
 import * as SelectMode from "@/features/select-mode/components";
 
 export function SelectModePresentation() {

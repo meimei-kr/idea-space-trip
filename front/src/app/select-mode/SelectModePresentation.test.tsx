@@ -1,4 +1,4 @@
-import { SelectModePresentation } from "@/app/presentation/SelectMode/SelectModePresentation";
+import { SelectModePresentation } from "@/app/select-mode/SelectModePresentation";
 import { render, screen } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 

@@ -1,4 +1,4 @@
-import { SelectModePresentation } from "@/app/presentation/SelectMode/SelectModePresentation";
+import { SelectModePresentation } from "@/app/select-mode/SelectModePresentation";
 
 export default async function page() {
   return <SelectModePresentation />;
