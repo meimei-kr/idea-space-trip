@@ -1,7 +1,7 @@
-import CheckThemePresentation from "@/app/presentation/CheckTheme/CheckThemePresentation";
+import CheckThemeContainer from "@/app/[uuid]/check-theme/CheckThemeContainer";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 
-export default async function CheckTheme() {
+export default async function page() {
   const ideaSession = await getIdeaSessionInProgress();
-  return <CheckThemePresentation ideaSession={ideaSession} />;
+  return <CheckThemeContainer ideaSession={ideaSession} />;
 }
