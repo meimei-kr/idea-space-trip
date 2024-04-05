@@ -1,5 +1,4 @@
-import InputThemePresentation from "@/app/presentation/InputTheme/InputThemePresentation";
-import { IdeaSessionType } from "@/types";
+import InputThemePresentation from "@/app/[uuid]/input-theme/InputThemePresentation";
 import { render, screen } from "@testing-library/react";
 
 jest.mock("next/navigation", () => ({
@@ -26,14 +25,19 @@ jest.mock("@/components/ui/textarea", () => ({
   Textarea: () => <textarea name="theme" aria-label="theme" />,
 }));
 
-const ideaSession: IdeaSessionType = {
-  uuid: "uuid",
-  isThemeDetermined: true,
-};
+const uuid: string = "uuid";
+const isMoveAlertModalOpen: boolean = false;
+const handleMoveOkClick: () => void = jest.fn();
 
 describe("InputThemePresentation", () => {
   it("should render the instruction correctly", () => {
-    render(<InputThemePresentation ideaSession={ideaSession} />);
+    render(
+      <InputThemePresentation
+        uuid={uuid}
+        isMoveAlertModalOpen={isMoveAlertModalOpen}
+        handleMoveOkClick={handleMoveOkClick}
+      />,
+    );
 
     expect(
       screen.getByText("アイデア出しのテーマを入力してね"),
@@ -41,13 +45,25 @@ describe("InputThemePresentation", () => {
   });
 
   it("should display the textarea", () => {
-    render(<InputThemePresentation ideaSession={ideaSession} />);
+    render(
+      <InputThemePresentation
+        uuid={uuid}
+        isMoveAlertModalOpen={isMoveAlertModalOpen}
+        handleMoveOkClick={handleMoveOkClick}
+      />,
+    );
 
     expect(screen.getByRole("textbox", { name: "theme" })).toBeInTheDocument();
   });
 
   it("should render the checkItem correctly", () => {
-    render(<InputThemePresentation ideaSession={ideaSession} />);
+    render(
+      <InputThemePresentation
+        uuid={uuid}
+        isMoveAlertModalOpen={isMoveAlertModalOpen}
+        handleMoveOkClick={handleMoveOkClick}
+      />,
+    );
 
     expect(
       screen.getByText("テーマが具体的かどうかチェック"),
@@ -56,13 +72,25 @@ describe("InputThemePresentation", () => {
   });
 
   it("should display the submit button", () => {
-    render(<InputThemePresentation ideaSession={ideaSession} />);
+    render(
+      <InputThemePresentation
+        uuid={uuid}
+        isMoveAlertModalOpen={isMoveAlertModalOpen}
+        handleMoveOkClick={handleMoveOkClick}
+      />,
+    );
 
     expect(screen.getByRole("button", { name: "決定" })).toBeInTheDocument();
   });
 
   it("should display the BackButton", () => {
-    render(<InputThemePresentation ideaSession={ideaSession} />);
+    render(
+      <InputThemePresentation
+        uuid={uuid}
+        isMoveAlertModalOpen={isMoveAlertModalOpen}
+        handleMoveOkClick={handleMoveOkClick}
+      />,
+    );
 
     expect(screen.getByText("もどる")).toBeInTheDocument();
   });
