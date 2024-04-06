@@ -1,4 +1,4 @@
-import IdeaMemosPresentation from "@/app/presentation/IdeaMemos/IdeaMemosPresentation";
+import IdeaMemosPresentation from "@/app/idea-memos/IdeaMemosPresentation";
 import { getAllIdeaMemos } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 

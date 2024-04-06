@@ -7,21 +7,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { MAX_PAGE_NUM } from "@/constants/constants";
+import { ITEMS_PER_PAGE, MAX_PAGE_NUM } from "@/constants/constants";
 
 export function PaginationSection({
   totalItems,
-  itemsPerPage,
   currentPage,
   setCurrentPage,
 }: {
   totalItems: number;
-  itemsPerPage: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
 }) {
   const pageNumbers: number[] = [];
-  for (let i = 1; i <= totalItems / itemsPerPage; i++) {
+  for (let i = 1; i <= totalItems / ITEMS_PER_PAGE; i++) {
     pageNumbers.push(i);
   }
 
