@@ -22,7 +22,11 @@ export default function InputThemePresentation({
           <Description>アイデア出しのテーマを入力してね</Description>
           <InputTheme.Form uuid={uuid} />
           {/* すでにAIによるアイデア回答を生成済みの場合、アイデア出し画面に遷移するダイアログ表示 */}
-          <AlertModal isOpen={isMoveAlertModalOpen} onClick={handleMoveOkClick}>
+          <AlertModal
+            isOpen={isMoveAlertModalOpen}
+            onClick={handleMoveOkClick}
+            actionDisplay="OK"
+          >
             このセッションで、すでにAIによるアイデア回答例を生成済みだよ。
             <br />
             アイデア出し画面に遷移するね。

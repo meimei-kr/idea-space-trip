@@ -12,10 +12,12 @@ import {
 export default function AlertModal({
   isOpen,
   onClick,
+  actionDisplay,
   children,
 }: {
   isOpen: boolean;
   onClick: () => void;
+  actionDisplay: string;
   children: React.ReactNode;
 }) {
   return (
@@ -27,7 +29,9 @@ export default function AlertModal({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex-col sm:flex-row gap-4 sm:gap-0">
-          <AlertDialogAction onClick={onClick}>OK</AlertDialogAction>
+          <AlertDialogAction onClick={onClick}>
+            {actionDisplay}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

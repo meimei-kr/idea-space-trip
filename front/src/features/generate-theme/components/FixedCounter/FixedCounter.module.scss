@@ -1,0 +1,42 @@
+.count {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: var(--light-blue);
+    position: fixed;
+    top: 25vh;
+    right: var(--page-padding);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    z-index: 10;
+
+    span {
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::before,
+      &::after {
+        content: "";
+        background-image: url("/images/bulb.svg");
+        background-size: 3rem 3rem;
+        background-repeat: no-repeat;
+        width: 3rem;
+        height: 3rem;
+        display: inline-block;
+      }
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    right: var(--page-padding-lg);
+  }
+}

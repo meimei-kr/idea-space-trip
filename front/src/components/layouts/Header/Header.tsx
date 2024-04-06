@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/components/layouts/Header/Header.module.scss";
-import { useTouch } from "@/context/TouchContext";
+import { useTouch } from "@/context/global/TouchContext";
 
 import { useBodyFixed } from "@/hooks/useBodyFixed";
 import { signOut, useSession } from "next-auth/react";

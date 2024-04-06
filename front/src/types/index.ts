@@ -1,3 +1,6 @@
+/**
+ * コンポーネントの型
+ */
 export type LinkButtonProps = {
   children: React.ReactNode;
   color: "pink" | "light-blue" | "purple";
@@ -38,6 +41,9 @@ export type TextboxProps = {
   defaultValue?: string;
 };
 
+/**
+ * Propsの型
+ */
 export type IdeaSessionType = {
   uuid?: string;
   isThemeDetermined?: boolean;

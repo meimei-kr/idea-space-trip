@@ -1,0 +1,63 @@
+.perspective {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 16px;
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+}
+
+.perspectiveContentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.perspectiveContent {
+  width: 98%;
+}
+
+.perspectiveMain {
+  font-size: 24px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 32px;
+  }
+
+  span {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--pink);
+    animation: scale 1.5s infinite;
+    display: inline-block;
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.perspectiveSub {
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
