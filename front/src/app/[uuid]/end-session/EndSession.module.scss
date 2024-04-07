@@ -64,49 +64,7 @@
   }
 }
 
-/* ブロブ */
-.endCommentContainer {
-  position: relative;
-  width: 100%;
-  @media screen and (min-width: 1280px) {
-    width: 50%;
-  }
-}
-
-.blob {
-  width: 100%;
-  height: auto;
-}
-
-.endComment {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  color: var(--black);
-  font-size: 14px;
-  text-align: center;
-
-  span {
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--light-blue);
-  }
-}
-
 /* 結果表示 */
-.resultWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  margin-top: 16px;
-  margin-bottom: 40px;
-}
-
 .resultContainer {
   display: flex;
   flex-direction: column;

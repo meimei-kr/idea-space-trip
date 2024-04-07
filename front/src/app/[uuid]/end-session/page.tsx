@@ -1,4 +1,4 @@
-import EndSessionPresentation from "@/app/presentation/EndSession/EndSessionPresentation";
+import EndSessionContainer from "@/app/[uuid]/end-session/EndSessionContainer";
 import { getIdeaMemosThisMonth } from "@/lib/idea-memos";
 import { getLatestTwoIdeaSessionsWithMemos } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
@@ -23,7 +23,7 @@ export default async function page() {
   const ideaMemosCountThisMonth = await getIdeaMemosThisMonth();
 
   return (
-    <EndSessionPresentation
+    <EndSessionContainer
       ideaSession={ideaSessionLatest}
       ideaMemos={ideaMemosLatest}
       ideaMemosCountThisMonth={ideaMemosCountThisMonth}
