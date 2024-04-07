@@ -1,4 +1,4 @@
-import styles from "@/app/idea-memos/IdeaMemos.module.scss";
+import styles from "@/app/idea-memos/(index)/IdeaMemos.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 
 export default function IdeaMemosLayout({

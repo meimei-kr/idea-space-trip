@@ -1,0 +1,14 @@
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: canter;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,3 +1,5 @@
+"use client";
+
 import { LitUpBorders } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/generate-theme/components/AiAnswerForm/AiAnswerForm.module.scss";
 import { submitAiAnswer } from "@/lib/actions";

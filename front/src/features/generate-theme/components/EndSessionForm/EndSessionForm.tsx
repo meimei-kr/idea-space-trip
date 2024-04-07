@@ -1,3 +1,5 @@
+"use client";
+
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import { endSession } from "@/lib/actions";
 import { useRouter } from "next/navigation";

@@ -1,0 +1,13 @@
+.cardFooter {
+  width: 100%;
+  text-align: end;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    padding: 20px;
+  }
+}
