@@ -1,0 +1,18 @@
+/* 生成テーマエリア */
+.themesGenerated {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.themesSuggestion {
+  margin: 40px 0 16px;
+  font-size: 16px;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}

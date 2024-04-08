@@ -4,8 +4,8 @@ import styles from "@/app/[uuid]/generate-ideas/GenerateIdeas.module.scss";
 import AlertModal from "@/components/elements/AlertModal/AlertModal";
 import Description from "@/components/elements/Description/Description";
 import { BorderMagic } from "@/components/ui/tailwind-buttons";
-import * as GenerateIdeas from "@/features/generate-theme/components";
-import MyIdeaForm from "@/features/generate-theme/components/MyIdeaForm/MyIdeaForm";
+import * as GenerateIdeas from "@/features/generate-ideas/components";
+import MyIdeaForm from "@/features/generate-ideas/components/MyIdeaForm/MyIdeaForm";
 import {
   AiGeneratedAnswerType,
   IdeaSessionType,

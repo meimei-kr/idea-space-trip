@@ -1,14 +1,13 @@
 "use client";
 
+import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import ThemeCategoryRadioButtons from "@/components/elements/ThemeCategoryRadioButtons/ThemeCategoryRadioButtons";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/select-theme/components/SelectForm/SelectForm.module.scss";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
 import type { Option } from "@/types";
 import { ThemeCategoryEnum } from "@/utils/enums";
-import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
@@ -41,15 +40,7 @@ export default function SelectForm({ uuid }: { uuid: string }) {
     <form action={dispatch} className={styles.form} aria-label="form">
       {state?.errors?.option &&
         state?.errors?.option.map((error, index) => (
-          <Alert
-            variant="destructive"
-            id="theme-category-error"
-            key={index}
-            className="mb-1"
-          >
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
+          <ErrorAlert id="theme-category-error" key={index} error={error} />
         ))}
       <ThemeCategoryRadioButtons
         options={options}

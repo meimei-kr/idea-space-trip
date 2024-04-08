@@ -1,11 +1,10 @@
 "use client";
 
+import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import Textbox from "@/components/elements/Textbox/Textbox";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/input-theme/components/Form/Form.module.scss";
 import { ThemeState, submitTheme } from "@/lib/actions";
-import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
@@ -34,15 +33,7 @@ export default function Form({ uuid }: { uuid: string }) {
     <form action={dispatch} className={styles.form}>
       {state?.errors?.theme &&
         state?.errors?.theme.map((error, index) => (
-          <Alert
-            className="mb-1"
-            variant="destructive"
-            id="theme-error"
-            key={index}
-          >
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
+          <ErrorAlert id="theme-error" key={index} error={error} />
         ))}
       <Textbox
         id="theme"

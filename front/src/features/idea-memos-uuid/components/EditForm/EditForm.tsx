@@ -1,14 +1,13 @@
 "use client";
 
+import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/idea-memos-uuid/components/EditForm/EditForm.module.scss";
 import { IdeaMemoState, submitUpdateIdeaMemo } from "@/lib/actions";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
-import { AlertCircle } from "lucide-react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 
@@ -83,15 +82,7 @@ export default function EditMode({
 
           {ideaMemoState?.errors?.idea &&
             ideaMemoState?.errors?.idea.map((error, index) => (
-              <Alert
-                variant="destructive"
-                id="idea-error"
-                key={index}
-                className="mb-1"
-              >
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+              <ErrorAlert id="idea-error" key={index} error={error} />
             ))}
           <Textbox
             id="idea"
@@ -106,15 +97,7 @@ export default function EditMode({
 
           {ideaMemoState?.errors?.comment &&
             ideaMemoState?.errors?.comment.map((error, index) => (
-              <Alert
-                variant="destructive"
-                id="comment-error"
-                key={index}
-                className="mb-1"
-              >
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+              <ErrorAlert id="comment-error" key={index} error={error} />
             ))}
           <Textbox
             id="comment"

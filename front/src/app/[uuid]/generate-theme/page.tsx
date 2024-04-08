@@ -1,4 +1,4 @@
-import GenerateThemePresentation from "@/app/presentation/GenerateTheme/GenerateThemePresentation";
+import GenerateThemeContainer from "@/app/[uuid]/generate-theme/GenerateThemeContainer";
 import { getAIGeneratedThemes } from "@/lib/ai-generated-themes";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 import { AiGeneratedThemeType, Option } from "@/types";
@@ -31,7 +31,7 @@ export default async function page() {
   }
 
   return (
-    <GenerateThemePresentation
+    <GenerateThemeContainer
       ideaSession={ideaSession}
       aiGeneratedThemesArray={aiGeneratedThemesArray}
     />

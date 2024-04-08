@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import React from "react";
 
 export default function AlertDialogOnDelete({
   isOpen,
@@ -22,7 +23,7 @@ export default function AlertDialogOnDelete({
   onClickOk: () => void;
   disabled: boolean;
   dialogTitle: string;
-  dialogDescription: string;
+  dialogDescription: React.ReactNode;
 }) {
   return (
     <AlertDialog open={isOpen}>

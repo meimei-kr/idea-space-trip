@@ -5,11 +5,7 @@ import BackButton from "@/components/elements/BackButton/BackButton";
 import Description from "@/components/elements/Description/Description";
 import SelectForm from "@/features/select-theme/components/SelectForm/SelectForm";
 
-export default function SelectThemePresentation({
-  uuid,
-}: {
-  uuid: string;
-}) {
+export default function SelectThemePresentation({ uuid }: { uuid: string }) {
   return (
     <>
       <div className={styles.container}>
