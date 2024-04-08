@@ -1,4 +1,4 @@
-import SelectThemeCategoryPresentation from "@/app/presentation/SelectThemeCategory/SelectThemeCategoryPresentation";
+import SelectThemeCategoryPresentation from "@/app/[uuid]/select-theme-category/SelectThemeCategoryPresentation";
 import { IdeaSessionType } from "@/types";
 import { render, screen } from "@testing-library/react";
 
