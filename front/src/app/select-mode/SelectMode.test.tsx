@@ -1,4 +1,4 @@
-import { SelectModePresentation } from "@/app/select-mode/SelectModePresentation";
+import SelectMode from "@/app/select-mode/page";
 import { render, screen } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 
@@ -21,14 +21,14 @@ jest.mock("@/lib/idea-sessions");
 
 describe("SelectMode", () => {
   it("renders the correct text content", () => {
-    render(<SelectModePresentation />);
+    render(<SelectMode />);
     expect(screen.getByText("アイデア出し")).toBeInTheDocument();
     expect(screen.getByText("スタート")).toBeInTheDocument();
     expect(screen.getByText("アイデアメモ")).toBeInTheDocument();
   });
 
   it("should render two LinkButton components", () => {
-    render(<SelectModePresentation />);
+    render(<SelectMode />);
     const linkButton = screen.getByTestId("linkButton");
     const button = screen.getByTestId("button");
 
