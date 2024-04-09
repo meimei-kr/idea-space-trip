@@ -1,16 +1,12 @@
 .noDataContainer {
   height: calc(100vh - var(--back-button-length) - var(--page-padding));
   width: 100%;
-  padding-bottom: calc(var(--back-button-length) + var(--page-padding) + 80px);
   display: flex;
   justify-content: center;
   align-items: center;
 
   @media screen and (min-width: 1024px) {
     height: calc(100vh - var(--back-button-length) - var(--page-padding-lg));
-    padding-bottom: calc(
-      var(--back-button-length) + var(--page-padding-lg) + 160px
-    );
   }
 }
 
