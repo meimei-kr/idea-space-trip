@@ -1,9 +1,12 @@
-import GenerateThemeContainer from "@/app/[uuid]/generate-theme/GenerateThemeContainer";
+import styles from "@/app/[uuid]/generate-theme/GenerateTheme.module.scss";
+import BackButton from "@/components/elements/BackButton/BackButton";
+import Description from "@/components/elements/Description/Description";
+import * as GenerateTheme from "@/features/generate-theme/components";
 import { getAIGeneratedThemes } from "@/lib/ai-generated-themes";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 import { AiGeneratedThemeType, Option } from "@/types";
 
-export default async function page() {
+export default async function page({ params }: { params: { uuid: string } }) {
   // 進行中のアイデアセッションを取得
   const ideaSession = await getIdeaSessionInProgress();
 
@@ -31,9 +34,35 @@ export default async function page() {
   }
 
   return (
-    <GenerateThemeContainer
-      ideaSession={ideaSession}
-      aiGeneratedThemesArray={aiGeneratedThemesArray}
-    />
+    <main className={styles.wrapper}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <Description>
+            <p>先程選んだカテゴリーと</p>
+            <p>以下の質問への回答をもとに、</p>
+            <p>AIがテーマを提案するよ</p>
+          </Description>
+          <GenerateTheme.CategorySection ideaSession={ideaSession} />
+
+          {/* 回答送信フォーム */}
+          <GenerateTheme.AnswerForm
+            ideaSession={ideaSession}
+            aiGeneratedThemesArray={aiGeneratedThemesArray}
+          />
+
+          {/* AIが生成したテーマ表示 */}
+          {aiGeneratedThemesArray.length > 0 && (
+            <GenerateTheme.ThemesDisplay>
+              <GenerateTheme.SelectForm
+                ideaSession={ideaSession}
+                aiGeneratedThemesArray={aiGeneratedThemesArray}
+              />
+            </GenerateTheme.ThemesDisplay>
+          )}
+        </div>
+      </div>
+
+      <BackButton path={`/${params.uuid}/select-theme-category`} />
+    </main>
   );
 }

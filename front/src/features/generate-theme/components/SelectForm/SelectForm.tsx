@@ -4,18 +4,21 @@ import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import RadioButtons from "@/components/elements/RadioButtons/RadioButtons";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/generate-theme/components/SelectForm/SelectForm.module.scss";
+import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { GeneratedThemesState, confirmTheme } from "@/lib/actions";
-import type { Option } from "@/types";
+import type { IdeaSessionType, Option } from "@/types";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 
 export default function SelectForm({
+  ideaSession,
   aiGeneratedThemesArray,
-  uuid,
 }: {
+  ideaSession: IdeaSessionType | null;
   aiGeneratedThemesArray: Option[];
-  uuid: string;
 }) {
+  const { uuid } = useUUIDCheck({ ideaSession });
+
   // 生成されたテーマの選択フォームの状態
   const initialGeneratedThemesState: GeneratedThemesState = {
     errors: {},
@@ -23,7 +26,7 @@ export default function SelectForm({
   const [generatedThemesState, dispatchGeneratedThemes] = useFormState(
     async (prev: GeneratedThemesState | undefined, formData: FormData) => {
       const result = await confirmTheme(prev, formData);
-      if (generatedThemesState?.errors?.option) {
+      if (result?.errors?.option) {
         toast.error("エラーがあるよ。確認してね。");
       }
       return result;
