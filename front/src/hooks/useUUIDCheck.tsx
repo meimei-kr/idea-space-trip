@@ -3,12 +3,11 @@
 /**
  *  UUIDがユーザーの所有するものがチェックするカスタムフック
  *
- *  正当なUUIDが取得できなければエラーコードをセットする
+ *  正当なUUIDが取得できなければ404エラーページを表示
  */
 import { IdeaSessionType } from "@/types";
-
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { notFound, usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const useUUIDCheck = ({
   ideaSession,
@@ -16,7 +15,6 @@ export const useUUIDCheck = ({
   ideaSession: IdeaSessionType | null;
 }) => {
   const router = useRouter();
-  const [statusCode, setStatusCode] = useState<number>(200);
 
   // ideaSessionからUUIDを取得
   const uuid = ideaSession?.uuid ?? "";
@@ -24,18 +22,10 @@ export const useUUIDCheck = ({
   const uuidFromPath = usePathname().split("/")[1];
 
   useEffect(() => {
-    // セッションは開始されており、ideaSessionは必ず取得できる想定なので
-    // nullの場合は、500エラーを返す
-    if (ideaSession === null) {
-      setStatusCode(500);
-      return;
-    }
-
     // URLに含まれるUUIDがログインユーザーのものと一致するかチェック
     if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
-      setStatusCode(404);
+      notFound();
     } else {
-      setStatusCode(200);
       // 遷移先パスをprefetch
       router.prefetch(`/select-mode`);
       router.prefetch(`/${uuid}/input-theme`);
@@ -44,5 +34,5 @@ export const useUUIDCheck = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { uuid, statusCode };
+  return { uuid };
 };
