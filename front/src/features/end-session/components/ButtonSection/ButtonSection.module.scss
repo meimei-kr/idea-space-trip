@@ -1,0 +1,7 @@
+.buttonContainer {
+  margin-top: 80px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 96px;
+  }
+}

@@ -1,7 +1,10 @@
-import EndSessionContainer from "@/app/[uuid]/end-session/EndSessionContainer";
+import styles from "@/app/[uuid]/end-session/EndSession.module.scss";
+import Description from "@/components/elements/Description/Description";
+import * as EndSession from "@/features/end-session/components";
 import { getIdeaMemosThisMonth } from "@/lib/idea-memos";
 import { getLatestTwoIdeaSessionsWithMemos } from "@/lib/idea-sessions";
 import { IdeaSessionType } from "@/types";
+import Astronaut from "public/images/astronaut.svg";
 
 export default async function page() {
   const ideaSessionWithMemos: IdeaSessionType[] =
@@ -23,11 +26,32 @@ export default async function page() {
   const ideaMemosCountThisMonth = await getIdeaMemosThisMonth();
 
   return (
-    <EndSessionContainer
-      ideaSession={ideaSessionLatest}
-      ideaMemos={ideaMemosLatest}
-      ideaMemosCountThisMonth={ideaMemosCountThisMonth}
-      ideaCountDifference={ideaCountDifference}
-    />
+    <main className={styles.wrapper}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <Description>アイデア出しセッション終了</Description>
+          <div className={styles.astronautContainer}>
+            <div className={styles.fukidashi}>\ お疲れさまでした /</div>
+            <Astronaut className={styles.astronaut} />
+          </div>
+
+          {/* 前回のセッションと比べて、出したアイデアの数が増えた場合のメッセージ */}
+          {ideaCountDifference > 0 && (
+            <EndSession.CompareComment
+              ideaCountDifference={ideaCountDifference}
+            />
+          )}
+
+          <EndSession.ResultSection>
+            <EndSession.ResultThisSession ideaMemos={ideaMemosLatest} />
+            <EndSession.ResultThisMonth
+              ideaMemosCountThisMonth={ideaMemosCountThisMonth}
+            />
+          </EndSession.ResultSection>
+
+          <EndSession.ButtonSection ideaSession={ideaSessionLatest} />
+        </div>
+      </div>
+    </main>
   );
 }
