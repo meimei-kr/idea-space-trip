@@ -19,7 +19,7 @@ export function PaginationSection({
   setCurrentPage: (page: number) => void;
 }) {
   const pageNumbers: number[] = [];
-  for (let i = 1; i <= totalItems / ITEMS_PER_PAGE; i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / ITEMS_PER_PAGE); i++) {
     pageNumbers.push(i);
   }
 
