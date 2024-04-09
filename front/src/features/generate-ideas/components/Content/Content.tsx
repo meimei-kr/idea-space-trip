@@ -1,10 +1,16 @@
 "use client";
 
+import AlertModal from "@/components/elements/AlertModal/AlertModal";
+import Description from "@/components/elements/Description/Description";
+import { BorderMagic } from "@/components/ui/tailwind-buttons";
 import {
   COMMEND_MESSAGE_INTERVAL,
   FIRST_COMMEND_MESSAGE_COUNT,
   HEADER_HEIGHT,
 } from "@/constants/constants";
+import * as GenerateIdeas from "@/features/generate-ideas/components";
+import styles from "@/features/generate-ideas/components/Content/Content.module.scss";
+import MyIdeaForm from "@/features/generate-ideas/components/MyIdeaForm/MyIdeaForm";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { createAiGeneratedAnswers } from "@/lib/ai-generated-answers";
 import { updateAIUsageHistory } from "@/lib/ai-usage-history";
@@ -14,30 +20,24 @@ import {
   updateIdeaSession,
 } from "@/lib/idea-sessions";
 import { generateUUID } from "@/lib/uuid";
-import {
-  AiGeneratedAnswerType,
-  IdeaMemoType,
-  IdeaSessionType,
-  PerspectiveType,
-} from "@/types";
+import type { IdeaMemoType, IdeaSessionType, PerspectiveType } from "@/types";
+import { AiGeneratedAnswerType } from "@/types";
 import { createConsumer } from "@rails/actioncable";
 import { useSession } from "next-auth/react";
-import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import GenerateIdeasPresentation from "./GenerateIdeasPresentation";
 
-export default function GenerateIdeasContainer({
+export default function Content({
   ideaSession,
-  selectedPerspectives,
   aiAnswers,
   myIdeas,
+  selectedPerspectives,
 }: {
   ideaSession: IdeaSessionType | null;
-  selectedPerspectives: PerspectiveType[];
   aiAnswers: AiGeneratedAnswerType[] | null;
   myIdeas: IdeaMemoType[] | null;
+  selectedPerspectives: PerspectiveType[];
 }) {
   const [aiGeneratedAnswers, setAiGeneratedAnswers] = useState<
     AiGeneratedAnswerType[] | null
@@ -50,8 +50,9 @@ export default function GenerateIdeasContainer({
   const [hasApiError, setHasApiError] = useState(false); // APIリクエスト失敗時のエラーがあるかどうか
 
   const router = useRouter();
-  const { uuid, statusCode } = useUUIDCheck({ ideaSession });
+  const { uuid } = useUUIDCheck({ ideaSession });
   const session = useSession();
+
   const scrollTopRef = useRef<HTMLElement>(null);
   const scrollNextHintRef = useRef<HTMLDivElement>(null);
 
@@ -208,30 +209,102 @@ export default function GenerateIdeasContainer({
     fetchAiAnswers();
   };
 
-  // エラーがある場合はエラーページを表示
-  if (statusCode >= 400) {
-    return <Error statusCode={statusCode} />;
-  }
   return (
-    <GenerateIdeasPresentation
-      ideaSession={ideaSession}
-      selectedPerspectives={selectedPerspectives}
-      aiGeneratedAnswers={aiGeneratedAnswers}
-      answerIndex={answerIndex}
-      perspectiveIndex={perspectiveIndex}
-      count={count}
-      setCount={setCount}
-      isOpenAIAnswer={isOpenAIAnswer}
-      handleShowAnswers={handleShowAnswers}
-      handleShowNextPerspective={handleShowNextPerspective}
-      handleShowOtherHint={handleShowOtherHint}
-      handleOkClick={handleOkClick}
-      handleRetryClick={handleRetryClick}
-      isAlertOpen={isAlertOpen}
-      hasApiError={hasApiError}
-      scrollTopRef={scrollTopRef}
-      scrollNextHintRef={scrollNextHintRef}
-      uuid={uuid}
-    />
+    <main className={styles.wrapper} ref={scrollTopRef}>
+      <GenerateIdeas.FixedCounter count={count} />
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <Description>
+            アイデアの良し悪しは考えず、
+            <br />
+            思いついたことをどんどん書いていこう！
+          </Description>
+          <GenerateIdeas.Counter count={count} />
+          <GenerateIdeas.ThemeSection theme={ideaSession?.theme} />
+          <GenerateIdeas.PerspectiveSection
+            selectedPerspectives={selectedPerspectives}
+            perspectiveIndex={perspectiveIndex}
+          />
+          <GenerateIdeas.MyIdeaSection scrollNextHintRef={scrollNextHintRef}>
+            <MyIdeaForm
+              setCount={setCount}
+              uuid={uuid}
+              selectedPerspectives={selectedPerspectives}
+              perspectiveIndex={perspectiveIndex}
+            />
+          </GenerateIdeas.MyIdeaSection>
+
+          {aiGeneratedAnswers ? (
+            // AI回答生成済みの場合
+            <div className={styles.aiResponse}>
+              <GenerateIdeas.HintSection
+                aiGeneratedAnswers={aiGeneratedAnswers}
+                answerIndex={answerIndex}
+                selectedPerspectives={selectedPerspectives}
+                perspectiveIndex={perspectiveIndex}
+              />
+              {!isOpenAIAnswer ? (
+                <BorderMagic type="button" onClick={handleShowAnswers}>
+                  AIの回答を見る
+                </BorderMagic>
+              ) : (
+                <>
+                  <GenerateIdeas.AnswerSection>
+                    <GenerateIdeas.AiAnswerForm
+                      aiGeneratedAnswers={aiGeneratedAnswers}
+                      answerIndex={answerIndex}
+                      selectedPerspectives={selectedPerspectives}
+                      perspectiveIndex={perspectiveIndex}
+                      setCount={setCount}
+                      uuid={uuid}
+                    />
+                  </GenerateIdeas.AnswerSection>
+                  <GenerateIdeas.NextOperationSection
+                    answerIndex={answerIndex}
+                    perspectiveIndex={perspectiveIndex}
+                    handleShowNextPerspective={handleShowNextPerspective}
+                    handleShowOtherHint={handleShowOtherHint}
+                    uuid={uuid}
+                  />
+                </>
+              )}
+            </div>
+          ) : (
+            // AI回答生成中の場合
+            <GenerateIdeas.AiLoadingSection />
+          )}
+        </div>
+
+        {/* 無効な入力だと判断された場合のアラート */}
+        <AlertModal
+          isOpen={isAlertOpen}
+          onClick={handleOkClick}
+          actionDisplay="OK"
+        >
+          {(ideaSession?.aiAnswerRetryCount ?? 0) <= 2 ? (
+            <>
+              無効なテーマだと判断されたよ。
+              <br />
+              テーマを変えてもう一度試してみてね。
+            </>
+          ) : (
+            <>
+              無効な入力が複数回続けて検知されたよ。
+              <br />
+              新しいセッションを作成するので、もう一度やってみてね。
+            </>
+          )}
+        </AlertModal>
+
+        {/* APIリクエストエラー時のアラート */}
+        <AlertModal
+          isOpen={hasApiError}
+          onClick={handleRetryClick}
+          actionDisplay="再試行"
+        >
+          ごめんね、AIの回答生成失敗です。再試行してみてね。
+        </AlertModal>
+      </div>
+    </main>
   );
 }

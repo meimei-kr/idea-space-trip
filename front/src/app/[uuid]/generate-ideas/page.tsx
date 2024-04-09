@@ -1,4 +1,4 @@
-import GenerateIdeasContainer from "@/app/[uuid]/generate-ideas/GenerateIdeasContainer";
+import Content from "@/features/generate-ideas/components/Content/Content";
 import { getAiGeneratedAnswers } from "@/lib/ai-generated-answers";
 import { getCurrentIdeaMemos } from "@/lib/idea-memos";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
@@ -43,11 +43,11 @@ export default async function page() {
   }
 
   return (
-    <GenerateIdeasContainer
+    <Content
       ideaSession={ideaSession}
-      selectedPerspectives={selectedPerspectives}
       aiAnswers={aiGeneratedAnswers}
       myIdeas={myIdeas}
+      selectedPerspectives={selectedPerspectives}
     />
   );
 }
