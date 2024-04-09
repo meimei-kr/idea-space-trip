@@ -6,7 +6,7 @@
  *  正当なUUIDが取得できなければ404エラーページを表示
  */
 import { IdeaSessionType } from "@/types";
-import { notFound, usePathname, useRouter } from "next/navigation";
+import { notFound, usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export const useUUIDCheck = ({
@@ -14,8 +14,6 @@ export const useUUIDCheck = ({
 }: {
   ideaSession: IdeaSessionType | null;
 }) => {
-  const router = useRouter();
-
   // ideaSessionからUUIDを取得
   const uuid = ideaSession?.uuid ?? "";
   // URLからUUIDを取得
@@ -25,14 +23,8 @@ export const useUUIDCheck = ({
     // URLに含まれるUUIDがログインユーザーのものと一致するかチェック
     if (!uuid || !uuidFromPath || uuid !== uuidFromPath) {
       notFound();
-    } else {
-      // 遷移先パスをprefetch
-      router.prefetch(`/select-mode`);
-      router.prefetch(`/${uuid}/input-theme`);
-      router.prefetch(`/${uuid}/select-theme-category`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [uuid, uuidFromPath]);
 
   return { uuid };
 };

@@ -3,8 +3,6 @@
 import styles from "@/components/elements/BackButton/BackButton.module.scss";
 import { Playlist } from "@/components/ui/tailwind-buttons";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
 import { IoChevronBack } from "react-icons/io5";
 
 export default function BackButton({ path }: { path: string }) {
@@ -12,9 +10,6 @@ export default function BackButton({ path }: { path: string }) {
   const handleBack = () => {
     router.push(path);
   };
-  useEffect(() => {
-    console.log(path);
-  }, [path]);
 
   return (
     <div className={styles.back}>

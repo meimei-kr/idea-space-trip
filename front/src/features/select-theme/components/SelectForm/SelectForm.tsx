@@ -4,15 +4,22 @@ import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import ThemeCategoryRadioButtons from "@/components/elements/ThemeCategoryRadioButtons/ThemeCategoryRadioButtons";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
 import styles from "@/features/select-theme/components/SelectForm/SelectForm.module.scss";
+import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import type { ThemeCategoryState } from "@/lib/actions";
 import { submitThemeCategory } from "@/lib/actions";
-import type { Option } from "@/types";
+import type { IdeaSessionType, Option } from "@/types";
 import { ThemeCategoryEnum } from "@/utils/enums";
 import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 
-export default function SelectForm({ uuid }: { uuid: string }) {
+export default function SelectForm({
+  ideaSession,
+}: {
+  ideaSession: IdeaSessionType | null;
+}) {
+  const { uuid } = useUUIDCheck({ ideaSession });
+
   // フォームの初期状態
   const initialState: ThemeCategoryState = {
     errors: {},
