@@ -1,13 +1,22 @@
 "use client";
 
-import IdeaMemosUuidPresentation from "@/app/idea-memos/(show)/[uuid]/IdeaMemosUuidPresentation";
+import AlertDialogOnDelete from "@/components/elements/AlertModalOnDelete/AlertDialogOnDelete";
+import {
+  ButtonSection,
+  CancelButton,
+  CardBodyOnViewMode,
+  CardFooter,
+  DeleteButton,
+  EditButton,
+  EditForm,
+} from "@/features/idea-memos-uuid/components";
 import { deleteIdeaMemo } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function IdeaMemosUuidContainer({
+export default function IdeaMemoCardContent({
   ideaMemo,
 }: {
   ideaMemo: IdeaMemoType;
@@ -56,17 +65,35 @@ export default function IdeaMemosUuidContainer({
   };
 
   return (
-    <IdeaMemosUuidPresentation
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-      handleBackClick={handleBackClick}
-      handleEditClick={handleEditClick}
-      onSubmit={onSubmit}
-      isConfirmDialogOpen={isConfirmDialogOpen}
-      handleCancel={handleCancel}
-      handleDeleteOK={handleDeleteOK}
-      isDeleting={isDeleting}
-      ideaMemo={ideaMemo}
-    />
+    <>
+      {isEditing ? (
+        <>
+          {/* 編集モードの場合 */}
+          <EditForm setIsEditing={setIsEditing} ideaMemo={ideaMemo}>
+            <CardFooter ideaMemo={ideaMemo} />
+          </EditForm>
+          <CancelButton onClick={handleBackClick} />
+        </>
+      ) : (
+        <>
+          {/* 詳細表示モードの場合 */}
+          <CardBodyOnViewMode ideaMemo={ideaMemo} />
+          <CardFooter ideaMemo={ideaMemo} />
+          <ButtonSection>
+            <EditButton handleEditClick={handleEditClick} />
+            <DeleteButton onSubmit={onSubmit} ideaMemo={ideaMemo} />
+          </ButtonSection>
+        </>
+      )}
+      {/* 削除確認ダイアログ */}
+      <AlertDialogOnDelete
+        isOpen={isConfirmDialogOpen}
+        onClickCancel={handleCancel}
+        onClickOk={handleDeleteOK}
+        disabled={isDeleting}
+        dialogTitle="本当に削除する？"
+        dialogDescription="「OK」を押すと、削除されて元に戻せないので、注意してね。"
+      />
+    </>
   );
 }

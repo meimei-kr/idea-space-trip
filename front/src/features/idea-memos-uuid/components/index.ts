@@ -5,6 +5,7 @@ import CardFooter from "@/features/idea-memos-uuid/components/CardFooter/CardFoo
 import DeleteButton from "@/features/idea-memos-uuid/components/DeleteButton/DeleteButton";
 import EditButton from "@/features/idea-memos-uuid/components/EditButton/EditButton";
 import EditForm from "@/features/idea-memos-uuid/components/EditForm/EditForm";
+import IdeaMemoCardContent from "@/features/idea-memos-uuid/components/IdeaMemoCardContent/IdeaMemoCardContent";
 import IdeaMemoCardHeader from "@/features/idea-memos-uuid/components/IdeaMemoCardHeader/IdeaMemoCardHeader";
 
 export {
@@ -15,5 +16,6 @@ export {
   DeleteButton,
   EditButton,
   EditForm,
+  IdeaMemoCardContent,
   IdeaMemoCardHeader,
 };
