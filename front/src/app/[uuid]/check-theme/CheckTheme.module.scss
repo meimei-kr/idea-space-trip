@@ -1,0 +1,27 @@
+.wrapper {
+  min-height: calc(100vh - var(--header-height));
+  width: 100vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  height: calc(100% - var(--back-button-length) - var(--page-padding));
+  width: calc(100% - var(--page-padding) * 2);
+  padding-bottom: calc(var(--back-button-length) + var(--page-padding) + 80px);
+
+  @media screen and (min-width: 1024px) {
+    height: calc(100% - var(--back-button-length) - var(--page-padding-lg));
+    width: calc(100% - var(--page-padding-lg) * 2);
+    padding-bottom: calc(
+      var(--back-button-length) + var(--page-padding-lg) + 160px
+    );
+  }
+}

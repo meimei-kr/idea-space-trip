@@ -1,9 +1,17 @@
-import { HomePresentation } from "@/app/presentation/Home/HomePresentation";
+import styles from "@/app/Home.module.scss";
+import * as Home from "@/features/home/components";
 import { authOptions } from "@/lib/options";
 import { getServerSession } from "next-auth";
 
-export default async function HomeContainer() {
+export default async function page() {
   const session = await getServerSession(authOptions);
 
-  return <HomePresentation session={session} />;
+  return (
+    <main className={styles.main}>
+      <Home.HeroSection />
+      <Home.AboutSection />
+      <Home.FeaturesSection />
+      <Home.LoginSection session={session} />
+    </main>
+  );
 }

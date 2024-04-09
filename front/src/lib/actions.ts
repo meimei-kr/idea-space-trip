@@ -356,6 +356,7 @@ export const submitUpdateIdeaMemo = async (
     answer: idea,
     comment: comment,
   });
+  revalidatePath(`/idea-memos/${uuid}`);
   return successMessage;
 };
 

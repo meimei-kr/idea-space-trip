@@ -6,7 +6,7 @@ module Openai
   class TimeoutError < StandardError; end
 
   class OpenAiService
-    def initialize(model: 'gpt-3.5-turbo', timeout: 20)
+    def initialize(model: 'gpt-3.5-turbo', timeout: 30)
       @model = model
       @connection = Faraday.new(url: 'https://api.openai.com/v1/chat/completions') do |faraday|
         faraday.headers['Authorization'] =

@@ -1,0 +1,165 @@
+.aboutWrapper {
+  min-height: 100vh;
+  padding: 0 24px;
+
+  @media screen and (min-width: 1024px) {
+    padding: 0 80px;
+  }
+}
+
+.aboutContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+  @media screen and (min-width: 1024px) {
+    gap: 24px;
+  }
+}
+
+/* Aboutの画像 */
+.about {
+  text-align: right;
+  width: 100%;
+  margin-top: var(--header-height);
+}
+
+.aboutImg {
+  width: 50%;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+
+  @media screen and (min-width: 1024px) {
+    width: 30%;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 20%;
+  }
+}
+
+/* Aboutの文章 */
+.aboutBody {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  position: relative;
+  z-index: 10;
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 20%;
+  }
+}
+
+.aboutTitleText {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 38px;
+    margin-bottom: 24px;
+  }
+}
+
+.description {
+  font-size: 16px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+/* クォーテーションエリア */
+.quoteArea {
+  margin: 8px 0;
+}
+
+.quoteItem {
+  height: 40px;
+
+  @media screen and (min-width: 768px) {
+    height: 44px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: 48px;
+  }
+
+  span {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 40px;
+    position: relative;
+    padding: 0 28px;
+    height: 100%;
+
+    @media screen and (min-width: 768px) {
+      font-size: 20px;
+      padding: 0 32px;
+      line-height: 44px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      font-size: 24px;
+      padding: 0 44px;
+      line-height: 48px;
+    }
+  }
+}
+
+.quoteStart {
+  width: 22px;
+  height: 22px;
+  margin-right: 6px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @media screen and (min-width: 768px) {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 28px;
+    height: 28px;
+    margin-right: 16px;
+  }
+}
+
+.quoteEnd {
+  width: 22px;
+  height: 22px;
+  margin-left: 6px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  @media screen and (min-width: 768px) {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 28px;
+    height: 28px;
+    margin-left: 16px;
+  }
+}

@@ -1,0 +1,24 @@
+.main {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    top: calc(-1 * var(--header-height));
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-image: url("/images/background.svg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+    @media screen and (min-width: 768px) {
+      background-image: url("/images/background-md.svg");
+    }
+
+    @media screen and (min-width: 1280px) {
+      background-image: url("/images/background-lg.svg");
+    }
+  }
+}

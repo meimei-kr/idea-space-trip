@@ -1,0 +1,20 @@
+.aiAnswerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.aiAnswer {
+  padding: 16px;
+  color: var(--white);
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+
+  p {
+    border-bottom: 1px solid var(--light-blue);
+  }
+}

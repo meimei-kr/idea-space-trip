@@ -1,0 +1,29 @@
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.resultTitle {
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+.resultCount {
+  font-size: 16px;
+  font-weight: 700;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+
+  span {
+    font-size: 3rem;
+    color: var(--pink);
+  }
+}

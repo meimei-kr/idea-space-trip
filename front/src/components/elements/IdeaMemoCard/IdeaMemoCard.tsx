@@ -2,7 +2,7 @@
 
 import styles from "@/components/elements/IdeaMemoCard/IdeaMemoCard.module.scss";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
-import { useTouch } from "@/context/TouchContext";
+import { useTouch } from "@/context/global/TouchContext";
 import { IdeaMemoType } from "@/types";
 import { PerspectiveEnum } from "@/utils/enums";
 import Link from "next/link";

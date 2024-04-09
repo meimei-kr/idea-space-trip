@@ -1,0 +1,28 @@
+.theme {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  margin: 48px 0 16px;
+  font-size: 16px;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+    gap: 24px;
+    margin: 64px 0 24px;
+  }
+}
+
+.themeContentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.themeContent {
+  width: 98%;
+}

@@ -9,3 +9,7 @@ export const HEADER_HEIGHT = 88;
 export const MAX_PAGE_NUM = 3;
 
 export const ITEMS_PER_PAGE = 6;
+
+export const FIRST_COMMEND_MESSAGE_COUNT = 5;
+
+export const COMMEND_MESSAGE_INTERVAL = 10;
