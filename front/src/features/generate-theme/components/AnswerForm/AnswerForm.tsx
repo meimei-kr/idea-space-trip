@@ -57,10 +57,10 @@ export default function AnswerForm({
     FormData
   >(async (prev: ThemeQuestionState | undefined, formData: FormData) => {
     const result = await generateThemes(prev, formData);
+    if (result?.errors?.option || result?.errors?.answer) {
+      toast.error("エラーがあるよ。確認してね。");
+    }
     if (result?.invalid) {
-      if (result?.errors?.option || result?.errors?.answer) {
-        toast.error("エラーがあるよ。確認してね。");
-      }
       setIsAlertModalOpen(true);
     }
     if (result?.apiError) {
