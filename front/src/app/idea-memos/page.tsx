@@ -1,11 +1,25 @@
 import styles from "@/app/idea-memos/IdeaMemos.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import Search from "@/components/elements/Search/Search";
 import * as IdeaMemos from "@/features/idea-memos/components";
-import { getAllIdeaMemos } from "@/lib/idea-memos";
+import { getAllIdeaMemos, getFilteredIdeaMemos } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 
-export default async function page() {
+export default async function page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
   const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
+  const filteredIdeaMemos: IdeaMemoType[] = await getFilteredIdeaMemos(
+    query,
+    currentPage,
+  );
 
   return (
     <main className={styles.wrapper}>
@@ -13,7 +27,16 @@ export default async function page() {
         {ideaMemos.length === 0 ? (
           <IdeaMemos.NoMemoDisplay />
         ) : (
-          <IdeaMemos.MemosDisplay ideaMemos={ideaMemos} />
+          <>
+            <div className={styles.header}>
+              <Search />
+            </div>
+            <IdeaMemos.IdeaMemos
+              filteredIdeaMemos={filteredIdeaMemos}
+              // query={query}
+              // currentPage={currentPage}
+            />
+          </>
         )}
       </div>
       <BackButton path="/select-mode" />

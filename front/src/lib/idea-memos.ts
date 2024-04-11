@@ -258,3 +258,45 @@ export async function deleteIdeaMemo(uuid: string): Promise<void> {
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
+
+/**
+ * 検索条件に一致するアイデアメモ一覧を取得する
+ */
+export async function getFilteredIdeaMemos(
+  query: string,
+  currentPage: number,
+): Promise<IdeaMemoType[]> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_memos/index_with_filters?query=${query}&page=${currentPage}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+        cache: "no-store",
+      },
+    );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
+    const serializedData = await response.json();
+    if (serializedData === null) {
+      return [];
+    }
+    // JSON APIのデータをデシリアライズ
+    const deserializedData = await new Deserializer({
+      keyForAttribute: "camelCase",
+    }).deserialize(serializedData);
+    return deserializedData;
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
+    console.log(error);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
+  }
+}

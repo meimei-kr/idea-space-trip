@@ -1,0 +1,42 @@
+.container {
+  box-sizing: border-box;
+  position: relative;
+  width: 80%;
+}
+
+.label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.input {
+  border: 1px solid #999;
+  padding: 8px 8px 8px 44px;
+  border-radius: 27px;
+  font-size: 18px;
+  height: 3em;
+  width: 100%;
+  overflow: hidden;
+  color: var(--black);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  width: 24px;
+  color: var(--black);
+}

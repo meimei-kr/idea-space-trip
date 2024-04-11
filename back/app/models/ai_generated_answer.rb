@@ -60,18 +60,9 @@ class AiGeneratedAnswer < ApplicationRecord
     match[1] if match
   end
 
-  PERSPECTIVE_MAPPING = {
-    変更: :modify,
-    代用: :substitute,
-    逆転: :reverse,
-    結合: :combine,
-    拡大: :magnify,
-    縮小: :minify
-  }.freeze
-
   # perspectiveをenumのキーに変換する
   def self.convert_perspective_to_enum_key(perspective_ja)
-    perspective_key = PERSPECTIVE_MAPPING[perspective_ja]
+    perspective_key = Constants::PERSPECTIVE_MAPPING[perspective_ja]
     perspective_key || nil
   end
 end

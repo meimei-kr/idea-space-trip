@@ -14,6 +14,24 @@ module Api
         end
       end
 
+      def index_with_filters
+        query = params[:query] || ''
+        page = params[:page].to_i || 1
+        puts query
+        puts query.class
+        puts page
+        puts page.class
+        idea_memos = ::FilteredIdeaMemosByQuery.call(@current_user.idea_memos, query, page)
+
+        if idea_memos.empty?
+          render json: nil, status: :ok
+        else
+          render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
+                                          .serializable_hash.to_json,
+                  status: :ok
+        end
+      end
+
       def show
         set_idea_memo
         if @idea_memo.nil?
