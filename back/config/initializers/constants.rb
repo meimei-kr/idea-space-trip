@@ -8,7 +8,7 @@ module Constants
     結合: :combine,
     拡大: :magnify,
     縮小: :minify
-  }
+  }.freeze
 end
 
 Constants.freeze

@@ -17,18 +17,18 @@ module Api
       def index_with_filters
         query = params[:query] || ''
         page = params[:page].to_i || 1
-        puts query
-        puts query.class
-        puts page
-        puts page.class
+        Rails.logger.debug query
+        Rails.logger.debug query.class
+        Rails.logger.debug page
+        Rails.logger.debug page.class
         idea_memos = ::FilteredIdeaMemosByQuery.call(@current_user.idea_memos, query, page)
 
         if idea_memos.empty?
           render json: nil, status: :ok
         else
           render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
-                                          .serializable_hash.to_json,
-                  status: :ok
+                                         .serializable_hash.to_json,
+                 status: :ok
         end
       end
 

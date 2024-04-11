@@ -12,7 +12,7 @@ class FilteredIdeaMemosByQuery
   end
 
   def call
-    #　ユーザー入力をEnumキーに変換
+    # 　ユーザー入力をEnumキーに変換
     enum_key = Constants::PERSPECTIVE_MAPPING[@query.to_sym]
 
     # Enumキーから対応する整数値を取得
@@ -33,7 +33,7 @@ class FilteredIdeaMemosByQuery
     parameters[:query] = "%#{@query}%"
 
     where_clause = conditions.join(' OR ')
-  
+
     @relation
       .joins(:idea_session)
       .where(where_clause, parameters)
