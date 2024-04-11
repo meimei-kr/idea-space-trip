@@ -17,11 +17,9 @@ module Api
       def index_with_filters
         query = params[:query] || ''
         page = params[:page].to_i || 1
-        Rails.logger.debug query
-        Rails.logger.debug query.class
-        Rails.logger.debug page
-        Rails.logger.debug page.class
-        idea_memos = ::FilteredIdeaMemosByQuery.call(@current_user.idea_memos, query, page)
+        idea_memos = ::FilteredIdeaMemosByQuery.call(
+          @current_user.idea_memos.includes(:idea_session), query, page
+        )
 
         if idea_memos.empty?
           render json: nil, status: :ok
@@ -91,6 +89,15 @@ module Api
         count = @current_user.idea_memos.where('idea_memos.created_at >= ?',
                                                Time.current.beginning_of_month).count
         render json: { count: }, status: :ok
+      end
+
+      def total_pages_with_filters
+        query = params[:query] || ''
+        total_memos = FilteredTotalPagesByQuery.call(
+          @current_user.idea_memos.includes(:idea_session), query
+        )
+        total_pages = (total_memos.to_f / Constants::ITEMS_PER_PAGE).ceil
+        render json: { pages: total_pages }, status: :ok
       end
 
       private

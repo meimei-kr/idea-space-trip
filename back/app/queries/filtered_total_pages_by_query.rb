@@ -1,14 +1,13 @@
-class FilteredIdeaMemosByQuery
+class FilteredTotalPagesByQuery
   attr_reader :relation, :query, :page
 
-  def self.call(relation, query, page)
-    new(relation, query, page).call
+  def self.call(relation, query)
+    new(relation, query).call
   end
 
-  def initialize(relation, query, page)
+  def initialize(relation, query)
     @relation = relation
     @query = query
-    @page = page
   end
 
   def call
@@ -36,8 +35,6 @@ class FilteredIdeaMemosByQuery
 
     @relation
       .where(where_clause, parameters)
-      .order('idea_memos.created_at DESC')
-      .limit(Constants::ITEMS_PER_PAGE)
-      .offset((@page - 1) * Constants::ITEMS_PER_PAGE)
+      .count
   end
 end

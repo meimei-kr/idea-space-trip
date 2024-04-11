@@ -260,7 +260,7 @@ export async function deleteIdeaMemo(uuid: string): Promise<void> {
 }
 
 /**
- * 検索条件に一致するアイデアメモ一覧を取得する
+ * 検索条件に一致する、現在のページのアイデアメモを取得する
  */
 export async function getFilteredIdeaMemos(
   query: string,
@@ -296,7 +296,37 @@ export async function getFilteredIdeaMemos(
     if (error instanceof Error && error.message === "Unauthorized") {
       redirect("/auth/signin");
     }
-    console.log(error);
+    throw new Error(`予期せぬエラーが発生しました: ${error}`);
+  }
+}
+
+/**
+ * 検索条件に一致するアイデアメモ一覧の総ページ数を取得する
+ */
+export async function getIdeaMemosPages(query: string): Promise<number> {
+  const session = await getServerSession(authOptions);
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/v1/idea_memos/total_pages_with_filters?query=${query}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+        cache: "no-store",
+      },
+    );
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
+    const totalPages = await response.json();
+    return totalPages.pages;
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      redirect("/auth/signin");
+    }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
 }
