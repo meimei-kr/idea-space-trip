@@ -1,5 +1,6 @@
 import styles from "@/app/idea-memos/IdeaMemos.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import { IdeaMemoList } from "@/components/elements/IdeaMemoList/IdeaMemoList";
 import { PaginationSection } from "@/components/elements/Pagination/Pagination";
 import Search from "@/components/elements/Search/Search";
 import * as IdeaMemos from "@/features/idea-memos/components";
@@ -31,7 +32,7 @@ export default async function page({
             <div className={styles.header}>
               <Search />
             </div>
-            <IdeaMemos.IdeaMemos query={query} currentPage={currentPage} />
+            <IdeaMemoList query={query} currentPage={currentPage} />
             <div className={styles.pagination}>
               <PaginationSection totalPages={totalPages} />
             </div>
