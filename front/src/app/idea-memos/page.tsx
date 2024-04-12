@@ -1,11 +1,25 @@
 import styles from "@/app/idea-memos/IdeaMemos.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
+import { PaginationSection } from "@/components/elements/Pagination/Pagination";
+import Search from "@/components/elements/Search/Search";
 import * as IdeaMemos from "@/features/idea-memos/components";
-import { getAllIdeaMemos } from "@/lib/idea-memos";
+import { getAllIdeaMemos, getIdeaMemosPages } from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 
-export default async function page() {
+export default async function page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
   const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
+  const totalPages = await getIdeaMemosPages(query);
+  const currentPage =
+    Math.max(1, Math.min(Number(searchParams?.page), totalPages)) || 1;
+  console.log(totalPages);
 
   return (
     <main className={styles.wrapper}>
@@ -13,7 +27,15 @@ export default async function page() {
         {ideaMemos.length === 0 ? (
           <IdeaMemos.NoMemoDisplay />
         ) : (
-          <IdeaMemos.MemosDisplay ideaMemos={ideaMemos} />
+          <>
+            <div className={styles.header}>
+              <Search />
+            </div>
+            <IdeaMemos.IdeaMemos query={query} currentPage={currentPage} />
+            <div className={styles.pagination}>
+              <PaginationSection totalPages={totalPages} />
+            </div>
+          </>
         )}
       </div>
       <BackButton path="/select-mode" />

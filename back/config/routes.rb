@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       resources :idea_memos, param: :uuid, only: %i[index show update destroy] do
         collection do
           get 'this_month_count', to: 'idea_memos#this_month_count'
+          get 'index_with_filters', to: 'idea_memos#index_with_filters'
+          get 'total_pages_with_filters', to: 'idea_memos#total_pages_with_filters'
         end
       end
     end

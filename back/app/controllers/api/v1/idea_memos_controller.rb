@@ -14,6 +14,22 @@ module Api
         end
       end
 
+      def index_with_filters
+        query = params[:query] || ''
+        page = params[:page].to_i || 1
+        idea_memos = ::FilteredIdeaMemosByQuery.call(
+          @current_user.idea_memos.includes(:idea_session), query, page
+        )
+
+        if idea_memos.empty?
+          render json: nil, status: :ok
+        else
+          render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
+                                         .serializable_hash.to_json,
+                 status: :ok
+        end
+      end
+
       def show
         set_idea_memo
         if @idea_memo.nil?
@@ -73,6 +89,15 @@ module Api
         count = @current_user.idea_memos.where('idea_memos.created_at >= ?',
                                                Time.current.beginning_of_month).count
         render json: { count: }, status: :ok
+      end
+
+      def total_pages_with_filters
+        query = params[:query] || ''
+        total_memos = FilteredTotalPagesByQuery.call(
+          @current_user.idea_memos.includes(:idea_session), query
+        )
+        total_pages = (total_memos.to_f / Constants::ITEMS_PER_PAGE).ceil
+        render json: { pages: total_pages }, status: :ok
       end
 
       private

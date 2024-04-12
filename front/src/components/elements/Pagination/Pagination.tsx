@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination,
   PaginationContent,
@@ -7,24 +9,28 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { ITEMS_PER_PAGE, MAX_PAGE_NUM } from "@/constants/constants";
+import { MAX_PAGE_NUM } from "@/constants/constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function PaginationSection({
-  totalItems,
-  currentPage,
-  setCurrentPage,
-}: {
-  totalItems: number;
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
-}) {
-  const pageNumbers: number[] = [];
-  for (let i = 1; i <= Math.ceil(totalItems / ITEMS_PER_PAGE); i++) {
-    pageNumbers.push(i);
-  }
+export function PaginationSection({ totalPages }: { totalPages: number }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const rawPage = Number(searchParams.get("page"));
+  const currentPage = Math.max(1, Math.min(rawPage, totalPages)) || 1;
+  const router = useRouter();
+
+  const createPageURL = (page: number): string => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    return `${pathname}?${params.toString()}`;
+  };
 
   const maxPageNum = MAX_PAGE_NUM;
   const pageNumLimit = Math.floor(maxPageNum / 2); // 現在のページを可能な限り中央に表示するための制限
+  const pageNumbers: number[] = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   // 表示するページ番号
   const activePages = pageNumbers.slice(
@@ -32,27 +38,13 @@ export function PaginationSection({
     Math.min(currentPage - 1 + pageNumLimit + 1, pageNumbers.length), // 現在のページの後に表示するページ数
   );
 
-  const handleNextPage = () => {
-    if (currentPage < pageNumbers.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   const renderPages = () => {
     const renderedPages = activePages.map((page, index) => (
       <PaginationItem
         key={index}
         className={currentPage === page ? "bg-zinc-700 rounded-md" : ""}
       >
-        <PaginationLink href="#" onClick={() => setCurrentPage(page)}>
-          {page}
-        </PaginationLink>
+        <PaginationLink href={createPageURL(page)}>{page}</PaginationLink>
       </PaginationItem>
     ));
 
@@ -61,7 +53,7 @@ export function PaginationSection({
       renderedPages.unshift(
         <PaginationEllipsis
           key="ellipsis-start"
-          onClick={() => setCurrentPage(firstActivePage - 1)}
+          onClick={() => router.push(createPageURL(firstActivePage - 1))}
         />,
       );
     }
@@ -71,7 +63,7 @@ export function PaginationSection({
       renderedPages.push(
         <PaginationEllipsis
           key="ellipsis-end"
-          onClick={() => setCurrentPage(lastActivePage + 1)}
+          onClick={() => router.push(createPageURL(lastActivePage + 1))}
         />,
       );
     }
@@ -82,13 +74,17 @@ export function PaginationSection({
   return (
     <Pagination>
       <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" onClick={handlePrevPage} />
-        </PaginationItem>
+        {currentPage > 1 && (
+          <PaginationItem>
+            <PaginationPrevious href={createPageURL(currentPage - 1)} />
+          </PaginationItem>
+        )}
         {renderPages()}
-        <PaginationItem>
-          <PaginationNext href="#" onClick={handleNextPage} />
-        </PaginationItem>
+        {currentPage < totalPages && (
+          <PaginationItem>
+            <PaginationNext href={createPageURL(currentPage + 1)} />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );

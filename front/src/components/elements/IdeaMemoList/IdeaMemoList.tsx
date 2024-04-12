@@ -1,17 +1,15 @@
-"use client";
-
 import IdeaMemoCard from "@/components/elements/IdeaMemoCard/IdeaMemoCard";
 import styles from "@/components/elements/IdeaMemoList/IdeaMemoList.module.scss";
 import { IdeaMemoType } from "@/types";
 
-export const IdeaMemoList = ({
-  currentIdeaMemos,
+export const IdeaMemoList = async ({
+  filteredIdeaMemos,
 }: {
-  currentIdeaMemos: IdeaMemoType[];
+  filteredIdeaMemos: IdeaMemoType[];
 }) => {
   return (
     <div className={styles.content}>
-      {currentIdeaMemos.map((memo) => (
+      {filteredIdeaMemos.map((memo) => (
         <IdeaMemoCard key={memo.uuid!} ideaMemo={memo} />
       ))}
     </div>
