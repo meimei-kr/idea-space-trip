@@ -14,6 +14,7 @@
 #
 class IdeaMemo < ApplicationRecord
   belongs_to :idea_session
+  has_one :idea_like, dependent: :destroy
 
   attribute :perspective, :integer
   enum :perspective,

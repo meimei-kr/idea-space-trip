@@ -4,7 +4,11 @@ import { IdeaMemoList } from "@/components/elements/IdeaMemoList/IdeaMemoList";
 import { PaginationSection } from "@/components/elements/Pagination/Pagination";
 import Search from "@/components/elements/Search/Search";
 import * as IdeaMemos from "@/features/idea-memos/components";
-import { getAllIdeaMemos, getIdeaMemosPages } from "@/lib/idea-memos";
+import {
+  getAllIdeaMemos,
+  getFilteredIdeaMemos,
+  getIdeaMemosPages,
+} from "@/lib/idea-memos";
 import { IdeaMemoType } from "@/types";
 
 export default async function page({
@@ -20,7 +24,10 @@ export default async function page({
   const totalPages = await getIdeaMemosPages(query);
   const currentPage =
     Math.max(1, Math.min(Number(searchParams?.page), totalPages)) || 1;
-  console.log(totalPages);
+  const filteredIdeaMemos: IdeaMemoType[] = await getFilteredIdeaMemos(
+    query,
+    currentPage,
+  );
 
   return (
     <main className={styles.wrapper}>
@@ -32,7 +39,7 @@ export default async function page({
             <div className={styles.header}>
               <Search />
             </div>
-            <IdeaMemoList query={query} currentPage={currentPage} />
+            <IdeaMemoList filteredIdeaMemos={filteredIdeaMemos} />
             <div className={styles.pagination}>
               <PaginationSection totalPages={totalPages} />
             </div>

@@ -3,6 +3,7 @@
 import { IdeaMemoType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authOptions } from "./options";
 
@@ -291,6 +292,8 @@ export async function getFilteredIdeaMemos(
     const deserializedData = await new Deserializer({
       keyForAttribute: "camelCase",
     }).deserialize(serializedData);
+
+    revalidatePath("/idea-memos");
     return deserializedData;
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {

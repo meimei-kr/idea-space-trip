@@ -1,17 +1,15 @@
 module Api
   module V1
     class IdeaMemosController < ApplicationController
+      include Api::V1::IdeaSetter
+
+      before_action :set_idea_session, only: %i[all_in_session create]
+      before_action :set_idea_memo, only: %i[show update destroy]
+
       def index
         idea_memos = policy_scope(@current_user.idea_memos.includes(:idea_session)
                       .order(created_at: :desc))
-
-        if idea_memos.empty?
-          render json: nil, status: :ok
-        else
-          render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
-                                         .serializable_hash.to_json,
-                 status: :ok
-        end
+        render_idea_memos(idea_memos)
       end
 
       def index_with_filters
@@ -20,30 +18,23 @@ module Api
         idea_memos = ::FilteredIdeaMemosByQuery.call(
           @current_user.idea_memos.includes(:idea_session), query, page
         )
-
-        if idea_memos.empty?
-          render json: nil, status: :ok
-        else
-          render json: IdeaMemoSerializer.new(idea_memos, include: [:idea_session])
-                                         .serializable_hash.to_json,
-                 status: :ok
-        end
+        render_idea_memos(idea_memos)
       end
 
       def show
-        set_idea_memo
         if @idea_memo.nil?
           render json: { error: '指定されたアイデアメモが見つかりません' }, status: :not_found
         else
           authorize @idea_memo
-          render json: IdeaMemoSerializer.new(@idea_memo, include: [:idea_session])
+          render json: IdeaMemoSerializer.new(@idea_memo,
+                                              { params: { current_user: @current_user },
+                                                include: [:idea_session] })
                                          .serializable_hash.to_json,
                  status: :ok
         end
       end
 
       def create
-        set_idea_session
         authorize @idea_session, :record_owner?
         idea_memo = @idea_session.idea_memos.new(idea_memo_params)
 
@@ -55,7 +46,6 @@ module Api
       end
 
       def all_in_session
-        set_idea_session
         idea_memos = policy_scope(@idea_session.idea_memos)
 
         if idea_memos.empty?
@@ -66,7 +56,6 @@ module Api
       end
 
       def update
-        set_idea_memo
         authorize @idea_memo
         @idea_memo.update(idea_memo_params)
         if @idea_memo.save
@@ -77,7 +66,6 @@ module Api
       end
 
       def destroy
-        set_idea_memo
         authorize @idea_memo
         @idea_memo.destroy!
         render json: { message: 'アイデアメモの削除に成功しました' }, status: :ok
@@ -100,22 +88,33 @@ module Api
         render json: { pages: total_pages }, status: :ok
       end
 
+      def likes
+        liked_memos = policy_scope(@current_user.idea_likes.includes(:idea_session)
+                                    .order(created_at: :desc))
+        if liked_memos.empty?
+          render json: nil, status: :ok
+        else
+          render json: IdeaMemoSerializer.new(liked_memos, include: [:idea_session])
+                                         .serializable_hash.to_json, status: :ok
+        end
+      end
+
       private
-
-      def set_idea_session
-        @idea_session = @current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
-        return unless @idea_session.nil?
-
-        render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
-        nil
-      end
-
-      def set_idea_memo
-        @idea_memo = @current_user.idea_memos.find_by(uuid: params[:uuid])
-      end
 
       def idea_memo_params
         params.require(:idea_memo).permit(:perspective, :hint, :answer, :comment)
+      end
+
+      def render_idea_memos(idea_memos)
+        if idea_memos.empty?
+          render json: nil, status: :ok
+        else
+          render json: IdeaMemoSerializer.new(idea_memos,
+                                              { params: { current_user: @current_user },
+                                                include: [:idea_session] })
+                                         .serializable_hash.to_json,
+                 status: :ok
+        end
       end
     end
   end

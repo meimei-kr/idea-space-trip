@@ -95,6 +95,7 @@ export type IdeaMemoType = {
   uuid?: string;
   createdAt?: string;
   ideaSession?: IdeaSessionType;
+  isLiked?: boolean;
 };
 
 export type UserType = {
