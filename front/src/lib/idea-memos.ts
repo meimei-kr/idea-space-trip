@@ -266,12 +266,13 @@ export async function deleteIdeaMemo(uuid: string): Promise<void> {
 export async function getFilteredIdeaMemos(
   query: string,
   currentPage: number,
+  favoritesMode: boolean,
 ): Promise<IdeaMemoType[]> {
   const session = await getServerSession(authOptions);
 
   try {
     const response = await fetch(
-      `${BASE_URL}/api/v1/idea_memos/index_with_filters?query=${query}&page=${currentPage}`,
+      `${BASE_URL}/api/v1/idea_memos/index_with_filters?query=${query}&page=${currentPage}&favorites_mode=${favoritesMode}`,
       {
         method: "GET",
         headers: {
@@ -306,12 +307,15 @@ export async function getFilteredIdeaMemos(
 /**
  * 検索条件に一致するアイデアメモ一覧の総ページ数を取得する
  */
-export async function getIdeaMemosPages(query: string): Promise<number> {
+export async function getIdeaMemosPages(
+  query: string,
+  favoritesMode: boolean,
+): Promise<number> {
   const session = await getServerSession(authOptions);
 
   try {
     const response = await fetch(
-      `${BASE_URL}/api/v1/idea_memos/total_pages_with_filters?query=${query}`,
+      `${BASE_URL}/api/v1/idea_memos/total_pages_with_filters?query=${query}&favorites_mode=${favoritesMode}`,
       {
         method: "GET",
         headers: {

@@ -1,0 +1,11 @@
+.likeListButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--white);
+  border-radius: 16px;
+  height: 54px;
+  width: 54px;
+  padding: 12px;
+  cursor: pointer;
+}

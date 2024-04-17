@@ -1,24 +1,46 @@
 class FilteredIdeaMemosByQuery
   attr_reader :relation, :query, :page
 
-  def self.call(relation, query, page)
-    new(relation, query, page).call
+  def self.call(relation, query, page, favorites_mode, user)
+    new(relation, query, page, favorites_mode, user).call
   end
 
-  def initialize(relation, query, page)
+  def initialize(relation, query, page, favorites_mode, user)
     @relation = relation
     @query = query
     @page = page
+    @favorites_mode = favorites_mode
+    @user = user
   end
 
   def call
-    # 　ユーザー入力をEnumキーに変換
+    perspective_value = extract_perspective_value
+
+    where_clause, parameters = build_conditions(perspective_value)
+
+    if @favorites_mode
+      @relation = @relation.joins(:idea_like).where(idea_like: { user_id: @user.id })
+    end
+
+    @relation
+      .where(where_clause, parameters)
+      .order('idea_memos.created_at DESC')
+      .limit(Constants::ITEMS_PER_PAGE)
+      .offset((@page - 1) * Constants::ITEMS_PER_PAGE)
+  end
+
+  private
+
+  def extract_perspective_value
+    # ユーザー入力をEnumキーに変換
     enum_key = Constants::PERSPECTIVE_MAPPING[@query.to_sym]
 
     # Enumキーから対応する整数値を取得
-    perspective_value = IdeaMemo.perspectives[enum_key] if enum_key
+    IdeaMemo.perspectives[enum_key] if enum_key
+  end
 
-    # 検索条件構築
+  # 検索条件構築
+  def build_conditions(perspective_value)
     conditions = []
     parameters = {}
 
@@ -34,10 +56,6 @@ class FilteredIdeaMemosByQuery
 
     where_clause = conditions.join(' OR ')
 
-    @relation
-      .where(where_clause, parameters)
-      .order('idea_memos.created_at DESC')
-      .limit(Constants::ITEMS_PER_PAGE)
-      .offset((@page - 1) * Constants::ITEMS_PER_PAGE)
+    [where_clause, parameters]
   end
 end

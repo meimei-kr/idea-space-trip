@@ -1,6 +1,7 @@
 import styles from "@/app/idea-memos/IdeaMemos.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import { IdeaMemoList } from "@/components/elements/IdeaMemoList/IdeaMemoList";
+import LikeListButton from "@/components/elements/LikeListButton/LikeListButton";
 import { PaginationSection } from "@/components/elements/Pagination/Pagination";
 import Search from "@/components/elements/Search/Search";
 import * as IdeaMemos from "@/features/idea-memos/components";
@@ -17,16 +18,19 @@ export default async function page({
   searchParams?: {
     query?: string;
     page?: string;
+    favorites_mode?: string;
   };
 }) {
   const query = searchParams?.query || "";
-  const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
-  const totalPages = await getIdeaMemosPages(query);
+  const favoritesMode = searchParams?.favorites_mode || "false";
+  const totalPages = await getIdeaMemosPages(query, JSON.parse(favoritesMode));
   const currentPage =
     Math.max(1, Math.min(Number(searchParams?.page), totalPages)) || 1;
+  const ideaMemos: IdeaMemoType[] = await getAllIdeaMemos();
   const filteredIdeaMemos: IdeaMemoType[] = await getFilteredIdeaMemos(
     query,
     currentPage,
+    JSON.parse(favoritesMode),
   );
 
   return (
@@ -38,6 +42,7 @@ export default async function page({
           <>
             <div className={styles.header}>
               <Search />
+              <LikeListButton />
             </div>
             <IdeaMemoList filteredIdeaMemos={filteredIdeaMemos} />
             <div className={styles.pagination}>

@@ -15,8 +15,10 @@ module Api
       def index_with_filters
         query = params[:query] || ''
         page = params[:page].to_i || 1
+        favorites_mode = params[:favorites_mode] == 'true'
         idea_memos = ::FilteredIdeaMemosByQuery.call(
-          @current_user.idea_memos.includes(:idea_session), query, page
+          @current_user.idea_memos.includes(:idea_session),
+          query, page, favorites_mode, @current_user
         )
         render_idea_memos(idea_memos)
       end
@@ -81,22 +83,12 @@ module Api
 
       def total_pages_with_filters
         query = params[:query] || ''
-        total_memos = FilteredTotalPagesByQuery.call(
-          @current_user.idea_memos.includes(:idea_session), query
+        favorites_mode = params[:favorites_mode] == 'true'
+        total_memos = ::FilteredTotalPagesByQuery.call(
+          @current_user.idea_memos.includes(:idea_session), query, favorites_mode, @current_user
         )
         total_pages = (total_memos.to_f / Constants::ITEMS_PER_PAGE).ceil
         render json: { pages: total_pages }, status: :ok
-      end
-
-      def likes
-        liked_memos = policy_scope(@current_user.idea_likes.includes(:idea_session)
-                                    .order(created_at: :desc))
-        if liked_memos.empty?
-          render json: nil, status: :ok
-        else
-          render json: IdeaMemoSerializer.new(liked_memos, include: [:idea_session])
-                                         .serializable_hash.to_json, status: :ok
-        end
       end
 
       private
