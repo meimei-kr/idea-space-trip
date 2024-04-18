@@ -18,7 +18,10 @@ export default function IdeaMemoCard({ ideaMemo }: { ideaMemo: IdeaMemoType }) {
       onTouchEnd={handleTouchEnd}
     >
       <IdeaMemoCardHeader ideaMemo={ideaMemo} />
-      <Link href={`/idea-memos/${ideaMemo.uuid}`}>
+      <Link
+        href={`/idea-memos/${ideaMemo.uuid}`}
+        className={styles.linkContainer}
+      >
         <IdeaMemoCardContent ideaMemo={ideaMemo} />
         <IdeaMemoCardFooter ideaMemo={ideaMemo} />
       </Link>
