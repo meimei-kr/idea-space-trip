@@ -31,12 +31,15 @@ export default function LikeListButton() {
   };
 
   return (
-    <div className={styles.likeListButton}>
+    <button
+      className={styles.likeListButton}
+      onClick={isLikeListClicked ? handleShowAll : handleShowLikeList}
+    >
       {isLikeListClicked ? (
-        <FiHeart className={styles.like} onClick={handleShowAll} />
+        <FiHeart className={styles.like} />
       ) : (
-        <FiHeart className={styles.unlike} onClick={handleShowLikeList} />
+        <FiHeart className={styles.unlike} />
       )}
-    </div>
+    </button>
   );
 }
