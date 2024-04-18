@@ -48,7 +48,10 @@ module Api
         if idea_sessions.empty?
           render json: { error: '対象のidea_sessionデータが見つかりませんでした。' }, status: :not_found
         else
-          render json: IdeaSessionSerializer.new(idea_sessions, options).serializable_hash.to_json,
+          render json: IdeaSessionSerializer.new(idea_sessions,
+                                                 { params: { current_user: @current_user },
+                                                   include: [:idea_memos] })
+                                            .serializable_hash.to_json,
                  status: :ok
         end
       end
@@ -73,12 +76,6 @@ module Api
 
       def set_idea_session
         @current_user.idea_sessions.find_by(uuid: params[:uuid])
-      end
-
-      def options
-        options = {}
-        options[:include] = %i[idea_memos]
-        options
       end
     end
   end

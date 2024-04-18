@@ -41,7 +41,9 @@ module Api
         idea_memo = @idea_session.idea_memos.new(idea_memo_params)
 
         if idea_memo.save
-          render json: IdeaMemoSerializer.new(idea_memo).serializable_hash.to_json, status: :ok
+          render json: IdeaMemoSerializer.new(idea_memo,
+                                              { params: { current_user: @current_user } })
+                                         .serializable_hash.to_json, status: :ok
         else
           render json: { errors: idea_memo.errors }, status: :unprocessable_entity
         end
@@ -53,7 +55,9 @@ module Api
         if idea_memos.empty?
           render json: nil, status: :ok
         else
-          render json: IdeaMemoSerializer.new(idea_memos).serializable_hash.to_json, status: :ok
+          render json: IdeaMemoSerializer.new(idea_memos,
+                                              { params: { current_user: @current_user } })
+                                         .serializable_hash.to_json, status: :ok
         end
       end
 
