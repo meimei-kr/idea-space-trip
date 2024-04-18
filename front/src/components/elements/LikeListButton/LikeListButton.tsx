@@ -2,9 +2,8 @@
 
 import styles from "@/components/elements/LikeListButton/LikeListButton.module.scss";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import HeartLike from "public/images/heart-like.svg";
-import HeartUnlike from "public/images/heart-unlike.svg";
 import { useState } from "react";
+import { FiHeart } from "react-icons/fi";
 
 export default function LikeListButton() {
   const searchParams = useSearchParams();
@@ -34,9 +33,9 @@ export default function LikeListButton() {
   return (
     <div className={styles.likeListButton}>
       {isLikeListClicked ? (
-        <HeartLike onClick={handleShowAll} />
+        <FiHeart className={styles.like} onClick={handleShowAll} />
       ) : (
-        <HeartUnlike onClick={handleShowLikeList} />
+        <FiHeart className={styles.unlike} onClick={handleShowLikeList} />
       )}
     </div>
   );
