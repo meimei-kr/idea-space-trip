@@ -29,6 +29,7 @@ Rails.application.routes.draw do
           get 'index_with_filters', to: 'idea_memos#index_with_filters'
           get 'total_pages_with_filters', to: 'idea_memos#total_pages_with_filters'
         end
+        resource :idea_likes, only: %i[create destroy]
       end
     end
   end

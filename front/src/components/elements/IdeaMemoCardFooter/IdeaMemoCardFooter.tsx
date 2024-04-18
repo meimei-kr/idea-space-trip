@@ -1,7 +1,7 @@
-import styles from "@/features/idea-memos-uuid/components/CardFooter/CardFooter.module.scss";
+import styles from "@/components/elements/IdeaMemoCardFooter/IdeaMemoCardFooter.module.scss";
 import { IdeaMemoType } from "@/types";
 
-export default function CardFooterOnViewMode({
+export default function IdeaMemoCardFooter({
   ideaMemo,
 }: {
   ideaMemo: IdeaMemoType;

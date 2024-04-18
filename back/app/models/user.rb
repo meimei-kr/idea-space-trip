@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :idea_sessions, dependent: :destroy
   has_many :idea_memos, through: :idea_sessions
   has_one :ai_usage_history, dependent: :destroy
+  has_many :idea_likes, dependent: :destroy
+  has_many :liked_idea_memos, through: :idea_likes, source: :idea_memo
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -27,5 +29,20 @@ class User < ApplicationRecord
     find_by(id: payload['user_id'])
   rescue JWT::DecodeError
     nil
+  end
+
+  # アイデアメモをお気に入り登録する
+  def like(idea_memo)
+    liked_idea_memos << idea_memo
+  end
+
+  # アイデアメモのお気に入り登録を解除する
+  def unlike(idea_memo)
+    liked_idea_memos.destroy(idea_memo)
+  end
+
+  # アイデアメモがお気に入り登録されているかどうかを返す
+  def like?(idea_memo)
+    liked_idea_memos.include?(idea_memo)
   end
 end

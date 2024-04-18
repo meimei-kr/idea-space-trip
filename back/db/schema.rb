@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_14_061525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -40,6 +40,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ai_usage_histories_on_user_id"
+  end
+
+  create_table "idea_likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "idea_memo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_memo_id"], name: "index_idea_likes_on_idea_memo_id"
+    t.index ["user_id", "idea_memo_id"], name: "index_idea_likes_on_user_id_and_idea_memo_id", unique: true
+    t.index ["user_id"], name: "index_idea_likes_on_user_id"
   end
 
   create_table "idea_memos", force: :cascade do |t|
@@ -179,6 +189,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_021820) do
   add_foreign_key "ai_generated_answers", "idea_sessions"
   add_foreign_key "ai_generated_themes", "idea_sessions"
   add_foreign_key "ai_usage_histories", "users"
+  add_foreign_key "idea_likes", "idea_memos"
+  add_foreign_key "idea_likes", "users"
   add_foreign_key "idea_memos", "idea_sessions"
   add_foreign_key "idea_sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

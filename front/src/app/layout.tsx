@@ -3,7 +3,7 @@ import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/global/AuthProvider";
-import { TouchProvider } from "@/context/global/TouchContext";
+import { TouchProvider } from "@/context/global/TouchProvider";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";

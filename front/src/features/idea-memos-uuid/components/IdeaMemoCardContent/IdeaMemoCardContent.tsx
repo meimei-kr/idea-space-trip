@@ -1,11 +1,11 @@
 "use client";
 
 import AlertDialogOnDelete from "@/components/elements/AlertModalOnDelete/AlertDialogOnDelete";
+import IdeaMemoCardFooter from "@/components/elements/IdeaMemoCardFooter/IdeaMemoCardFooter";
 import {
   ButtonSection,
   CancelButton,
   CardBodyOnViewMode,
-  CardFooter,
   DeleteButton,
   EditButton,
   EditForm,
@@ -70,7 +70,7 @@ export default function IdeaMemoCardContent({
         <>
           {/* 編集モードの場合 */}
           <EditForm setIsEditing={setIsEditing} ideaMemo={ideaMemo}>
-            <CardFooter ideaMemo={ideaMemo} />
+            <IdeaMemoCardFooter ideaMemo={ideaMemo} />
           </EditForm>
           <CancelButton onClick={handleBackClick} />
         </>
@@ -78,7 +78,7 @@ export default function IdeaMemoCardContent({
         <>
           {/* 詳細表示モードの場合 */}
           <CardBodyOnViewMode ideaMemo={ideaMemo} />
-          <CardFooter ideaMemo={ideaMemo} />
+          <IdeaMemoCardFooter ideaMemo={ideaMemo} />
           <ButtonSection>
             <EditButton handleEditClick={handleEditClick} />
             <DeleteButton onSubmit={onSubmit} ideaMemo={ideaMemo} />

@@ -1,0 +1,23 @@
+.likeListButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--white);
+  border-radius: 16px;
+  height: 54px;
+  width: 54px;
+  cursor: pointer;
+}
+
+.like {
+  width: 24px;
+  height: 24px;
+  fill: var(--pink);
+  color: var(--pink);
+}
+
+.unlike {
+  width: 24px;
+  height: 24px;
+  color: var(--white);
+}

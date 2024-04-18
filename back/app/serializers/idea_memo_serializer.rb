@@ -18,5 +18,8 @@ class IdeaMemoSerializer
 
   set_type :idea_memo
   attributes :uuid, :perspective, :hint, :answer, :comment, :idea_session_id, :created_at
+  attribute :is_liked do |object, params|
+    params[:current_user].like?(object)
+  end
   belongs_to :idea_session, serializer: IdeaSessionSerializer
 end

@@ -1,9 +1,7 @@
 import styles from "@/app/idea-memos/[uuid]/IdeaMemosUuid.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
-import {
-  IdeaMemoCardContent,
-  IdeaMemoCardHeader,
-} from "@/features/idea-memos-uuid/components";
+import IdeaMemoCardHeader from "@/components/elements/IdeaMemoCardHeader/IdeaMemoCardHeader";
+import { IdeaMemoCardContent } from "@/features/idea-memos-uuid/components";
 import { getIdeaMemo } from "@/lib/idea-memos";
 
 export default async function page({ params }: { params: { uuid: string } }) {
@@ -13,7 +11,7 @@ export default async function page({ params }: { params: { uuid: string } }) {
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.cardContainer}>
-            <IdeaMemoCardHeader />
+            <IdeaMemoCardHeader ideaMemo={ideaMemo} />
             <IdeaMemoCardContent ideaMemo={ideaMemo} />
           </div>
         </div>

@@ -1,13 +1,15 @@
 class FilteredTotalPagesByQuery
   attr_reader :relation, :query, :page
 
-  def self.call(relation, query)
-    new(relation, query).call
+  def self.call(relation, query, favorites_mode, user)
+    new(relation, query, favorites_mode, user).call
   end
 
-  def initialize(relation, query)
+  def initialize(relation, query, favorites_mode, user)
     @relation = relation
     @query = query
+    @favorites_mode = favorites_mode
+    @user = user
   end
 
   def call
@@ -32,6 +34,10 @@ class FilteredTotalPagesByQuery
     parameters[:query] = "%#{@query}%"
 
     where_clause = conditions.join(' OR ')
+
+    if @favorites_mode
+      @relation = @relation.joins(:idea_like).where(idea_like: { user_id: @user.id })
+    end
 
     @relation
       .where(where_clause, parameters)
