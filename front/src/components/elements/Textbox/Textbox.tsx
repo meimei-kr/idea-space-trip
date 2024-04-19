@@ -4,8 +4,8 @@ import styles from "@/components/elements/Textbox/Textbox.module.scss";
 import { Textarea } from "@/components/ui/textarea";
 import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import type { TextboxProps } from "@/types";
-import { useState } from "react";
-// import { FaMicrophone } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { FaCircleStop, FaMicrophone } from "react-icons/fa6";
 
 export default function Textbox({
   id,
@@ -14,12 +14,70 @@ export default function Textbox({
   placeholder,
   defaultValue,
 }: TextboxProps) {
-  const [characterCount, setCharacterCount] = useState(
-    defaultValue?.length || 0,
+  const [isRecording, setIsRecording] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [recordedText, setRecordedText] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [transcript, setTranscript] = useState<string>("");
+  const [inputText, setInputText] = useState<string>(defaultValue || "");
+  const [recognition, setRecognition] = useState<SpeechRecognition | null>(
+    null,
   );
+  const [characterCount, setCharacterCount] = useState(inputText.length || 0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = "ja-JP";
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    setRecognition(recognition);
+  }, []);
+
+  useEffect(() => {
+    if (!recognition) return;
+    if (isRecording) {
+      recognition.start();
+    } else {
+      recognition.stop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRecording]);
+
+  useEffect(() => {
+    if (!recognition) return;
+    recognition.onresult = (e) => {
+      const results = e.results;
+      for (let i = e.resultIndex; i < results.length; i++) {
+        const result = results[i];
+        if (result && result[0]) {
+          const reliableResult = result[0];
+          if (result.isFinal) {
+            setRecordedText((prevText) => {
+              const newRecordedText = prevText + reliableResult?.transcript;
+              setInputText((prev) => prev + newRecordedText);
+              return newRecordedText;
+            });
+            setTranscript("");
+            setRecordedText("");
+          } else {
+            setTranscript(reliableResult?.transcript);
+          }
+        }
+      }
+    };
+  }, [recognition]);
+
+  useEffect(() => {
+    setCharacterCount(inputText.length);
+  }, [inputText]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCharacterCount(e.target.value.length);
+    setInputText(e.target.value);
+  };
+
+  const handleClick = () => {
+    setIsRecording((prev) => !prev);
   };
 
   return (
@@ -32,9 +90,14 @@ export default function Textbox({
           placeholder={placeholder}
           className={styles.textarea}
           defaultValue={defaultValue}
+          value={inputText}
           onChange={handleChange}
         />
-        {/* <FaMicrophone className={styles.microphone} /> */}
+        {isRecording ? (
+          <FaCircleStop className={styles.icon} onClick={handleClick} />
+        ) : (
+          <FaMicrophone className={styles.icon} onClick={handleClick} />
+        )}
       </div>
       <div className={styles.characterCount}>
         あと{" "}

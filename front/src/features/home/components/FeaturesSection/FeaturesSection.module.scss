@@ -37,14 +37,6 @@
 }
 
 /* Featuresコンテンツ */
-.noMvpFeature {
-  opacity: 0.5;
-}
-
-.noMvp {
-  color: var(--light-blue);
-}
-
 .featuresContent {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -118,5 +110,13 @@
 
   @media screen and (min-width: 1280px) {
     font-size: 18px;
+  }
+
+  span {
+    font-size: 12px;
+
+    @media screen and (min-width: 1280px) {
+      font-size: 14px;
+    }
   }
 }

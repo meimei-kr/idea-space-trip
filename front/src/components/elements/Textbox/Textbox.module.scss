@@ -11,13 +11,14 @@
   height: 10rem;
 }
 
-.microphone {
+.icon {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   color: var(--black);
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 .characterCount {
