@@ -1,3 +1,7 @@
+.textareaWrapper {
+  width: 100%;
+}
+
 .textareaContainer {
   width: 100%;
   position: relative;
@@ -14,4 +18,18 @@
   color: var(--black);
   width: 20px;
   height: 20px;
+}
+
+.characterCount {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+
+  span {
+    font-size: 16px;
+  }
+}
+
+.overLimit {
+  color: var(--red);
 }

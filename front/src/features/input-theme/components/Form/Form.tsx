@@ -4,6 +4,7 @@ import AlertModal from "@/components/elements/AlertModal/AlertModal";
 import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
+import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import styles from "@/features/input-theme/components/Form/Form.module.scss";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
 import { ThemeState, submitTheme } from "@/lib/actions";
@@ -71,7 +72,7 @@ export default function Form({
           id="theme"
           name="theme"
           ariaDescribedby="theme-error"
-          placeholder="255文字以内で入力してね"
+          placeholder={`${FORM_CHARACTER_LIMIT}文字以内で入力してね`}
         />
         <p className={styles.checkItem}>
           <IoCheckboxOutline />
