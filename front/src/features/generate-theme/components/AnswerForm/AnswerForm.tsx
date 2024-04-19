@@ -7,6 +7,7 @@ import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
+import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import styles from "@/features/generate-theme/components/AnswerForm/AnswerForm.module.scss";
 import SelectOptions from "@/features/generate-theme/components/SelectOptions/SelectOptions";
 import { useUUIDCheck } from "@/hooks/useUUIDCheck";
@@ -141,7 +142,7 @@ export default function AnswerForm({
             id="answer"
             name="answer"
             ariaDescribedby="theme-answer-error"
-            placeholder="255文字以内で回答を入力してね。複数回答してもOKだよ。"
+            placeholder={`${FORM_CHARACTER_LIMIT}文字以内で回答を入力してね。複数回答してもOKだよ。`}
           />
         </div>
       </div>

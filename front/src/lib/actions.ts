@@ -1,5 +1,6 @@
 "use server";
 
+import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import {
   createAIGeneratedThemes,
   deleteAIGeneratedThemes,
@@ -32,7 +33,9 @@ const ThemeSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "テーマの入力は必須だよ" })
-    .max(255, { message: "テーマは255文字以内で入力してね" }),
+    .max(FORM_CHARACTER_LIMIT, {
+      message: `テーマは${FORM_CHARACTER_LIMIT}文字以内で入力してね`,
+    }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 
@@ -138,7 +141,9 @@ const ThemeQuestionSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "回答入力は必須だよ" })
-    .max(255, { message: "回答は255文字以内で入力してね" }),
+    .max(FORM_CHARACTER_LIMIT, {
+      message: `回答は${FORM_CHARACTER_LIMIT}文字以内で入力してね`,
+    }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 
@@ -253,7 +258,9 @@ const IdeaSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "アイデアの入力は必須だよ" })
-    .max(255, { message: "アイデアは255文字以内で入力してね" }),
+    .max(FORM_CHARACTER_LIMIT, {
+      message: `アイデアは${FORM_CHARACTER_LIMIT}文字以内で入力してね`,
+    }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
   perspective: z.string(), // perspectiveはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
@@ -322,11 +329,15 @@ const IdeaMemoSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "回答の入力は必須だよ" })
-    .max(255, { message: "回答は255文字以内で入力してね" }),
+    .max(FORM_CHARACTER_LIMIT, {
+      message: `回答は${FORM_CHARACTER_LIMIT}文字以内で入力してね`,
+    }),
   comment: z
     .string()
     .trim()
-    .max(255, { message: "コメントは255文字以内で入力してね" }),
+    .max(FORM_CHARACTER_LIMIT, {
+      message: `コメントは${FORM_CHARACTER_LIMIT}文字以内で入力してね`,
+    }),
   uuid: z.string(), // uuidはhiddenで自動的に送信されるため、厳密なバリデーションは不要
 });
 

@@ -4,6 +4,7 @@ import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import SectionTitle from "@/components/elements/SectionTitle/SectionTitle";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import { LitUpBordersLg } from "@/components/ui/tailwind-buttons";
+import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import styles from "@/features/idea-memos-uuid/components/EditForm/EditForm.module.scss";
 import { IdeaMemoState, submitUpdateIdeaMemo } from "@/lib/actions";
 import { IdeaMemoType } from "@/types";
@@ -88,7 +89,7 @@ export default function EditMode({
             id="idea"
             name="idea"
             ariaDescribedby="idea-error"
-            placeholder="255文字以内"
+            placeholder={`${FORM_CHARACTER_LIMIT}文字以内`}
             defaultValue={ideaMemo.answer}
           />
         </div>
@@ -103,7 +104,7 @@ export default function EditMode({
             id="comment"
             name="comment"
             ariaDescribedby="comment-error"
-            placeholder="255文字以内"
+            placeholder={`${FORM_CHARACTER_LIMIT}文字以内`}
             defaultValue={ideaMemo.comment ?? ""}
           />
         </div>

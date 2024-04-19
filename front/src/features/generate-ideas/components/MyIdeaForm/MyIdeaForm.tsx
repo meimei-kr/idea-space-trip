@@ -3,6 +3,7 @@
 import ErrorAlert from "@/components/elements/ErrorAlert/ErrorAlert";
 import Textbox from "@/components/elements/Textbox/Textbox";
 import { LitUpBorders } from "@/components/ui/tailwind-buttons";
+import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import styles from "@/features/generate-ideas/components/MyIdeaForm/MyIdeaForm.module.scss";
 import { MyIdeaState, submitMyIdea } from "@/lib/actions";
 import { PerspectiveType } from "@/types";
@@ -63,7 +64,7 @@ export default function MyIdeaForm({
         id="idea"
         name="idea"
         ariaDescribedby="idea-error"
-        placeholder="思いついたアイデアを入力してね（255文字以内）"
+        placeholder={`思いついたアイデアを入力してね（${FORM_CHARACTER_LIMIT}文字以内）`}
       />
       <input
         type="hidden"
