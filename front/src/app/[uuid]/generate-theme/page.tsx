@@ -6,7 +6,7 @@ import { getAIGeneratedThemes } from "@/lib/ai-generated-themes";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 import { AiGeneratedThemeType, Option } from "@/types";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export default async function page({ params }: { params: { uuid: string } }) {
   // 進行中のアイデアセッションを取得
