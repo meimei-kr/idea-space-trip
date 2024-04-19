@@ -14,7 +14,9 @@ export default function Textbox({
   placeholder,
   defaultValue,
 }: TextboxProps) {
-  const [characterCount, setCharacterCount] = useState(0);
+  const [characterCount, setCharacterCount] = useState(
+    defaultValue?.length || 0,
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCharacterCount(e.target.value.length);
