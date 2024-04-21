@@ -7,7 +7,7 @@ import { FORM_CHARACTER_LIMIT } from "@/constants/constants";
 import styles from "@/features/generate-ideas/components/MyIdeaForm/MyIdeaForm.module.scss";
 import { MyIdeaState, submitMyIdea } from "@/lib/actions";
 import { PerspectiveType } from "@/types";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 
@@ -22,7 +22,8 @@ export default function MyIdeaForm({
   selectedPerspectives: PerspectiveType[];
   perspectiveIndex: number;
 }) {
-  const ref = useRef<HTMLFormElement>(null);
+  const [isResetTextbox, setIsResetTextbox] = useState(false);
+  // const ref = useRef<HTMLFormElement>(null);
 
   // フォーム送信処理
   const initialMyIdeaState: MyIdeaState = {
@@ -43,7 +44,8 @@ export default function MyIdeaForm({
   // フォーム送信後エラーがなければ、フォームクリア
   const handleFormClear = () => {
     if (!myIdeaState?.errors?.idea) {
-      ref?.current?.reset();
+      // ref?.current?.reset();
+      setIsResetTextbox(true);
     }
   };
 
@@ -55,7 +57,7 @@ export default function MyIdeaForm({
   }, [myIdeaState?.errors?.idea]);
 
   return (
-    <form ref={ref} action={myIdeaStateDispatch} className={styles.form}>
+    <form action={myIdeaStateDispatch} className={styles.form}>
       {myIdeaState?.errors?.idea &&
         myIdeaState?.errors?.idea.map((error, index) => (
           <ErrorAlert id="idea-error" key={index} error={error} />
@@ -65,6 +67,8 @@ export default function MyIdeaForm({
         name="idea"
         ariaDescribedby="idea-error"
         placeholder={`思いついたアイデアを入力してね（${FORM_CHARACTER_LIMIT}文字以内）`}
+        isResetTextbox={isResetTextbox}
+        setIsResetTextbox={setIsResetTextbox}
       />
       <input
         type="hidden"

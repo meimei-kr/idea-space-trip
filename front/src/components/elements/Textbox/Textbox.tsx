@@ -13,6 +13,8 @@ export default function Textbox({
   ariaDescribedby,
   placeholder,
   defaultValue,
+  isResetTextbox,
+  setIsResetTextbox,
 }: TextboxProps) {
   const [isRecording, setIsRecording] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -71,6 +73,14 @@ export default function Textbox({
   useEffect(() => {
     setCharacterCount(inputText.length);
   }, [inputText]);
+
+  useEffect(() => {
+    if (isResetTextbox && setIsResetTextbox) {
+      setInputText("");
+      setIsResetTextbox(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isResetTextbox]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);

@@ -39,6 +39,8 @@ export type TextboxProps = {
   ariaDescribedby: string;
   placeholder?: string;
   defaultValue?: string;
+  isResetTextbox?: boolean;
+  setIsResetTextbox?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 /**
