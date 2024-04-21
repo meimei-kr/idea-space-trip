@@ -4,7 +4,7 @@ import { IdeaMemoType } from "@/types";
 import { Deserializer } from "jsonapi-serializer";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { authOptions } from "./options";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -179,6 +179,9 @@ export async function getIdeaMemo(uuid: string): Promise<IdeaMemoType> {
       throw new Error("Unauthorized");
     }
     const serializedData = await response.json();
+    if (response.status === 404) {
+      throw new Error("Not Found");
+    }
     if (!response.ok) {
       throw new Error(`データ取得に失敗しました: ${serializedData}`);
     }
@@ -190,6 +193,9 @@ export async function getIdeaMemo(uuid: string): Promise<IdeaMemoType> {
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
       redirect("/auth/signin");
+    }
+    if (error instanceof Error && error.message === "Not Found") {
+      return notFound();
     }
     throw new Error(`予期せぬエラーが発生しました: ${error}`);
   }
