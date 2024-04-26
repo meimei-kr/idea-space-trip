@@ -52,6 +52,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <link rel="manifest" href="/manifest/manifest.json" />
+        <link rel="apple-touch-icon" href="/manifest/icon-192x192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#100706" />
+      </head>
       <body className={`${zenmaruGothic.variable} ${openSans.variable}`}>
         <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>

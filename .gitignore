@@ -37,6 +37,11 @@ front/next-env.d.ts
 # Sentry Config File
 front/.sentryclirc
 
+# PWA
+front/public/sw.js
+front/public/sw.js.map
+front/public/workbox-*.js
+front/public/workbox-*.js.map
 
 # ignoreing files for back directory
 # Ignore bundler config.

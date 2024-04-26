@@ -33,6 +33,7 @@
     "lucide-react": "^0.364.0",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
+    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
     "react-element-to-jsx-string": "^15.0.0",
