@@ -10,10 +10,3 @@ development:
   password: password
   database: app_development
   host: db
-
-production:
-  <<: *default
-  username: <%= Rails.application.credentials.dig(:postgresql, :production, :username) %>
-  password: <%= Rails.application.credentials.dig(:postgresql, :production, :password) %>
-  database: <%= Rails.application.credentials.dig(:postgresql, :production, :database) %>
-  host: <%= Rails.application.credentials.dig(:postgresql, :production, :host) %>
