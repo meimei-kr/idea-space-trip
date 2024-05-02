@@ -66,3 +66,11 @@ RSpec.configure do |config|
   # 追加することで、FactoryBotのメソッドを簡単に使えるようになる
   config.include FactoryBot::Syntax::Methods
 end
+
+require 'shoulda/matchers'
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
