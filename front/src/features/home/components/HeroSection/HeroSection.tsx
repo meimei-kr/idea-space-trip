@@ -1,10 +1,17 @@
 import styles from "@/features/home/components/HeroSection/HeroSection.module.scss";
-import Earth from "public/images/earth.svg";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
     <section className={styles.heroWrapper}>
-      <Earth className={styles.earthImg} data-testid="earth" />
+      <Image
+        src="/images/earth.webp"
+        alt="earth"
+        width={502}
+        height={497}
+        className={styles.earthImg}
+        data-testid="earth"
+      />
       <div className={styles.slogan}>
         <span>EXPLORE</span> <span>INFINITE</span> <span>CREATIVITY</span>
       </div>

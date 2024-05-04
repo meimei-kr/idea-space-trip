@@ -15,6 +15,18 @@ const withPWA = nextPWA({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "idea-space-trip.net",
+      },
+      {
+        protocol: "https",
+        hostname: "127.0.0.1",
+      },
+    ],
+  },
   reactStrictMode: false,
   webpack: (config) => {
     config.watchOptions = {
