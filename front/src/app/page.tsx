@@ -1,13 +1,24 @@
 import styles from "@/app/Home.module.scss";
-import * as Home from "@/features/home/components";
+import { HeroSection } from "@/features/home/components";
+import dynamic from "next/dynamic";
+
+const AboutSection = dynamic(() =>
+  import("@/features/home/components").then((mod) => mod.AboutSection),
+);
+const FeaturesSection = dynamic(() =>
+  import("@/features/home/components").then((mod) => mod.FeaturesSection),
+);
+const LoginSection = dynamic(() =>
+  import("@/features/home/components").then((mod) => mod.LoginSection),
+);
 
 export default async function page() {
   return (
     <main className={styles.main}>
-      <Home.HeroSection />
-      <Home.AboutSection />
-      <Home.FeaturesSection />
-      <Home.LoginSection />
+      <HeroSection />
+      <AboutSection />
+      <FeaturesSection />
+      <LoginSection />
     </main>
   );
 }

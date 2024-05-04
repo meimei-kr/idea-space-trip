@@ -15,3 +15,5 @@ export const FIRST_COMMEND_MESSAGE_COUNT = 5;
 export const COMMEND_MESSAGE_INTERVAL = 10;
 
 export const FORM_CHARACTER_LIMIT = 255;
+
+export const VERCEL_TIMEOUT = 60;

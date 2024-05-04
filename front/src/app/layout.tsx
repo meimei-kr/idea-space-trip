@@ -1,4 +1,3 @@
-import Footer from "@/components/layouts/Footer/Footer";
 import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
 import { Toaster } from "@/components/ui/toaster";
@@ -7,6 +6,7 @@ import { TouchProvider } from "@/context/global/TouchProvider";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
 
@@ -44,6 +44,8 @@ export const metadata: Metadata = {
     canonical: url,
   },
 };
+
+const Footer = dynamic(() => import("@/components/layouts/Footer/Footer"));
 
 export default function RootLayout({
   children,
