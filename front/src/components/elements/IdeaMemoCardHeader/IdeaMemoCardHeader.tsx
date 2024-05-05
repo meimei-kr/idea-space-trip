@@ -1,10 +1,9 @@
 "use client";
 
-import styles from "@/components/elements/IdeaMemoCardHeader/IdeaMemoCardHeader.module.scss";
-import { IdeaMemoType } from "@/types";
-// import HeartLike from "public/images/heart-like.svg";
 import FavoriteAnimation from "@/components/elements/FavoriteAnimation/FavoriteAnimation";
+import styles from "@/components/elements/IdeaMemoCardHeader/IdeaMemoCardHeader.module.scss";
 import { createIdeaLike, deleteIdeaLike } from "@/lib/idea-likes";
+import { IdeaMemoType } from "@/types";
 import { useState } from "react";
 import toast from "react-hot-toast";
 

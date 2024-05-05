@@ -1,12 +1,13 @@
 import styles from "@/app/[uuid]/generate-theme/GenerateTheme.module.scss";
 import BackButton from "@/components/elements/BackButton/BackButton";
 import Description from "@/components/elements/Description/Description";
+import { VERCEL_TIMEOUT } from "@/constants/constants";
 import * as GenerateTheme from "@/features/generate-theme/components";
 import { getAIGeneratedThemes } from "@/lib/ai-generated-themes";
 import { getIdeaSessionInProgress } from "@/lib/idea-sessions";
 import { AiGeneratedThemeType, Option } from "@/types";
 
-export const maxDuration = 60;
+export const maxDuration = VERCEL_TIMEOUT;
 
 export default async function page({ params }: { params: { uuid: string } }) {
   // 進行中のアイデアセッションを取得
