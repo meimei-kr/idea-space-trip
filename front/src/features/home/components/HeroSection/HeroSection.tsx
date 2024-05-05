@@ -8,7 +8,7 @@ export default function HeroSection() {
       <Image
         src={earth}
         alt="earth"
-        sizes="100vw"
+        sizes="100vw, (min-width: 1280px) 45vw"
         priority={true}
         className={styles.earthImg}
         data-testid="earth"
