@@ -1,15 +1,14 @@
 import styles from "@/features/home/components/HeroSection/HeroSection.module.scss";
 import Image from "next/image";
+import earth from "/public/images/earth.webp";
 
 export default function HeroSection() {
   return (
     <section className={styles.heroWrapper}>
       <Image
-        src="/images/earth.webp"
+        src={earth}
         alt="earth"
-        width={502}
-        height={497}
-        sizes="(min-width: 1280px) 45vw, 100vw"
+        sizes="100vw"
         priority={true}
         className={styles.earthImg}
         data-testid="earth"
