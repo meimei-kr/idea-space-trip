@@ -9,6 +9,7 @@ export default function HeroSection() {
         alt="earth"
         width={502}
         height={497}
+        priority={true}
         className={styles.earthImg}
         data-testid="earth"
       />
