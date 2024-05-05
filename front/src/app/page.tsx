@@ -8,8 +8,9 @@ const AboutSection = dynamic(() =>
 const FeaturesSection = dynamic(() =>
   import("@/features/home/components").then((mod) => mod.FeaturesSection),
 );
-const LoginSection = dynamic(() =>
-  import("@/features/home/components").then((mod) => mod.LoginSection),
+const LoginSection = dynamic(
+  () => import("@/features/home/components").then((mod) => mod.LoginSection),
+  { ssr: false },
 );
 
 export default async function page() {
