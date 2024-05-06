@@ -5,10 +5,10 @@ import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/global/AuthProvider";
 import { TouchProvider } from "@/context/global/TouchProvider";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
+import { isMobile } from "@/lib/is-mobile";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { isMobile } from "react-device-detect";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
 
@@ -54,6 +54,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isMobileDevice = isMobile();
+
   return (
     <html lang="ja">
       <head>
@@ -67,7 +69,7 @@ export default function RootLayout({
         <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>
           <TouchProvider>
-            {isMobile ? <StaticStars /> : <Stars />}
+            {isMobileDevice ? <StaticStars /> : <Stars />}
             <Header />
             {children}
             <Toaster />
