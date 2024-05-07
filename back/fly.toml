@@ -12,6 +12,9 @@ console_command = '/rails/bin/rails console'
 [[mounts]]
   source = 'idea_space_trip_db'
   destination = '/data'
+  auto_extend_size_threshold = 90
+  auto_extend_size_increment = "1GB"
+  auto_extend_size_limit = "3GB"
 
 [[services]]
   internal_port = 3000
