@@ -90,12 +90,12 @@
       
 | 1. 考えたいテーマがあるか選択 | 2. 考えたいテーマが<br>ある場合は入力 | 3. 考えたいテーマが<br>決まっていない場合は<br>AIがテーマ案を生成するので選択 | 4. 提示された考え方をもとに<br>AIとアイデア出し |
 | :------------- | :--------------------------- | :--------------------------- | :--------------------------- |
-| <img height="400px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/4cf065fe-1f48-4ed3-98e4-7bf8ef8485c5"> | <img height="400px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/55a364a2-25b1-4269-9917-44992b799e20" /> | <img height="400px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/09e50d3f-766b-46bd-88d4-217cf5ddea03" />| <img height="400px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/f68cf977-2785-4f9d-ae1e-c4d77b6f7673" /> |
+| <img height="350px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/4cf065fe-1f48-4ed3-98e4-7bf8ef8485c5"> | <img height="350px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/55a364a2-25b1-4269-9917-44992b799e20" /> | <img height="350px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/09e50d3f-766b-46bd-88d4-217cf5ddea03" />| <img height="350px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/f68cf977-2785-4f9d-ae1e-c4d77b6f7673" /> |
 
 ### メイン機能② 出したアイデアの整理
 | 1. アイデアメモ一覧参照/お気に入り/検索 | 2. アイデアメモ編集・削除 |
 | :-------------: | :---------------------------: |
-| <img height="400px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/40edb29d-7987-4d3d-9ea1-966503d96776" /> | <img height="400px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/7e3860cc-e8b8-4997-967e-0c99093e7d27" /> |
+| <img height="350px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/40edb29d-7987-4d3d-9ea1-966503d96776" /> | <img height="350px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/7e3860cc-e8b8-4997-967e-0c99093e7d27" /> |
 
 
 ## ■ 使用技術
