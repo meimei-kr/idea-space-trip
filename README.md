@@ -121,3 +121,6 @@ https://www.figma.com/file/29Z6kPbrJDKNfcNO9k8K3K/IDEA-SPACE-TRIP?type=design&no
 ## ER 図
 
 ![er_20240331](https://github.com/meimei-kr/idea-space-trip/assets/77828683/9a8e3765-293a-4e5e-a05c-26b6a8047809)
+
+## インフラ構成図
+![idea-space-trip-infrastructure](https://github.com/meimei-kr/idea-space-trip/assets/77828683/e95877e2-bdac-4a7b-bc5a-b4698ab33c7a)
