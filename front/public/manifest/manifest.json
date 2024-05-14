@@ -2,7 +2,7 @@
   "theme_color": "#100706",
   "background_color": "#100706",
   "display": "standalone",
-  "scope": "",
+  "scope": "/",
   "start_url": "/",
   "name": "IDEA SPACE TRIP",
   "short_name": "IDEA SPACE TRIP",

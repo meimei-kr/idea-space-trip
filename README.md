@@ -1,6 +1,11 @@
+## ■ サービス名
+<img src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/3be82936-96aa-467b-976c-d92849681eaa" width="50%" />
+
+[IDEA SPACE TRIP](https://www.idea-space-trip.net/)
+
 ## ■ サービス概要
 
-「IDEA SPACE TRIP」は、AI の誘導によりユーザーにアイデアを広げるヒントを提供します。  
+「IDEA SPACE TRIP」は、アイデア発想法のやり方や、AIによるヒントやアイデア案をユーザーに提示することで、アイデア出しが簡単かつ楽しくなるようサポートするサービスです。  
 具体的な企画立案の際はもちろん、簡単なトレーニング感覚でも気軽に使用でき、さまざまな視点からアイデアを探求できます。  
 考えたアイデアはアプリ内のメモに保存可能ですので、後から見返して新しいアイデアにつなげることもできます。
 
@@ -80,19 +85,34 @@
 - アイデアメモのフリーワード検索機能
 - アイデアメモへのお気に入り機能
 
-## ■ 機能の実装方針予定
+## ■ 使い方
+### メイン機能① アイデア出しセッション
+      
+| 1. 考えたいテーマがあるか選択 | 2. 考えたいテーマが<br>ある場合は入力 | 3. 考えたいテーマが<br>決まっていない場合は<br>AIがテーマ案を生成するので選択 | 4. 提示された考え方をもとに<br>AIとアイデア出し |
+| :------------- | :--------------------------- | :--------------------------- | :--------------------------- |
+| <img height="380px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/4cf065fe-1f48-4ed3-98e4-7bf8ef8485c5"> | <img height="380px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/55a364a2-25b1-4269-9917-44992b799e20" /> | <img height="380px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/09e50d3f-766b-46bd-88d4-217cf5ddea03" />| <img height="380px" align="center" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/f68cf977-2785-4f9d-ae1e-c4d77b6f7673" /> |
+
+### メイン機能② 出したアイデアの整理
+| 1. アイデアメモ一覧参照/お気に入り/検索 | 2. アイデアメモ編集・削除 |
+| :-------------: | :---------------------------: |
+| <img height="380px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/40edb29d-7987-4d3d-9ea1-966503d96776" /> | <img height="380px" src="https://github.com/meimei-kr/idea-space-trip/assets/77828683/7e3860cc-e8b8-4997-967e-0c99093e7d27" /> |
+
+
+## ■ 使用技術
 
 | カテゴリー     | 使用技術                     |
 | :------------- | :--------------------------- |
-| フロントエンド | Next.js                      |
-| バックエンド   | Ruby on Rails API モード     |
-| インフラ       | Vercel / fly.io              |
+| フロントエンド | TypeScript 5.4.5<br>Next.js 14.1.0<br>React 18.3.1|
+| バックエンド   | Ruby 3.2.2<br>Ruby on Rails 7.1.3.2 (API モード)     |
+| インフラ       | Vercel / Fly.io              |
 | DB             | PostgreSQL                   |
-| Redis          | Upstash for Redis ( fly.io ) |
+| Redis          | Upstash for Redis |
 | 認証           | NextAuth.js                  |
 | CI/CD          | GitHub Actions               |
 | 開発環境       | Docker                       |
-| API            | Web Speech API、OpenAI API   |
+| API            | OpenAI API / Web Speech API  |
+| その他（フロントエンド）| ESLint / Prettier / Zod / shadcn/ui |
+| その他（バックエンド） | Active Job( Solid Queue ) / Action Cable / RuboCop |
 
 ## 画面遷移図
 
@@ -101,3 +121,6 @@ https://www.figma.com/file/29Z6kPbrJDKNfcNO9k8K3K/IDEA-SPACE-TRIP?type=design&no
 ## ER 図
 
 ![er_20240331](https://github.com/meimei-kr/idea-space-trip/assets/77828683/9a8e3765-293a-4e5e-a05c-26b6a8047809)
+
+## インフラ構成図
+![idea-space-trip-infrastructure](https://github.com/meimei-kr/idea-space-trip/assets/77828683/e95877e2-bdac-4a7b-bc5a-b4698ab33c7a)

@@ -21,6 +21,7 @@
   border-radius: 50px;
   box-shadow: 0 0 0 3px inset #fff;
   animation: l4 2.5s infinite;
+  will-change: inset;
 }
 .loader:after {
   animation-delay: -1.25s;

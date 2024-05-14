@@ -1,17 +1,25 @@
 import styles from "@/app/Home.module.scss";
-import * as Home from "@/features/home/components";
-import { authOptions } from "@/lib/options";
-import { getServerSession } from "next-auth";
+import { HeroSection } from "@/features/home/components";
+import dynamic from "next/dynamic";
+
+const AboutSection = dynamic(() =>
+  import("@/features/home/components").then((mod) => mod.AboutSection),
+);
+const FeaturesSection = dynamic(() =>
+  import("@/features/home/components").then((mod) => mod.FeaturesSection),
+);
+const LoginSection = dynamic(
+  () => import("@/features/home/components").then((mod) => mod.LoginSection),
+  { ssr: false },
+);
 
 export default async function page() {
-  const session = await getServerSession(authOptions);
-
   return (
     <main className={styles.main}>
-      <Home.HeroSection />
-      <Home.AboutSection />
-      <Home.FeaturesSection />
-      <Home.LoginSection session={session} />
+      <HeroSection />
+      <AboutSection />
+      <FeaturesSection />
+      <LoginSection />
     </main>
   );
 }

@@ -78,6 +78,7 @@
   width: 50%;
   max-width: 50%;
   text-align: center;
+  z-index: 1;
 
   @media screen and (min-width: 1280px) {
     font-size: 20px;
@@ -99,4 +100,5 @@
 .blob {
   width: 100%;
   height: 100%;
+  will-change: transform;
 }

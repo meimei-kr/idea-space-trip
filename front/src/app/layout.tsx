@@ -1,12 +1,14 @@
-import Footer from "@/components/layouts/Footer/Footer";
 import Header from "@/components/layouts/Header/Header";
 import Stars from "@/components/layouts/Stars/Stars";
+import StaticStars from "@/components/layouts/StaticStars/StaticStars";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/context/global/AuthProvider";
 import { TouchProvider } from "@/context/global/TouchProvider";
 import { openSans, zenmaruGothic } from "@/fonts/fonts";
+import { isMobile } from "@/lib/is-mobile";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Toaster as HotToaster } from "react-hot-toast";
 import "./globals.scss";
 
@@ -45,11 +47,15 @@ export const metadata: Metadata = {
   },
 };
 
+const Footer = dynamic(() => import("@/components/layouts/Footer/Footer"));
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isMobileDevice = isMobile();
+
   return (
     <html lang="ja">
       <head>
@@ -63,7 +69,7 @@ export default function RootLayout({
         <HotToaster position="top-center" reverseOrder={false} />
         <NextAuthProvider>
           <TouchProvider>
-            <Stars />
+            {isMobileDevice ? <StaticStars /> : <Stars />}
             <Header />
             {children}
             <Toaster />

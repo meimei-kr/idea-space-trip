@@ -1,8 +1,12 @@
+"use client";
+
 import LinkButton from "@/components/elements/LinkButton/LinkButton";
 import styles from "@/features/home/components/LoginSection/LoginSection.module.scss";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-export default function LoginSection({ session }: { session: Session | null }) {
+export default function LoginSection() {
+  const { data: session } = useSession();
+
   return (
     <section className={styles.loginWrapper}>
       <div className={styles.loginContainer}>
