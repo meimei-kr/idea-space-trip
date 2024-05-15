@@ -15,7 +15,7 @@
 FactoryBot.define do
   factory :idea_memo do
     idea_session
-    perspective { 1 }
+    perspective { :modify }
     hint { 'MyText' }
     answer { 'MyText' }
     comment { 'MyText' }
