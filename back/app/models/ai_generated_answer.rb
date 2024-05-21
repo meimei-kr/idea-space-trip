@@ -13,7 +13,7 @@
 class AiGeneratedAnswer < ApplicationRecord
   belongs_to :idea_session
 
-  validates :perspective, presence: true, numericality: true
+  validates :perspective, presence: true
   validates :hint, presence: true
   validates :answer, presence: true
 

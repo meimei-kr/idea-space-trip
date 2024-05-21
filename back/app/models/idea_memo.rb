@@ -23,4 +23,5 @@ class IdeaMemo < ApplicationRecord
 
   validates :perspective, presence: true
   validates :answer, presence: true, length: { maximum: 255 }
+  validates :comment, length: { maximum: 255 }
 end

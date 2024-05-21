@@ -27,4 +27,8 @@ RSpec.describe AiGeneratedTheme do
       expect(ai_generated_theme).not_to be_valid
     end
   end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:idea_session) }
+  end
 end

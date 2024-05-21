@@ -12,7 +12,7 @@
 #
 FactoryBot.define do
   factory :ai_generated_answer do
-    perspective { 1 }
+    perspective { :modify }
     hint { 'MyText' }
     answer { 'MyText' }
     idea_session

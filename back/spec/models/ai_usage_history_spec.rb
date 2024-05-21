@@ -12,6 +12,7 @@
 require 'rails_helper'
 
 RSpec.describe AiUsageHistory do
+  # バリデーションのテスト
   describe 'validation' do
     it 'is valid with valid attributes' do
       ai_usage_history = build(:ai_usage_history)
@@ -27,5 +28,15 @@ RSpec.describe AiUsageHistory do
       ai_usage_history = build(:ai_usage_history, count: nil)
       expect(ai_usage_history).not_to be_valid
     end
+
+    it 'is invalid with a negative count' do
+      ai_usage_history = build(:ai_usage_history, count: -1)
+      expect(ai_usage_history).not_to be_valid
+    end
+  end
+
+  # アソシエーションのテスト
+  describe 'association' do
+    it { is_expected.to belong_to(:user) }
   end
 end
