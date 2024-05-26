@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :idea_like do
-    user { nil }
-    idea_memo { nil }
+    user
+    idea_memo
   end
 end

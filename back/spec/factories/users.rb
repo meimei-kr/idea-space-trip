@@ -12,7 +12,7 @@
 FactoryBot.define do
   factory :user do
     name { 'test_user' }
-    email { 'test@gmail.com' }
+    sequence(:email) { |n| "test#{n}@gmail.com" }
     provider { 'google' }
 
     trait :guest do

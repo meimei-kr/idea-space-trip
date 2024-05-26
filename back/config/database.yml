@@ -10,3 +10,10 @@ development:
   password: password
   database: app_development
   host: db
+
+test:
+  <<: *default
+  username: root
+  password: password
+  database: app_test
+  host: db
