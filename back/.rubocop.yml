@@ -68,3 +68,7 @@ Metrics/BlockLength:
 # itブロック内で複数のexpectを許可
 RSpec/MultipleExpectations:
   Enabled: false
+
+# テストのネストを4階層までに制限
+RSpec/NestedGroups:
+  Max: 4
