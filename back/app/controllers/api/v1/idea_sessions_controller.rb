@@ -19,7 +19,7 @@ module Api
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
                  status: :ok
         else
-          render json: idea_session.errors, status: :unprocessable_entity
+          render json: { errors: idea_session.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
@@ -30,7 +30,7 @@ module Api
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
                  status: :ok
         else
-          render json: idea_session.errors, status: :unprocessable_entity
+          render json: { errors: idea_session.errors.full_messages }, status: :unprocessable_entity
         end
       end
 

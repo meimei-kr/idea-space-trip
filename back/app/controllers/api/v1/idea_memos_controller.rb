@@ -45,7 +45,7 @@ module Api
                                               { params: { current_user: @current_user } })
                                          .serializable_hash.to_json, status: :ok
         else
-          render json: { errors: idea_memo.errors }, status: :unprocessable_entity
+          render json: { errors: idea_memo.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
@@ -67,7 +67,7 @@ module Api
         if @idea_memo.save
           render json: { message: 'アイデアメモの更新に成功しました' }, status: :ok
         else
-          render json: { errors: @idea_memo.errors }, status: :unprocessable_entity
+          render json: { errors: @idea_memo.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
