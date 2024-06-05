@@ -72,3 +72,7 @@ RSpec/MultipleExpectations:
 # テストのネストを4階層までに制限
 RSpec/NestedGroups:
   Max: 4
+
+# テスト内のコード行数を8行までに制限（デフォルト5）
+RSpec/ExampleLength:
+  Max: 8
