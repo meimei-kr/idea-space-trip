@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :ai_generated_theme do
-    theme { 'MyText' }
+    sequence(:theme) { |n| "MyText#{n}" }
     idea_session
   end
 end
