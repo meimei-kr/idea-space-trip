@@ -13,7 +13,7 @@ const LoginSection = dynamic(
   { ssr: false },
 );
 
-export default async function page() {
+export default function page() {
   return (
     <main className={styles.main}>
       <HeroSection />

@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :idea_session do
-    uuid { 'MyString' }
+    sequence(:uuid) { |n| "MyString#{n}" }
     is_theme_determined { false }
     is_ai_theme_generated { false }
     theme_category { 0 }

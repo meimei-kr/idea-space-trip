@@ -14,7 +14,7 @@ FactoryBot.define do
   factory :ai_generated_answer do
     perspective { :modify }
     hint { 'MyText' }
-    answer { 'MyText' }
+    sequence(:answer) { |n| "MyText#{n}" }
     idea_session
   end
 end

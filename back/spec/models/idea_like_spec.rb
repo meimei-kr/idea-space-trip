@@ -7,6 +7,8 @@ RSpec.describe IdeaLike do
   end
 
   describe 'validations' do
+    before { create(:idea_like) }
+
     it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:idea_memo_id) }
   end
 end

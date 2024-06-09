@@ -44,7 +44,7 @@ RSpec.describe AiGeneratedAnswer do
   # クラスメソッドのテスト
   # # OpenAIのレスポンスを受け取り、AIが生成したアイデアを保存するメソッドのテスト
   describe '.create_from_openai_response' do
-    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations, Layout/LineLength
+    # rubocop:disable RSpec/ExampleLength, Layout/LineLength
     let!(:idea_session) { create(:idea_session) }
     let!(:ai_ideas) do
       '
@@ -103,7 +103,7 @@ RSpec.describe AiGeneratedAnswer do
       expect(result[8].hint).to eq('デジタル機能')
       expect(result[8].answer).to eq('書いた内容をデジタル化できる機能を搭載したボールペンを開発し、ユーザーが手書きメモをスキャンして保存したり、Bluetooth接続で他のデバイスと連携できるようにする')
     end
-    # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations, Layout/LineLength
+    # rubocop:enable RSpec/ExampleLength, Layout/LineLength
   end
 
   # JSONからハッシュに変換するメソッドのテスト
