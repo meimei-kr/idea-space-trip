@@ -38,7 +38,7 @@ export default function SelectForm({
     <form action={dispatchGeneratedThemes} className={styles.selectThemeForm}>
       {generatedThemesState?.errors?.option &&
         generatedThemesState?.errors?.option.map((error, index) => (
-          <ErrorAlert id="theme-category-error" key={index} error={error} />
+          <ErrorAlert id="generated_themes_error" key={index} error={error} />
         ))}
       <RadioButtons
         options={aiGeneratedThemesArray}
