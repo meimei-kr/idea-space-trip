@@ -28,15 +28,8 @@ module Api
         themes_array = JSON.parse(themes)
 
         # 生成したテーマを保存し、配列に格納
-        ai_generated_themes = []
-        ActiveRecord::Base.transaction do
-          ai_generated_themes = themes_array.map do |theme|
-            @idea_session.ai_generated_themes.create!(theme:)
-          end
-        end
-
-        # idea_sessionのis_ai_theme_generatedをtrueに更新
-        @idea_session.update!(is_ai_theme_generated: true)
+        ai_generated_themes = AiGeneratedTheme.create_ai_generated_themes(@idea_session,
+                                                                          themes_array)
 
         render json: AiGeneratedThemeSerializer.new(ai_generated_themes).serializable_hash.to_json,
                status: :ok
