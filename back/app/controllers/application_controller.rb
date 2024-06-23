@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
     encoded_token = request.headers['Authorization']&.split&.last
     @current_user = User.find_with_jwt(encoded_token) if encoded_token
 
-    return if @current_user
+    return if current_user
 
     render json: { error: '認証に失敗しました' }, status: :unauthorized
   end

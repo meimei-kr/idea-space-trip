@@ -2,7 +2,7 @@ module Api
   module V1
     class AiUsageHistoriesController < ApplicationController
       def show
-        ai_usage_history = @current_user.ai_usage_history
+        ai_usage_history = current_user.ai_usage_history
         if ai_usage_history.nil?
           render json: { error: 'AI使用履歴が見つかりません。' }, status: :not_found
         else
@@ -25,7 +25,7 @@ module Api
       end
 
       def update
-        ai_usage_history = @current_user.ai_usage_history
+        ai_usage_history = current_user.ai_usage_history
         authorize ai_usage_history
 
         # AI使用回数を更新

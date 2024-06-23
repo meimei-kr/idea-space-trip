@@ -2,7 +2,7 @@ module Api
   module V1
     class IdeaSessionsController < ApplicationController
       def show_in_progress
-        idea_session = @current_user.idea_sessions.where(is_finished: false).first
+        idea_session = current_user.idea_sessions.where(is_finished: false).first
         if idea_session.nil?
           render json: nil, status: :ok
         else
@@ -13,7 +13,7 @@ module Api
       end
 
       def create
-        idea_session = @current_user.idea_sessions.new(idea_session_params)
+        idea_session = current_user.idea_sessions.new(idea_session_params)
         authorize idea_session
         if idea_session.save
           render json: IdeaSessionSerializer.new(idea_session).serializable_hash.to_json,
@@ -44,15 +44,17 @@ module Api
       end
 
       def show_latest_two_with_memos
-        idea_sessions = @current_user.idea_sessions.order(updated_at: :desc).limit(2)
+        idea_sessions = current_user.idea_sessions.order(updated_at: :desc).limit(2)
         if idea_sessions.empty?
           render json: { error: '対象のidea_sessionデータが見つかりませんでした。' }, status: :not_found
         else
+          # rubocop:disable Style/HashSyntax
           render json: IdeaSessionSerializer.new(idea_sessions,
-                                                 { params: { current_user: @current_user },
+                                                 { params: { current_user: current_user },
                                                    include: [:idea_memos] })
                                             .serializable_hash.to_json,
                  status: :ok
+          # rubocop:enable Style/HashSyntax
         end
       end
 
@@ -75,7 +77,7 @@ module Api
       end
 
       def set_idea_session
-        @current_user.idea_sessions.find_by(uuid: params[:uuid])
+        current_user.idea_sessions.find_by(uuid: params[:uuid])
       end
     end
   end

@@ -17,7 +17,7 @@ module Api
 
       def create
         input = build_input(params[:user_input])
-        if AiIdeaGenerationJob.perform_later(@current_user.id, input)
+        if AiIdeaGenerationJob.perform_later(current_user.id, input)
           render json: nil, status: :ok
         else
           render json: { error: 'ジョブキューへの追加に失敗しました' }, status: :internal_server_error
@@ -34,7 +34,7 @@ module Api
 
       # uuidをもとにIdeaSessionを取得
       def set_idea_session
-        @idea_session = @current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
+        @idea_session = current_user.idea_sessions.find_by(uuid: params[:idea_session_uuid])
         return unless @idea_session.nil?
 
         render json: { error: '指定されたアイデアセッションが見つかりません' }, status: :not_found
