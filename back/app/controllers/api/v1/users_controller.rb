@@ -4,7 +4,7 @@ module Api
       skip_before_action :authenticate, only: [:create]
 
       def show
-        render json: UserSerializer.new(@current_user).serializable_hash.to_json, status: :ok
+        render json: UserSerializer.new(current_user).serializable_hash.to_json, status: :ok
       end
 
       def create
@@ -13,16 +13,16 @@ module Api
         create_ai_usage_history
 
         # JWTを発行
-        payload = { user_id: @current_user.id, exp: 24.hours.from_now.to_i }
+        payload = { user_id: current_user.id, exp: 24.hours.from_now.to_i }
         encoded_token = encode_jwt(payload)
 
-        render json: { user: @current_user, accessToken: encoded_token, status: :ok }
+        render json: { user: current_user, accessToken: encoded_token, status: :ok }
       rescue StandardError => e
         render json: { error: "ログインに失敗しました: #{e.message}" }, status: :internal_server_error
       end
 
       def destroy
-        @current_user.destroy!
+        current_user.destroy!
       end
 
       private
@@ -32,10 +32,10 @@ module Api
       end
 
       def create_ai_usage_history
-        ai_usage_history = @current_user.ai_usage_history
+        ai_usage_history = current_user.ai_usage_history
         return if ai_usage_history.present?
 
-        @current_user.create_ai_usage_history!(date: Time.zone.today)
+        current_user.create_ai_usage_history!(date: Time.zone.today)
       end
     end
   end

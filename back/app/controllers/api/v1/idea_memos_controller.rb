@@ -7,7 +7,7 @@ module Api
       before_action :set_idea_memo, only: %i[show update destroy]
 
       def index
-        idea_memos = policy_scope(@current_user.idea_memos.includes(:idea_session)
+        idea_memos = policy_scope(current_user.idea_memos.includes(:idea_session)
                       .order(created_at: :desc))
         render_idea_memos(idea_memos)
       end
@@ -17,8 +17,8 @@ module Api
         page = params[:page].to_i || 1
         favorites_mode = params[:favorites_mode] == 'true'
         idea_memos = ::FilteredIdeaMemosByQuery.call(
-          @current_user.idea_memos.includes(:idea_session),
-          query, page, favorites_mode, @current_user
+          current_user.idea_memos.includes(:idea_session),
+          query, page, favorites_mode, current_user
         )
         render_idea_memos(idea_memos)
       end
@@ -28,11 +28,13 @@ module Api
           render json: { error: '指定されたアイデアメモが見つかりません' }, status: :not_found
         else
           authorize @idea_memo
+          # rubocop:disable Style/HashSyntax
           render json: IdeaMemoSerializer.new(@idea_memo,
-                                              { params: { current_user: @current_user },
+                                              { params: { current_user: current_user },
                                                 include: [:idea_session] })
                                          .serializable_hash.to_json,
                  status: :ok
+          # rubocop:enable Style/HashSyntax
         end
       end
 
@@ -41,9 +43,11 @@ module Api
         idea_memo = @idea_session.idea_memos.new(idea_memo_params)
 
         if idea_memo.save
+          # rubocop:disable Style/HashSyntax
           render json: IdeaMemoSerializer.new(idea_memo,
-                                              { params: { current_user: @current_user } })
+                                              { params: { current_user: current_user } })
                                          .serializable_hash.to_json, status: :ok
+          # rubocop:enable Style/HashSyntax
         else
           render json: { errors: idea_memo.errors.full_messages }, status: :unprocessable_entity
         end
@@ -55,9 +59,11 @@ module Api
         if idea_memos.empty?
           render json: nil, status: :ok
         else
+          # rubocop:disable Style/HashSyntax
           render json: IdeaMemoSerializer.new(idea_memos,
-                                              { params: { current_user: @current_user } })
+                                              { params: { current_user: current_user } })
                                          .serializable_hash.to_json, status: :ok
+          # rubocop:enable Style/HashSyntax
         end
       end
 
@@ -80,8 +86,8 @@ module Api
       end
 
       def this_month_count
-        count = @current_user.idea_memos.where('idea_memos.created_at >= ?',
-                                               Time.current.beginning_of_month).count
+        count = current_user.idea_memos.where('idea_memos.created_at >= ?',
+                                              Time.current.beginning_of_month).count
         render json: { count: }, status: :ok
       end
 
@@ -89,7 +95,7 @@ module Api
         query = params[:query] || ''
         favorites_mode = params[:favorites_mode] == 'true'
         total_memos = ::FilteredTotalPagesByQuery.call(
-          @current_user.idea_memos.includes(:idea_session), query, favorites_mode, @current_user
+          current_user.idea_memos.includes(:idea_session), query, favorites_mode, current_user
         )
         total_pages = (total_memos.to_f / Constants::ITEMS_PER_PAGE).ceil
         render json: { pages: total_pages }, status: :ok
@@ -105,11 +111,13 @@ module Api
         if idea_memos.empty?
           render json: nil, status: :ok
         else
+          # rubocop:disable Style/HashSyntax
           render json: IdeaMemoSerializer.new(idea_memos,
-                                              { params: { current_user: @current_user },
+                                              { params: { current_user: current_user },
                                                 include: [:idea_session] })
                                          .serializable_hash.to_json,
                  status: :ok
+          # rubocop:enable Style/HashSyntax
         end
       end
     end

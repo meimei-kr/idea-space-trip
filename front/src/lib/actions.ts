@@ -206,7 +206,7 @@ export type GeneratedThemesState = {
 };
 
 export const confirmTheme = async (
-  prevState: ThemeCategoryState | undefined,
+  prevState: GeneratedThemesState | undefined,
   formData: FormData,
 ) => {
   const ThemeCategorySchema = z.object({
