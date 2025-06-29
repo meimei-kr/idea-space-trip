@@ -4,6 +4,7 @@
 options:
   label:
     fly_launch_runtime: rails
+  platform: linux/amd64
   postgresql: true
   prepare: false
   redis: true
