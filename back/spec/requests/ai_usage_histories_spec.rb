@@ -13,7 +13,7 @@ RSpec.describe 'AiUsageHistories' do
         it 'returns AiUsageHistory' do
           get(api_v1_ai_usage_history_path, headers:)
           expect(response).to have_http_status(:ok)
-          puts response.body
+          Rails.logger.debug response.body
           expect(json['data']['attributes']['userId']).to eq(user.id)
         end
       end

@@ -2,7 +2,7 @@ inherit_from: .rubocop_todo.yml
 
 # inherit_from: .rubocop_todo.yml
 
-require:
+plugins:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
@@ -13,7 +13,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - bin/*
-    - db/schema.rb
+    - db/**/*
     - vendor/**/*
 
 # ********************

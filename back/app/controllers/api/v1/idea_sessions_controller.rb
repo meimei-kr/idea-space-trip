@@ -48,13 +48,11 @@ module Api
         if idea_sessions.empty?
           render json: { error: '対象のidea_sessionデータが見つかりませんでした。' }, status: :not_found
         else
-          # rubocop:disable Style/HashSyntax
           render json: IdeaSessionSerializer.new(idea_sessions,
                                                  { params: { current_user: current_user },
                                                    include: [:idea_memos] })
                                             .serializable_hash.to_json,
                  status: :ok
-          # rubocop:enable Style/HashSyntax
         end
       end
 
